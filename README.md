@@ -56,9 +56,6 @@ Programming language and library used.
     ![Php](https://img.shields.io/badge/PHP%20-6B7DB0?style=for-the-badge&logo=PHP&logoColor=white)
     ![JavaScript](https://img.shields.io/badge/JavaScript%20-%23F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black)
     ![Java](https://img.shields.io/badge/Java%20-2314354C?style=for-the-badge&logo=java&logoColor=white)
-    ![Dart](https://img.shields.io/badge/Dart%20-2AAEEA?style=for-the-badge&logo=dart&logoColor=white)
-    ![C](https://img.shields.io/badge/C%20-%232370ED.svg?style=for-the-badge&logo=c&logoColor=white)
-    ![C++](https://img.shields.io/badge/C++%20-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white)
     ![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
     ![CodeIgniter](https://img.shields.io/badge/CodeIgniter%20-6B7DB0?style=for-the-badge&logo=codeigniter&logoColor=white)
 
