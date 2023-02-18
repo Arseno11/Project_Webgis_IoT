@@ -5,10 +5,10 @@ Tugas Akhir Project
 
 Bahasa Pemrograma dan library yang digunakan.
  
-* [![Php][PHP]][Php-url]
-* [![Leaflet][Leaflet.js]][Leaflet-url]
-* [![JQuery][JQuery.js]][JQuery-url]
-* [![Bootstrap][Bootstrap]][Bootstrap-url]
+* [![Php][Php.com]][Php-url]
+* [![Leaflet][leaflet.com]][Leaflet-url]
+* [![JQuery][JQuery.com]][JQuery-url]
+* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 
 
 [leaflet.com]: https://img.shields.io/badge/Leaflet-FF2D20?style=for-the-badge&logo=leaflet&logoColor=white
