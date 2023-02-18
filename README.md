@@ -51,10 +51,10 @@ Bahasa Pemrograma dan library yang digunakan.
 
 - **Languages & Framework**:
     
-    ![Php](https://img.shields.io/badge/PHP%20-%6B7DB0.svg?style=for-the-badge&logo=c&logoColor=white)
+    ![Php](https://img.shields.io/badge/PHP%20-%6B7DB0.svg?style=for-the-badge&logo=PHP&logoColor=white)
     ![JavaScript](https://img.shields.io/badge/JavaScript%20-%23F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black)
-    ![Java](https://img.shields.io/badge/Python%20-%2314354C.svg?style=for-the-badge&logo=python&logoColor=white)
-    ![Laravel](https://img.shields.io/badge/Python%20-%2314354C.svg?style=for-the-badge&logo=python&logoColor=white)
-    ![CodeIgniter](https://img.shields.io/badge/Python%20-%2314354C.svg?style=for-the-badge&logo=python&logoColor=white)
+    ![Java](https://img.shields.io/badge/Java%20-%2314354C.svg?style=for-the-badge&logo=java&logoColor=white)
+    ![Laravel](https://img.shields.io/badge/Laravel%20-%FF2D20.svg?style=for-the-badge&logo=laravel&logoColor=white)
+    ![CodeIgniter](https://img.shields.io/badge/CodeIgniter%20-%2314354C.svg?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 <br>   
