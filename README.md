@@ -57,6 +57,6 @@ Programming language and library used.
     ![Java](https://img.shields.io/badge/Java%20-2314354C?style=for-the-badge&logo=java&logoColor=white)
     ![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
     ![CodeIgniter](https://img.shields.io/badge/CodeIgniter%20-6B7DB0?style=for-the-badge&logo=codeigniter&logoColor=white)
-    ![MySql](https://img.shields.io/badge/MySql%20-6B7DB0?style=for-the-badge&logo=mysql&logoColor=white)
+    ![MySql](https://img.shields.io/badge/MySql%20-FF0000?style=for-the-badge&logo=mysql&logoColor=white)
 
 <br>   
