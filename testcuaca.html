@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Aplikasi Cuaca</title>
+</head>
+
+<body>
+    <h1>Aplikasi Cuaca</h1>
+
+    <!-- Form untuk mencari kota -->
+    <form id="form-cari">
+        <label for="kota">Masukkan nama kota:</label><br>
+        <input type="text" id="kota" name="kota"><br>
+        <button type="submit">Cari</button>
+    </form>
+
+    <!-- Tempat menampilkan data cuaca -->
+    <div id="hasil"></div>
+
+    <!-- Memanggil library jQuery dan file JavaScript kita -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        // Fungsi yang akan dipanggil ketika form dikirim
+        $("#form-cari").submit(function (e) {
+            // Menghindari submit form secara default
+            e.preventDefault();
+
+            // Mengambil nilai dari input kota
+            var kota = $("#kota").val();
+
+            // Menyiapkan URL untuk mengambil data cuaca dari OpenWeatherMap
+            var url = "https://api.openweathermap.org/data/2.5/weather?q=" + kota + "&APPID=f96734e9b69f7abbed84a3b5dc2a86a4&units=metric";
+
+            // Mengambil data cuaca menggunakan AJAX
+            $.ajax({
+                url: url,
+                success: function (data) {
+                    // Menampilkan data cuaca ke dalam element dengan id "hasil"
+                    var cuaca = data.weather[0].main;
+                    var suhu = data.main.temp;
+                    var kelembaban = data.main.humidity;
+                    var tekanan = data.main.pressure;
+                    var kecepatanAngin = data.wind.speed;
+
+                    // Menampilkan icon cuaca
+                    var iconUrl = "https://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png";
+                    var icon = "<img src='" + iconUrl + "' alt='Icon Cuaca'>";
+
+                    $("#hasil").html("Cuaca di " + kota + ": " + cuaca + " " + icon + "<br>" +
+                        "Suhu: " + suhu + "°C<br>" +
+                        "Kelembaban: " + kelembaban + "%<br>" +
+                        "Tekanan: " + tekanan + " hPa<br>" +
+                        "Kecepatan Angin: " + kecepatanAngin + " meter/detik");
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
