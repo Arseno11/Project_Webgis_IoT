@@ -7,9 +7,9 @@
 
 <br>
 
-### This Project Built With
+### Project 
 
-Bahasa Pemrograma dan library yang digunakan.
+Programming language and library used.
  
 * [![Php][Php.com]][Php-url]
 * [![Leaflet][leaflet.com]][Leaflet-url]
