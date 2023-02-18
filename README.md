@@ -11,7 +11,7 @@ Bahasa Pemrograma dan library yang digunakan.
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 
 
-[leaflet.com]: https://img.shields.io/badge/Leaflet-8cea79?style=for-the-badge&logo=leaflet&logoColor=white
+[leaflet.com]: https://img.shields.io/badge/Leaflet-8cea79?style=for-the-badge&logo=leaflet&logoColor=white&borderRadius=3
 [Leaflet-url]: https://leafletjs.com
 [Php.com]: https://img.shields.io/badge/Php-6B7DB0?style=for-the-badge&logo=php&logoColor=white
 [Php-url]: https://php.com
