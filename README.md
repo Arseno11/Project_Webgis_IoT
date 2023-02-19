@@ -12,6 +12,8 @@
 This project using programming language and library.
  
 * [![Php][Php.com]][Php-url]
+* [![TypeScript][Typescript.com]][Typescript-url]
+* [![JavaScript][Javascript.com]][Javascript-url]
 * [![Leaflet][leaflet.com]][Leaflet-url]
 * [![JQuery][JQuery.com]][JQuery-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
@@ -19,6 +21,10 @@ This project using programming language and library.
 
 [leaflet.com]: https://img.shields.io/badge/Leaflet-8cea79?style=for-the-badge&logo=leaflet&logoColor=white
 [Leaflet-url]: https://leafletjs.com
+[TypeScript.com]: https://img.shields.io/badge/TypeScript-8cea79?style=for-the-badge&logo=typescript&logoColor=white
+[Typescript-url]: https://typescriptlang.org
+[JavaScript.com]: https://img.shields.io/badge/JavaScript-8cea79?style=for-the-badge&logo=javascript&logoColor=white
+[Javascript-url]: https://javascript.com
 [Php.com]: https://img.shields.io/badge/Php-6B7DB0?style=for-the-badge&logo=php&logoColor=white
 [Php-url]: https://php.com
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
