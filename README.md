@@ -8,7 +8,7 @@
 <br>
 
 ## <picture> <img src="https://media.giphy.com/media/WFZvB7VIXBgiz3oDXE/giphy.gif" width="35"></picture> **Project About** 
-<picture> <img align="right" src="https://github.com/0xAbdulKhalid/0xAbdulKhalid/raw/main/assets/mdImages/Right_Side.gif" width = 250px></picture>
+<picture> <img align="right" src="https://media.giphy.com/media/WTjXuYA2y4o3UZly3W/giphy.gif" width = 250px></picture>
 
 This project using programming language and library.
  
