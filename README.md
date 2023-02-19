@@ -21,9 +21,9 @@ This project using programming language and library.
 
 [leaflet.com]: https://img.shields.io/badge/Leaflet-8cea79?style=for-the-badge&logo=leaflet&logoColor=white
 [Leaflet-url]: https://leafletjs.com
-[TypeScript.com]: https://img.shields.io/badge/TypeScript-8cea79?style=for-the-badge&logo=typescript&logoColor=white
+[TypeScript.com]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
 [Typescript-url]: https://typescriptlang.org
-[JavaScript.com]: https://img.shields.io/badge/JavaScript-8cea79?style=for-the-badge&logo=javascript&logoColor=white
+[JavaScript.com]: https://img.shields.io/badge/JavaScript-23F7DF1E?style=for-the-badge&logo=javascript&logoColor=white
 [Javascript-url]: https://javascript.com
 [Php.com]: https://img.shields.io/badge/Php-6B7DB0?style=for-the-badge&logo=php&logoColor=white
 [Php-url]: https://php.com
