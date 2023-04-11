@@ -1,15 +1,15 @@
 <?php
 include 'koneksi.php';
 
-// Memastikan bahwa parameter "jarak" dan "hujan" telah ditentukan
-if (!isset($_GET["distance"]) || !isset($_GET["cuaca"]) || !isset($_GET["id_alat"])) {
+// Memastikan bahwa parameter "jarak", "hujan", dan "id_alat" telah ditentukan
+if (!isset($_GET["jarak"]) || !isset($_GET["hujan"]) || !isset($_GET["id_alat"])) {
     http_response_code(400);
     die("Missing required parameters");
 }
 
-// Mengambil nilai dari parameter "jarak" dan "hujan"
-$jarak = $_GET["distance"];
-$cuaca = $_GET["cuaca"];
+// Mengambil nilai dari parameter "jarak", "hujan", dan "id_alat"
+$jarak = $_GET["jarak"];
+$hujan = $_GET["hujan"];
 $id_alat = $_GET["id_alat"];
 
 // Memeriksa apakah id sudah ada di database
@@ -37,7 +37,7 @@ if (mysqli_stmt_num_rows($id_exists_stmt) == 0) {
 // Mempersiapkan pernyataan SQL yang akan dijalankan
 $stmt = mysqli_prepare(
     $koneksi,
-    "UPDATE alat SET distance = ?, cuaca = ?  WHERE id_alat = ?"
+    "UPDATE alat SET jarak = ?, hujan = ? WHERE id_alat = ?"
 );
 if (!$stmt) {
     http_response_code(500);
@@ -45,7 +45,7 @@ if (!$stmt) {
 }
 
 // Menyisipkan data ke dalam database
-mysqli_stmt_bind_param($stmt, "sii", $jarak, $cuaca, $id_alat);
+mysqli_stmt_bind_param($stmt, "iii", $jarak, $hujan, $id_alat);
 if (!mysqli_stmt_execute($stmt)) {
     http_response_code(500);
     die("Failed to update data in database: " . mysqli_error($koneksi));

@@ -10,7 +10,7 @@ function selesai() {
 }
  
 function update() {
-    $.getJSON("uodate.php", function(data) {
+    $.getJSON("update.php", function(data) {
         $("secondHeading").empty();
         var no = 1;
         $.each(data.result, function() {

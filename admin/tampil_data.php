@@ -64,12 +64,12 @@ include "koneksi.php";
                             </a>
                         </li>
 
-                        <li class="sidebar-item ">
-                            <a href="tambah_data.php" class='sidebar-link'>
-                                <i class="bi bi-cloud-plus"></i>
-                                <span>Tambah Data Alat</span>
-                            </a>
-                        </li>
+                        <!-- <li class="sidebar-item ">
+              <a href="tambah_data.php" class='sidebar-link'>
+                <i class="bi bi-cloud-plus"></i>
+                <span>Tambah Data Alat</span>
+              </a>
+            </li> -->
 
                         <li class="sidebar-item ">
                             <a href="logout.php" class='sidebar-link'>
@@ -190,13 +190,22 @@ include "koneksi.php";
                     </div>
                 </div>
 
+                <div>
+                    <a href="tambah_data.php" class='sidebar-link'>
+                        <button class="btn btn-primary mb-2">
+
+                            <i class="bi bi-cloud-plus"></i>
+                            <span>Tambah Data</span>
+                        </button></a>
+                </div>
+
                 <!-- Basic Tables start -->
                 <section class="section">
                     <div class="card">
                         <div class="card-header">
-                            Jquery Datatable
+                            Data Alat
                         </div>
-                        <div class="card-body">
+                        <div class="card-body table-responsive">
                             <table class="table" id="table1">
                                 <thead>
                                     <tr>
