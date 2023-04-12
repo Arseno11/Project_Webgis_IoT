@@ -17,9 +17,13 @@ if (!isset($_SESSION['username'])) {
 <?php include "head.php"; ?>
 
 <style>
+.card-body {
+  position: relative;
+}
+
 canvas {
-  max-width: 100%;
-  height: auto;
+  display: block;
+  width: 100%;
 }
 
 @media screen and (max-width: 576px) {
