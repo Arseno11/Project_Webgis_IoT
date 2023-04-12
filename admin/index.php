@@ -22,22 +22,6 @@ if (!isset($_SESSION['username'])) {
     height: auto;
   }
 
-  .chart-container {
-    position: relative !important;
-    height: 0 !important;
-    padding-bottom: 60% !important;
-    overflow: auto !important;
-  }
-
-  .chart-container canvas {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    display: block !important;
-  }
-
   .loader {
     position: fixed;
     top: 0;
@@ -68,12 +52,21 @@ if (!isset($_SESSION['username'])) {
   }
 
   @media (max-width: 767px) {
-    .card-body {
-      text-align: center;
+    .flex {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .chart-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
     }
 
     .chart-container {
-      display: inline-block;
+      width: 100%;
+      height: auto;
+      margin-bottom: 1rem;
     }
   }
 </style>
@@ -303,7 +296,7 @@ if (!isset($_SESSION['username'])) {
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h4>Value Chart</h4>
+                  <h4 class="chart-title">Value Chart</h4>
                 </div>
                 <div class="card-body">
                   <button id="reset-data" class="btn btn-danger float-right btn-sm">Reset Data</button>
@@ -315,6 +308,7 @@ if (!isset($_SESSION['username'])) {
             </div>
           </div>
         </section>
+
       </div>
 
 
