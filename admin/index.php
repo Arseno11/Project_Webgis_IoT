@@ -373,7 +373,7 @@ canvas {
       var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: JSON.parse(localStorage.getItem('chartLabels')) || [],
+          labels: [],
           datasets: []
         },
         options: {
@@ -396,47 +396,39 @@ canvas {
         }
       });
 
-
       // Function to fetch data and update chart
-      function updateChart(id_alat) {
-        fetch('ambildata.php?id_alat=' + id_alat)
+      function updateChart() {
+        fetch('ambildata.php')
           .then(response => response.json())
           .then(data => {
-            // Get the last updated time from the first data entry
-            var lastUpdateTime = data.results.length > 0 ? data.results[0].waktu : null;
+            // Add new datasets for any new IDs in the fetched data
+            for (let i = 0; i < data.results.length; i++) {
+              const id = data.results[i].id;
+              const label = `Jarak(cm) - ID ${id}`;
+              const color =
+                `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.2)`;
+              if (!myChart.data.datasets.find(dataset => dataset.label === label)) {
+                myChart.data.datasets.push({
+                  label: label,
+                  data: [],
+                  backgroundColor: color,
+                  borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
+                  borderWidth: 1
+                });
+              }
+            }
 
-            // Add dataset if it doesn't exist yet
-            var datasetIndex = myChart.data.datasets.findIndex(dataset => dataset.id_alat === id_alat);
-
-            // const datasetIndex = myChart.data.datasets.findIndex(dataset => dataset.label === nama_alat);
-            if (datasetIndex === -1) {
-              myChart.data.datasets.push({
-                id_alat: id_alat,
-                label: 'Jarak(cm) - Alat ',
-                data: [],
-                backgroundColor: 'rgba(255, 16, 88, 0.2)',
-                borderColor: 'rgba(38, 228, 81, 1)',
-                borderWidth: 1
-              }, {
-                id_alat: id_alat,
-                label: 'Hujan - Alat ',
-                data: [],
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
+            // Update chart data for each ID
+            for (let i = 0; i < data.results.length; i++) {
+              const id = data.results[i].id;
+              const label = `Jarak(cm) - ID ${id}`;
+              const dataset = myChart.data.datasets.find(dataset => dataset.label === label);
+              const lastUpdateTime = data.results[i].waktu;
+              const jarak = data.results[i].jarak;
+              dataset.data.push({
+                x: lastUpdateTime,
+                y: jarak
               });
-            }
-
-            // Update chart data
-            myChart.data.labels.push(lastUpdateTime);
-
-            // Check if dataset exists before accessing it
-            if (datasetIndex >= 0) {
-              myChart.data.datasets[datasetIndex].data.push(data.results.length > 0 ? data.results[0].jarak : null);
-            }
-            if (datasetIndex + 1 >= 0) {
-              myChart.data.datasets[datasetIndex + 1].data.push(data.results.length > 0 ? data.results[0].hujan :
-                null);
             }
 
 
@@ -446,52 +438,40 @@ canvas {
               const currentDataTime = moment(myChart.data.labels[j], 'DD/MM/YY HH:mm:ss');
               const timeDiff = moment.duration(moment().diff(currentDataTime)).asMinutes();
               if (timeDiff > 5) {
-                myChart.data.datasets[datasetIndex].borderWidth = 0;
-                myChart.data.datasets[datasetIndex + 1].borderWidth = 0.5;
-                myChart.data.datasets[datasetIndex + 1].borderDash = [5, 5];
+                myChart.data.datasets[0].borderWidth = 0;
+                myChart.data.datasets[1].borderWidth = 0.5;
+                myChart.data.datasets[1].borderDash = [5, 5];
               } else if (timeDiff > 4) {
-                myChart.data.datasets[datasetIndex].borderWidth = 0.5;
-                myChart.data.datasets[datasetIndex].borderDash = [5, 5];
-                myChart.data.datasets[datasetIndex + 1].borderWidth = 1;
-                myChart.data.datasets[datasetIndex + 1].borderDash = [];
+                myChart.data.datasets[0].borderWidth = 0.5;
+                myChart.data.datasets[0].borderDash = [5, 5];
+                myChart.data.datasets[1].borderWidth = 1;
+                myChart.data.datasets[1].borderDash = [];
               } else {
-                myChart.data.datasets[datasetIndex].borderWidth = 1;
-                myChart.data.datasets[datasetIndex].borderDash = [];
-                myChart.data.datasets[datasetIndex + 1].borderWidth = 1;
-                myChart.data.datasets[datasetIndex + 1].borderDash = [];
+                myChart.data.datasets[0].borderWidth = 1;
+                myChart.data.datasets[0].borderDash = [];
+                myChart.data.datasets[1].borderWidth = 1;
+                myChart.data.datasets[1].borderDash = [];
               }
 
               // Change color of the line based on the value of the data point
-              if (myChart.data.datasets[datasetIndex].data[j] < 10) {
-                myChart.data.datasets[datasetIndex].borderColor = 'rgba(255, 0, 0, 1)';
-              } else if (myChart.data.datasets[datasetIndex].data[j] > 10 && myChart.data.datasets[datasetIndex]
-                .data[
-                  j] <= 20) {
-                myChart.data.datasets[datasetIndex].borderColor = 'rgba(255, 255, 0, 1)';
+              if (myChart.data.datasets[0].data[j] < 10) {
+                myChart.data.datasets[0].borderColor = 'rgba(255, 0, 0, 1)';
+              } else if (myChart.data.datasets[0].data[j] > 10 && myChart.data.datasets[0].data[j] <= 20) {
+                myChart.data.datasets[0].borderColor = 'rgba(255, 255, 0, 1)';
               } else {
-                myChart.data.datasets[datasetIndex].borderColor = 'rgba(16, 255, 79, 1)';
-              }
-
-              if (myChart.data.datasets[datasetIndex + 1].data[j] < 10) {
-                myChart.data.datasets[datasetIndex + 1].borderColor = 'rgba(255, 0, 0, 1)';
-              } else if (myChart.data.datasets[datasetIndex + 1].data[j] > 10 && myChart.data.datasets[
-                  datasetIndex +
-                  1].data[j] <= 20) {
-                myChart.data.datasets[datasetIndex + 1].borderColor = 'rgba(255, 255, 0, 1)';
-              } else {
-                myChart.data.datasets[datasetIndex + 1].borderColor = 'rgba(16, 255, 79, 1)';
+                myChart.data.datasets[0].borderColor = 'rgba(16, 255, 79, 1)';
               }
             }
             myChart.update();
             localStorage.setItem('chartLabels', JSON.stringify(myChart.data.labels));
-            localStorage.setItem('chartDataJarak', JSON.stringify(myChart.data.datasets[datasetIndex].data));
-            localStorage.setItem('chartDataHujan', JSON.stringify(myChart.data.datasets[datasetIndex + 1].data));
+            localStorage.setItem('chartDataJarak', JSON.stringify(myChart.data.datasets[0].data));
+            localStorage.setItem('chartDataHujan', JSON.stringify(myChart.data.datasets[1].data));
           })
           .catch(error => console.error(error));
 
       }
 
-      setInterval(updateChart, 5000); // Update the chart every 5 seconds.
+      setInterval(updateChart, 2000); // Update the chart every 5 seconds.
       </script>
 </body>
 
