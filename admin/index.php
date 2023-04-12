@@ -399,11 +399,11 @@ if (!isset($_SESSION['username'])) {
               // Get the last updated time from the first data entry
               var lastUpdateTime = data.results.length > 0 ? data.results[0].waktu : null;
               // Check if data for this id already exists
-              var id = data.id;
+              var id = data.id_alat;
               if (!chartData[id]) {
                 // If data doesn't exist, create a new dataset for this id
                 chartData[id] = {
-                  label: data.alat,
+                  label: data.nama_alat,
                   data: {
                     labels: [],
                     datasets: [{
