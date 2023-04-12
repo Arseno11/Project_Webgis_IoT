@@ -401,38 +401,74 @@ if (!isset($_SESSION['username'])) {
           }
         });
 
+        // Create an object to store data for each id_alat
+        var dataByAlat = {};
+
+        // Function to fetch data and update chart
         function updateChart() {
           fetch('ambildata.php')
             .then(response => response.json())
             .then(data => {
-              // Separate data by id_alat
-              const idAlats = [...new Set(data.results.map(result => result.id_alat))];
-              const datasets = idAlats.map((idAlat, index) => {
-                const filteredData = data.results.filter(result => result.id_alat === idAlat);
-                const dataset = {
-                  label: `Data ${idAlat}`,
-                  data: [],
-                  borderColor: `rgba(${Math.floor(Math.random()*256)}, ${Math.floor(Math.random()*256)}, ${Math.floor(Math.random()*256)}, 1)`,
-                  borderWidth: 1,
-                };
-                for (let j = 0; j < myChart.data.labels.length; j++) {
-                  const currentDataTime = moment(myChart.data.labels[j], 'DD/MM/YY HH:mm:ss');
-                  const timeDiff = moment.duration(moment().diff(currentDataTime)).asMinutes();
-                  const dataPoint = filteredData.find(result => result.waktu === myChart.data.labels[j]);
-                  if (dataPoint && timeDiff <= 5) {
-                    dataset.data.push(dataPoint.jarak);
-                  } else {
-                    dataset.data.push(null);
-                  }
+              // Get the last updated time from the first data entry
+              var lastUpdateTime = data.results.length > 0 ? data.results[0].waktu : null;
+
+              // Loop through each object in data.results and update dataByAlat object
+              data.results.forEach(function(result) {
+                var idAlat = result.id_alat;
+                if (!dataByAlat[idAlat]) {
+                  dataByAlat[idAlat] = {
+                    jarak: [],
+                    hujan: []
+                  };
                 }
-                return dataset;
+                dataByAlat[idAlat].jarak.unshift(result.jarak);
+                dataByAlat[idAlat].hujan.unshift(result.hujan);
               });
 
-              // Update chart data
-              myChart.data.datasets = datasets;
-              myChart.update();
+              // Loop through dataByAlat object and update chart data
+              var chartData = {
+                labels: [lastUpdateTime],
+                datasets: []
+              };
+              Object.values(dataByAlat).forEach(function(alatData) {
+                chartData.datasets.push({
+                  label: 'Jarak(cm) - ID Alat ' + alatData.idAlat,
+                  data: alatData.jarak,
+                  backgroundColor: 'rgba(255, 16, 88, 0.2)',
+                  borderColor: 'rgba(38, 228, 81, 1)',
+                  borderWidth: 1
+                });
+                chartData.datasets.push({
+                  label: 'Hujan - ID Alat ' + alatData.idAlat,
+                  data: alatData.hujan,
+                  backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                  borderColor: 'rgba(54, 162, 235, 1)',
+                  borderWidth: 1
+                });
+              });
+
+              // Hide or reduce width of older data
+              const newDataLength = chartData.labels.length;
+              for (let j = 0; j < newDataLength - 1; j++) {
+                const dataAge = newDataLength - j - 1;
+                const opacity = dataAge <= 10 ? 1 : (11 / dataAge) * 0.1;
+                const width = dataAge <= 10 ? 1 : (11 / dataAge) * 2;
+                chartData.datasets.forEach(function(dataset) {
+                  dataset.backgroundColor = `rgba(${dataset.backgroundColor.slice(5, -1)}, ${opacity})`;
+                  dataset.borderColor = `rgba(${dataset.borderColor.slice(5, -1)}, ${opacity})`;
+                  dataset.borderWidth = width;
+                });
+              } // Update chart with new data and options
+              myChart.data.labels.push(lastUpdateTime);
+              myChart.data.datasets = chartData.datasets;
+              myChart.update({
+                duration: 0
+              });
+
+              // Store chart data in localStorage
               localStorage.setItem('chartLabels', JSON.stringify(myChart.data.labels));
-              localStorage.setItem('chartData', JSON.stringify(myChart.data.datasets));
+              localStorage.setItem('chartDataJarak', JSON.stringify(chartData.datasets[0].data));
+              localStorage.setItem('chartDataHujan', JSON.stringify(chartData.datasets[1].data));
             })
             .catch(error => console.error(error));
         }
