@@ -411,7 +411,7 @@ if (!isset($_SESSION['username'])) {
 
               // Update chart data for each ID
               for (let i = 0; i < data.results.length; i++) {
-                const id = data.results[i].id;
+                const id = data.results[i].id_alat;
                 const label = `Jarak(cm) - ID ${id}`;
                 const dataset = myChart.data.datasets.find(dataset => dataset.label === label);
                 const lastUpdateTime = data.results[i].waktu;
