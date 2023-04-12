@@ -357,9 +357,6 @@ if (!isset($_SESSION['username'])) {
           }, 1000);
         });
 
-        // Define an object to store chart data for each id_alat
-        var chartData = {};
-
         // Get the canvas element
         var ctx = document.getElementById('chart').getContext('2d');
 
@@ -381,51 +378,65 @@ if (!isset($_SESSION['username'])) {
           }
         });
 
+        // Function to fetch data and update chart
         function updateChart() {
           fetch('ambildata.php')
             .then(response => response.json())
             .then(data => {
-              // Group data by id_alat
-              const dataById = {};
+              // Get the last updated time from the first data entry
+              var lastUpdateTime = data.results.length > 0 ? data.results[0].waktu : null;
+
+              // Iterate over each result
               data.results.forEach(result => {
-                if (!dataById[result.id_alat]) {
-                  dataById[result.id_alat] = {
-                    jarak: [],
-                    hujan: [],
-                    waktu: []
-                  };
+                // Check if dataset for this id already exists
+                var datasetIndex = myChart.data.datasets.findIndex(dataset => dataset.label === 'Jarak ' + result
+                  .id_alat);
+                if (datasetIndex === -1) {
+                  // If dataset for this id does not exist, create new dataset
+                  myChart.data.datasets.push({
+                    label: 'Jarak ' + result.id_alat,
+                    data: [],
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                  });
+
+                  // Create new dataset for hujan
+                  myChart.data.datasets.push({
+                    label: 'Hujan ' + result.id_alat,
+                    data: [],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                  });
                 }
-                dataById[result.id_alat].jarak.push(result.jarak);
-                dataById[result.id_alat].hujan.push(result.hujan);
-                dataById[result.id_alat].waktu.push(result.waktu);
+
+                // Update chart data for jarak
+                datasetIndex = myChart.data.datasets.findIndex(dataset => dataset.label === 'Jarak ' + result
+                  .id_alat);
+                if (datasetIndex > -1) {
+                  myChart.data.datasets[datasetIndex].data.push(result.jarak);
+                }
+
+                // Update chart data for hujan
+                datasetIndex = myChart.data.datasets.findIndex(dataset => dataset.label === 'Hujan ' + result
+                  .id_alat);
+                if (datasetIndex > -1) {
+                  myChart.data.datasets[datasetIndex].data.push(result.hujan);
+                }
               });
 
-              // Update chart data for each id_alat
-              for (const id in dataById) {
-                if (Object.hasOwnProperty.call(dataById, id)) {
-                  const datasetIndex = parseInt(id) - 1; // dataset index is zero-based
-                  myChart.data.labels = dataById[id].waktu;
-                  myChart.data.datasets[datasetIndex].data = datasetIndex === 0 ? dataById[id].jarak : dataById[id]
-                    .hujan;
-                  myChart.update();
-                }
-              }
+              // Update chart labels
+              myChart.data.labels.push(lastUpdateTime);
+
+              // Update chart
+              myChart.update();
             })
             .catch(error => console.error(error));
         }
 
         // Update the chart every second
         setInterval(updateChart, 1000);
-
-        // Function to generate random color
-        function getRandomColor() {
-          var letters = '0123456789ABCDEF';
-          var color = '#';
-          for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-          }
-          return color;
-        }
       </script>
 </body>
 
