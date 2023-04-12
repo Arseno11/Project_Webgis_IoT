@@ -339,9 +339,17 @@ if (!isset($_SESSION['username'])) {
 
         // Function to reset data from Local Storage and reload page
         function resetData() {
-          localStorage.removeItem('chartLabels');
-          localStorage.removeItem('chartDataJarak');
-          localStorage.removeItem('chartDataHujan');
+          // Clear data from localStorage
+          localStorage.removeItem('chartData');
+
+          // Reset chart data and labels
+          myChart.data.datasets.forEach(dataset => {
+            dataset.data = [];
+          });
+          myChart.data.labels = [];
+
+          // Update chart
+          myChart.update();
 
           hideLoader(); // sembunyikan loader setelah data dihapus
           location.reload(); // muat ulang halaman web
