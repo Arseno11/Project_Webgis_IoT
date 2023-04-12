@@ -394,7 +394,7 @@ if (!isset($_SESSION['username'])) {
                 if (datasetIndex === -1) {
                   // If dataset for this id does not exist, create new dataset
                   myChart.data.datasets.push({
-                    label: 'Jarak ' + result.id_alat,
+                    label: 'Jarak ' + result.nama_alat + result.id_alat,
                     data: [],
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgba(255, 99, 132, 1)',
@@ -436,7 +436,6 @@ if (!isset($_SESSION['username'])) {
         }
 
         // Update the chart every second
-        setInterval(updateChart, 1000);
         setInterval(updateChart, 1000);
       </script>
 </body>
