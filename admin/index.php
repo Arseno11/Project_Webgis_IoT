@@ -407,7 +407,13 @@ if (!isset($_SESSION['username'])) {
           fetch('ambildata.php')
             .then(response => response.json())
             .then(data => {
-              const groupedData = _.groupBy(data.results, 'id_alat');
+              const groupedData = {};
+              data.results.forEach((result) => {
+                if (!groupedData[result.id_alat]) {
+                  groupedData[result.id_alat] = [];
+                }
+                groupedData[result.id_alat].push(result);
+              });
               Object.keys(groupedData).forEach((key) => {
                 const currentData = groupedData[key][0];
                 myChart.data.labels.push(currentData.waktu);
@@ -449,10 +455,9 @@ if (!isset($_SESSION['username'])) {
               localStorage.setItem('chartDataHujan', JSON.stringify(myChart.data.datasets[1].data));
             })
             .catch(error => console.error(error));
-
         }
 
-        setInterval(updateChart, 5000); // Update the chart every 5 seconds.
+        setInterval(updateChart, 5000);
       </script>
 </body>
 
