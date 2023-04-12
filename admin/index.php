@@ -421,6 +421,7 @@ if (!isset($_SESSION['username'])) {
                     }]
                   }
                 };
+                // Add both datasets to the chart
                 myChart.data.datasets.push(chartData[id].data.datasets[0]);
                 myChart.data.datasets.push(chartData[id].data.datasets[1]);
               }
@@ -441,24 +442,25 @@ if (!isset($_SESSION['username'])) {
                   chartData[id].data.datasets[1].borderWidth = 0;
                   chartData[id].data.datasets[1].borderDash = [5, 5];
                 } else if (timeDiff > 4) {
-                  myChart.data.datasets[0].borderWidth = 0.5;
-                  myChart.data.datasets[0].borderDash = [5, 5];
-                  myChart.data.datasets[1].borderWidth = 1;
-                  myChart.data.datasets[1].borderDash = [];
+                  chartData[id].data.datasets[0].borderWidth = 0.5;
+                  chartData[id].data.datasets[0].borderDash = [5, 5];
+                  chartData[id].data.datasets[1].borderWidth = 1;
+                  chartData[id].data.datasets[1].borderDash = [];
                 } else {
-                  myChart.data.datasets[0].borderWidth = 1;
-                  myChart.data.datasets[0].borderDash = [];
-                  myChart.data.datasets[1].borderWidth = 1;
-                  myChart.data.datasets[1].borderDash = [];
+                  chartData[id].data.datasets[0].borderWidth = 1;
+                  chartData[id].data.datasets[0].borderDash = [];
+                  chartData[id].data.datasets[1].borderWidth = 1;
+                  chartData[id].data.datasets[1].borderDash = [];
                 }
 
                 // Change color of the line based on the value of the data point
-                if (myChart.data.datasets[0].data[j] < 10) {
-                  myChart.data.datasets[0].borderColor = 'rgba(255, 0, 0, 1)';
-                } else if (myChart.data.datasets[0].data[j] > 10 && myChart.data.datasets[0].data[j] <= 20) {
-                  myChart.data.datasets[0].borderColor = 'rgba(255, 255, 0, 1)';
+                if (chartData[id].data.datasets[0].data[j] < 10) {
+                  chartData[id].data.datasets[0].borderColor = 'rgba(255, 0, 0, 1)';
+                } else if (chartData[id].data.datasets[0].data[j] > 10 && chartData[id].data.datasets[0].data[j] <=
+                  20) {
+                  chartData[id].data.datasets[0].borderColor = 'rgba(255, 255, 0, 1)';
                 } else {
-                  myChart.data.datasets[0].borderColor = 'rgba(16, 255, 79, 1)';
+                  chartData[id].data.datasets[0].borderColor = 'rgba(16, 255, 79, 1)';
                 }
               }
               myChart.update();
@@ -466,10 +468,8 @@ if (!isset($_SESSION['username'])) {
               localStorage.setItem(`chartData${id}`, JSON.stringify(chartData[id].data.datasets));
             })
             .catch(error => console.error(error));
-
         }
-
-        setInterval(updateChart, 2000); // Update the chart every 5 seconds.
+        setInterval(updateChart, 5000); // Update the chart every 5 seconds.
       </script>
 </body>
 
