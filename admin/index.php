@@ -335,7 +335,7 @@ if (!isset($_SESSION['username'])) {
           // hapus data setelah delay 1 detik
           setTimeout(function() {
             resetData();
-          }, 1000);
+          }, 100);
         });
 
         // Function to reset data from Local Storage and reload page
@@ -407,7 +407,7 @@ if (!isset($_SESSION['username'])) {
                 if (datasetIndex === -1) {
                   // If dataset for this id does not exist, create new dataset
                   myChart.data.datasets.push({
-                    label: 'Jarak ' + result.id_alat,
+                    label: 'Jarak Air IdAlat=' + result.id_alat,
                     data: [],
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgba(255, 99, 132, 1)',
@@ -416,7 +416,7 @@ if (!isset($_SESSION['username'])) {
 
                   // Create new dataset for hujan
                   myChart.data.datasets.push({
-                    label: 'Hujan ' + result.id_alat,
+                    label: 'Hujan IdAlat=' + result.id_alat,
                     data: [],
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',
