@@ -26,6 +26,7 @@ if (!isset($_SESSION['username'])) {
     canvas {
       max-width: 100%;
       height: auto;
+      padding: 0 15px;
     }
   }
 
