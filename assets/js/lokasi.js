@@ -1,7 +1,7 @@
 navigator.geolocation.getCurrentPosition(function (location) {
   var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
 
-  var map = L.map('map', {
+var map = L.map('map', {
   center: [-7.782793615552607, 110.36728950566525],
   zoom: 13,
   scrollWheelZoom: false // Menonaktifkan zoom dengan scroll
@@ -57,27 +57,27 @@ navigator.geolocation.getCurrentPosition(function (location) {
 
   L.control.layers(baseMaps, overlayMaps).addTo(map);
 
-  const legend = L.control.Legend({
-    title: "Status Icon",
-    position: "bottomright",
-    collapsed: false,
-    symbolWidth: 30,
-    opacity: 1,
-    column: 2,
-    legends: [{
-      label: "Bahaya",
-      type: "image",
-      url: "img/bahaya.png",
-    }, {
-      label: "Awas",
-      type: "image",
-      url: "img/awas.png"
-    }, {
-      label: "Aman",
-      type: "image",
-      url: "img/aman.png"
-    }]
-  }).addTo(map);
+ const legend = L.control.Legend({
+  title: "Status Icon",
+  position: "bottomright",
+  collapsed: true, // Set default state to collapsed
+  symbolWidth: 30,
+  opacity: 1,
+  column: 2,
+  legends: [{
+    label: "Bahaya",
+    type: "image",
+    url: "img/bahaya.png",
+  }, {
+    label: "Awas",
+    type: "image",
+    url: "img/awas.png"
+  }, {
+    label: "Aman",
+    type: "image",
+    url: "img/aman.png"
+  }]
+}).addTo(map);
 
   var lc = L.control.locate({
     position: 'topleft',
@@ -101,11 +101,12 @@ navigator.geolocation.getCurrentPosition(function (location) {
 
   // deklarasi variabel untuk menyimpan popup yang sedang terbuka
   let currentPopup = null;
+ 
 
   // fungsi untuk memanggil data dari API
   async function loadData() {
     try {
-      const response = await fetch('http://localhost/SIG-BANJIR/ambildata.php');
+      const response = await fetch('ambildata.php');
       if (!response.ok) {
         throw new Error('Terjadi kesalahan saat memuat data.');
       }
@@ -127,6 +128,7 @@ navigator.geolocation.getCurrentPosition(function (location) {
         map.removeLayer(markers[i]);
       }
       markers = [];
+      
 
       // Menutup popup yang sedang terbuka jika ada
       if (currentPopup) {
@@ -148,17 +150,22 @@ navigator.geolocation.getCurrentPosition(function (location) {
       var deviceLocation = deviceLocations[i];
 
       // Memeriksa status hujan dan jarak air
-      if (deviceLocation.jarak <= 10) {
-        // Menentukan ikon marker dan konten popup
-        var iconUrl = 'img/bahaya.png';
-        var status = 'Bahaya';
-      } else if (deviceLocation.jarak <= 25) {
-        var iconUrl = 'img/awas.png';
-        var status = 'Awas';
-      } else {
-        var iconUrl = 'img/aman.png';
-        var status = 'Aman';
-      }
+      // Memeriksa status hujan dan jarak air
+    let iconUrl;
+    let status;
+  let currentCircle = null; // inisialisasi variabel
+
+    if (deviceLocation.jarak <= 10) {
+      // Menentukan ikon marker dan konten popup
+      iconUrl = 'img/bahaya.png';
+      status = 'Bahaya';
+    } else if (deviceLocation.jarak <= 25) {
+      iconUrl = 'img/awas.png';
+      status = 'Awas';
+    } else {
+      iconUrl = 'img/aman.png';
+      status = 'Aman';
+    }
 
       // Membuat marker di peta
       var marker = L.marker([deviceLocation.latitude, deviceLocation.longitude], {
@@ -191,12 +198,12 @@ navigator.geolocation.getCurrentPosition(function (location) {
   }
 
   // Array untuk menyimpan marker
-  let markers = [];
+  markers = [];
 
   // fungsi untuk memanggil data dari API
   async function loadData() {
     try {
-      const response = await fetch('http://localhost/SIG-BANJIR/ambildata.php');
+      const response = await fetch('ambildata.php');
       if (!response.ok) {
         throw new Error('Terjadi kesalahan saat memuat data.');
       }
@@ -235,6 +242,27 @@ navigator.geolocation.getCurrentPosition(function (location) {
 
   // panggil fungsi refreshData() saat halaman dimuat
   refreshData();
+});
+
+  // Fungsi untuk menampilkan SweetAlert
+function showAlert(icon, title, text) {
+  Swal.fire({
+    icon: icon,
+    title: title,
+    text: text,
+    confirmButtonText: 'OK',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      localStorage.setItem('showAlert', 'false');
+    }
+  });
+}
+
+// Menampilkan SweetAlert ketika halaman pertama kali dibuka
+window.addEventListener('DOMContentLoaded', function() {
+  if (localStorage.getItem('showAlert') !== 'false') {
+    showAlert('info', 'Selamat Datang', 'Ini adalah halaman deteksi banjir');
+  }
 });
 
 function updateData() {
