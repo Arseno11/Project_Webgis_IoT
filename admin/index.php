@@ -17,9 +17,16 @@ if (!isset($_SESSION['username'])) {
 <?php include "head.php"; ?>
 
 <style>
-  #chart {
+  canvas {
     max-width: 100%;
     height: auto;
+  }
+
+  @media screen and (max-width: 576px) {
+    canvas {
+      max-width: 100%;
+      height: auto;
+    }
   }
 
   .loader {
