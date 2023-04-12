@@ -20,7 +20,8 @@
       <!-- Site Title -->
       <title>SIG MONITORING BANJIR</title>
 
-
+      <link rel="shortcut icon" href="./img/logo.png" type="image/x-icon">
+      <link rel="shortcut icon" href="./img/logo.png" type="image/png">
 
       <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
       <!--==================== CSS ========================= -->

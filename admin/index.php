@@ -16,20 +16,63 @@ if (!isset($_SESSION['username'])) {
 
 <?php include "head.php"; ?>
 
+<style>
+#chart {
+  width: 100%;
+  height: auto;
+}
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader::after {
+  content: "";
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 10px solid #ccc;
+  border-top-color: #333;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
+
 <body>
+  <div class="loader"></div>
+  </div>
   <div id="app">
     <div id="sidebar" class="active">
       <div class="sidebar-wrapper active">
         <div class="sidebar-header position-relative">
           <div class="d-flex justify-content-between align-items-center">
             <div class="logo">
-              <a href="index.php"><img src="assets/images/logo/logo.png" style="width: 50px; height: 50px;" alt="Logo" srcset=""></a>
+              <a href="index.php"><img src="assets/images/logo/logo.png" style="width: 50px; height: 50px;" alt="Logo"
+                  srcset=""></a>
               <span>SIG BANJIR</span>
             </div>
             <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
-              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
+                role="img" class="iconify iconify--system-uicons" width="20" height="20"
+                preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
                 <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M10.5 14.5c2.219 0 4-1.763 4-3.982a4.003 4.003 0 0 0-4-4.018c-2.219 0-4 1.781-4 4c0 2.219 1.781 4 4 4zM4.136 4.136L5.55 5.55m9.9 9.9l1.414 1.414M1.5 10.5h2m14 0h2M4.135 16.863L5.55 15.45m9.899-9.9l1.414-1.415M10.5 19.5v-2m0-14v-2" opacity=".3"></path>
+                  <path
+                    d="M10.5 14.5c2.219 0 4-1.763 4-3.982a4.003 4.003 0 0 0-4-4.018c-2.219 0-4 1.781-4 4c0 2.219 1.781 4 4 4zM4.136 4.136L5.55 5.55m9.9 9.9l1.414 1.414M1.5 10.5h2m14 0h2M4.135 16.863L5.55 15.45m9.899-9.9l1.414-1.415M10.5 19.5v-2m0-14v-2"
+                    opacity=".3"></path>
                   <g transform="translate(-210 -1)">
                     <path d="M220.5 2.5v2m6.5.5l-1.5 1.5"></path>
                     <circle cx="220.5" cy="11.5" r="4"></circle>
@@ -42,8 +85,11 @@ if (!isset($_SESSION['username'])) {
                 <input class="form-check-input  me-0" type="checkbox" id="toggle-dark">
                 <label class="form-check-label"></label>
               </div>
-              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--mdi" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                <path fill="currentColor" d="m17.75 4.09l-2.53 1.94l.91 3.06l-2.63-1.81l-2.63 1.81l.91-3.06l-2.53-1.94L12.44 4l1.06-3l1.06 3l3.19.09m3.5 6.91l-1.64 1.25l.59 1.98l-1.7-1.17l-1.7 1.17l.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95l2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85c-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14c.4-.4.82-.76 1.27-1.08c.75-.53 1.93.36 1.85 1.19c-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82c-2.81 3.14-2.7 7.96.31 10.98c3.02 3.01 7.84 3.12 10.98.31Z">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
+                role="img" class="iconify iconify--mdi" width="20" height="20" preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 24 24">
+                <path fill="currentColor"
+                  d="m17.75 4.09l-2.53 1.94l.91 3.06l-2.63-1.81l-2.63 1.81l.91-3.06l-2.53-1.94L12.44 4l1.06-3l1.06 3l3.19.09m3.5 6.91l-1.64 1.25l.59 1.98l-1.7-1.17l-1.7 1.17l.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95l2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85c-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14c.4-.4.82-.76 1.27-1.08c.75-.53 1.93.36 1.85 1.19c-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82c-2.81 3.14-2.7 7.96.31 10.98c3.02 3.01 7.84 3.12 10.98.31Z">
                 </path>
               </svg>
             </div>
@@ -91,15 +137,15 @@ if (!isset($_SESSION['username'])) {
           <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
           <script>
-            $(document).ready(function() {
-              // Menambahkan event click pada elemen sidebar-item
-              $('.sidebar-item').click(function() {
-                // Menghapus kelas "active" dari semua elemen sidebar-item
-                $('.sidebar-item').removeClass('active');
-                // Menambahkan kelas "active" ke elemen yang dipilih
-                $(this).addClass('active');
-              });
+          $(document).ready(function() {
+            // Menambahkan event click pada elemen sidebar-item
+            $('.sidebar-item').click(function() {
+              // Menghapus kelas "active" dari semua elemen sidebar-item
+              $('.sidebar-item').removeClass('active');
+              // Menambahkan kelas "active" ke elemen yang dipilih
+              $(this).addClass('active');
             });
+          });
           </script>
 
         </div>
@@ -108,60 +154,60 @@ if (!isset($_SESSION['username'])) {
 
             <div class="text-white-600 small ml-auto justify-content-center justify-item-center" id="clock2"></div>
             <script type='text/javascript'>
-              var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus',
-                'September',
-                'Oktober',
-                'November', 'Desember'
-              ];
-              var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum&#39;at', 'Sabtu'];
-              var date = new Date();
-              var day = date.getDate();
-              var month = date.getMonth();
-              var thisDay = date.getDay(),
-                thisDay = myDays[thisDay];
-              var yy = date.getYear();
-              var year = (yy < 1000) ? yy + 1900 : yy;
-              document.getElementById('clock2').innerHTML = thisDay + ', ' + day + ' ' + months[month] + ' ' +
-                year; //-->
+            var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus',
+              'September',
+              'Oktober',
+              'November', 'Desember'
+            ];
+            var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum&#39;at', 'Sabtu'];
+            var date = new Date();
+            var day = date.getDate();
+            var month = date.getMonth();
+            var thisDay = date.getDay(),
+              thisDay = myDays[thisDay];
+            var yy = date.getYear();
+            var year = (yy < 1000) ? yy + 1900 : yy;
+            document.getElementById('clock2').innerHTML = thisDay + ', ' + day + ' ' + months[month] + ' ' +
+              year; //-->
             </script>
             <center>
               <div class="text-white-600 small" id="clock"></div>
             </center>
             <script type="text/javascript">
-              function showTime() {
-                var a_p = "";
-                var today = new Date();
-                var curr_hour = today.getHours();
-                var curr_minute = today.getMinutes();
-                var curr_second = today.getSeconds();
-                if (curr_hour < 12) {
-                  a_p = "AM";
-                } else {
-                  a_p = "PM";
-                }
-                if (curr_hour == 0) {
-                  curr_hour = 12;
-                }
-                if (curr_hour > 12) {
-                  curr_hour = curr_hour - 12;
-                }
-                curr_hour = checkTime(curr_hour);
-                curr_minute = checkTime(curr_minute);
-                curr_second = checkTime(curr_second);
-                document.getElementById('clock').innerHTML = curr_hour + ":" + curr_minute + ":" +
-                  curr_second +
-                  " " +
-                  a_p;
+            function showTime() {
+              var a_p = "";
+              var today = new Date();
+              var curr_hour = today.getHours();
+              var curr_minute = today.getMinutes();
+              var curr_second = today.getSeconds();
+              if (curr_hour < 12) {
+                a_p = "AM";
+              } else {
+                a_p = "PM";
               }
+              if (curr_hour == 0) {
+                curr_hour = 12;
+              }
+              if (curr_hour > 12) {
+                curr_hour = curr_hour - 12;
+              }
+              curr_hour = checkTime(curr_hour);
+              curr_minute = checkTime(curr_minute);
+              curr_second = checkTime(curr_second);
+              document.getElementById('clock').innerHTML = curr_hour + ":" + curr_minute + ":" +
+                curr_second +
+                " " +
+                a_p;
+            }
 
-              function checkTime(i) {
-                if (i < 10) {
-                  i = "0" + i;
-                }
-                return i;
+            function checkTime(i) {
+              if (i < 10) {
+                i = "0" + i;
               }
-              setInterval(showTime, 500);
-              //-->
+              return i;
+            }
+            setInterval(showTime, 500);
+            //-->
             </script>
           </div>
         </center>
@@ -222,7 +268,8 @@ if (!isset($_SESSION['username'])) {
                         <center><b>PENDETEKSI DINI BANJIR </b> </center>
                       </h2>
                       <h2>
-                        <center><a href="../index.php"><button class="btn btn-primary" type="button" href="../index.php">Lihat
+                        <center><a href="../index.php"><button class="btn btn-primary" type="button"
+                              href="../index.php">Lihat
                               Web</button></a>
                         </center>
                       </h2>
@@ -230,6 +277,7 @@ if (!isset($_SESSION['username'])) {
                   </div>
                 </div>
               </div>
+              <!-- Add a canvas element to hold the chart -->
               <div class="row">
                 <div class="col-12">
                   <div class="card">
@@ -237,21 +285,169 @@ if (!isset($_SESSION['username'])) {
                       <h4>Value Chart</h4>
                     </div>
                     <div class="card-body">
-                      <div id="chart"></div>
+                      <button id="reset-data" class="btn btn-danger float-right btn-sm">Reset Data</button>
+                      <canvas id="chart"></canvas>
                     </div>
                   </div>
                 </div>
               </div>
-
-
             </div>
         </section>
       </div>
+
+
       <?php include "footer.php"; ?>
+      <!-- Load Chart.js library -->
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+      <!-- Load Chart.js library -->
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+
       <script>
+      // Munculkan loader
+      let loaderShown = false;
+
+      function showLoader() {
+        if (!loaderShown) {
+          document.querySelector('.loader').style.display = 'flex';
+          loaderShown = true;
+        }
+      }
+
+      // Sembunyikan loader
+      function hideLoader() {
+        document.querySelector('.loader').style.display = 'none';
+      }
+
+      // Add event listener to reset data button
+      document.getElementById('reset-data').addEventListener('click', function() {
+        showLoader(); // tampilkan loader sebelum menghapus data
+
+        // hapus data setelah delay 1 detik
+        setTimeout(function() {
+          resetData();
+        }, 1000);
+      });
+
+      // Function to reset data from Local Storage and reload page
+      function resetData() {
+        localStorage.removeItem('chartLabels');
+        localStorage.removeItem('chartDataJarak');
+        localStorage.removeItem('chartDataHujan');
+
+        hideLoader(); // sembunyikan loader setelah data dihapus
+        location.reload(); // muat ulang halaman web
+      }
+
+      // Tampilkan loader saat halaman web pertama dimuat
+      document.addEventListener('DOMContentLoaded', function() {
+        showLoader(); // tampilkan loader saat halaman web pertama dimuat
+
+        // sembunyikan loader setelah delay 1 detik
+        setTimeout(function() {
+          hideLoader();
+        }, 1000);
+      });
 
 
+      // Get the canvas element
+      var ctx = document.getElementById('chart').getContext('2d');
+
+      // Create the initial chart
+      var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: JSON.parse(localStorage.getItem('chartLabels')) || [],
+          datasets: [{
+              label: 'Jarak(cm)',
+              data: JSON.parse(localStorage.getItem('chartDataJarak')) || [],
+              backgroundColor: 'rgba(255, 16, 88, 0.2)',
+              borderColor: 'rgba(38, 228, 81, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'Hujan',
+              data: JSON.parse(localStorage.getItem('chartDataHujan')) || [],
+              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          scales: {
+            xAxes: [{
+              type: 'time',
+              time: {
+                tooltipFormat: 'DD/MM/YY',
+                displayFormats: {
+                  day: 'DD/MM/YY'
+                }
+              }
+            }],
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      });
+
+      // Function to fetch data and update chart
+      function updateChart() {
+        fetch('ambildata.php')
+          .then(response => response.json())
+          .then(data => {
+            // Get the last updated time from the first data entry
+            var lastUpdateTime = data.results.length > 0 ? data.results[0].waktu : null;
+            // Update chart data
+            myChart.data.labels.push(lastUpdateTime);
+            myChart.data.datasets[0].data.push(data.results.length > 0 ? data.results[0].jarak : null);
+            myChart.data.datasets[1].data.push(data.results.length > 0 ? data.results[0].hujan : null);
+
+            // Hide or reduce width of older data
+            const newDataLength = myChart.data.labels.length;
+            for (let j = 0; j < newDataLength - 1; j++) {
+              const currentDataTime = moment(myChart.data.labels[j], 'DD/MM/YY HH:mm:ss');
+              const timeDiff = moment.duration(moment().diff(currentDataTime)).asMinutes();
+              if (timeDiff > 5) {
+                myChart.data.datasets[0].borderWidth = 0;
+                myChart.data.datasets[1].borderWidth = 0.5;
+                myChart.data.datasets[1].borderDash = [5, 5];
+              } else if (timeDiff > 4) {
+                myChart.data.datasets[0].borderWidth = 0.5;
+                myChart.data.datasets[0].borderDash = [5, 5];
+                myChart.data.datasets[1].borderWidth = 1;
+                myChart.data.datasets[1].borderDash = [];
+              } else {
+                myChart.data.datasets[0].borderWidth = 1;
+                myChart.data.datasets[0].borderDash = [];
+                myChart.data.datasets[1].borderWidth = 1;
+                myChart.data.datasets[1].borderDash = [];
+              }
+
+              // Change color of the line based on the value of the data point
+              if (myChart.data.datasets[0].data[j] < 10) {
+                myChart.data.datasets[0].borderColor = 'rgba(255, 0, 0, 1)';
+              } else if (myChart.data.datasets[0].data[j] > 10 && myChart.data.datasets[0].data[j] <= 20) {
+                myChart.data.datasets[0].borderColor = 'rgba(255, 255, 0, 1)';
+              } else {
+                myChart.data.datasets[0].borderColor = 'rgba(16, 255, 79, 1)';
+              }
+            }
+            myChart.update();
+            localStorage.setItem('chartLabels', JSON.stringify(myChart.data.labels));
+            localStorage.setItem('chartDataJarak', JSON.stringify(myChart.data.datasets[0].data));
+            localStorage.setItem('chartDataHujan', JSON.stringify(myChart.data.datasets[1].data));
+          })
+          .catch(error => console.error(error));
+
+      }
+
+      setInterval(updateChart, 2000); // Update the chart every 5 seconds.
       </script>
 </body>
 

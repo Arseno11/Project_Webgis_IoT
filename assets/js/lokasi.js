@@ -1,7 +1,11 @@
 navigator.geolocation.getCurrentPosition(function (location) {
   var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
 
-  var map = L.map('map').setView([-7.782793615552607, 110.36728950566525], 13);
+  var map = L.map('map', {
+  center: [-7.782793615552607, 110.36728950566525],
+  zoom: 13,
+  scrollWheelZoom: false // Menonaktifkan zoom dengan scroll
+});
 
   // Tambahkan layer base map dari Google Maps
   L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {

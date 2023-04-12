@@ -186,93 +186,94 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col">
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Peta Alat</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div id="map" style="width:100%;height:480px;"></div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- DataTales Example -->
-                            <div class="col">
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Edit Data</h6>
-                                    </div>
-                                    <div class="card-body">
-
-                                        <?php
-                                        include 'koneksi.php';
-                                        $id = $_GET['id_alat'];
-                                        $query = mysqli_query($koneksi, "select * from alat where id_alat='$id'");
-                                        $data  = mysqli_fetch_array($query);
-                                        ?>
-
-                                        <!-- </div> -->
-                                        <div class="panel-body">
-                                            <form class="form-horizontal style-form" style="margin-top: 20px;" action="edit_aksi.php" method="post" enctype="multipart/form-data" name="form1" id="form1">
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 col-sm-2 control-label">ID Alat</label>
-                                                    <div class="col-sm-8">
-                                                        <input name="id_alat" type="text" id="id_alat" class="form-control" value="<?php echo $data['id_alat']; ?>" readonly />
-                                                        <!--<span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 col-sm-2 control-label">Nama Alat</label>
-                                                    <div class="col-sm-8">
-                                                        <input name="nama_alat" type="text" id="nama_alat" class="form-control" value="<?php echo $data['nama_alat']; ?>" required />
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 col-sm-2 control-label">Alamat</label>
-                                                    <div class="col-sm-8">
-                                                        <input name="alamat" class="form-control" id="alamat" type="text" value="<?php echo $data['alamat']; ?>" required />
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 col-sm-2 control-label">Deskripsi</label>
-                                                    <div class="col-sm-8">
-                                                        <input name="deskripsi" class="form-control" id="deskripsi" type="text" value="<?php echo $data['deskripsi']; ?>" required />
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 col-sm-2 control-label">Latitude</label>
-                                                    <div class="col-sm-8">
-                                                        <input name="latitude" class="form-control" id="latitude" type="text" value="<?php echo $data['latitude']; ?>" required />
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 col-sm-2 control-label">Longitude</label>
-                                                    <div class="col-sm-8">
-                                                        <input name="longitude" class="form-control" id="longitude" type="text" value="<?php echo $data['longitude']; ?>" required />
-                                                    </div>
-                                                </div>
-                                                <div class="form-group" style="margin-bottom: 20px;">
-                                                    <label class="col-sm-2 col-sm-2 control-label"></label>
-                                                    <div class="col-sm-8">
-                                                        <input type="submit" value="Simpan" class="btn btn-sm btn-primary" />&nbsp;
-                                                    </div>
-                                                </div>
-                                                <div style="margin-top: 20px;"></div>
-                                            </form>
+                    <section class="section">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-primary">Peta Alat</h6>
                                         </div>
+                                        <div class="card-body">
+                                            <div id="map" style="width:100%;height:480px; z-index:1;"></div>
 
+                                        </div>
                                     </div>
                                 </div>
 
+                                <!-- DataTales Example -->
+                                <div class="col-lg-6">
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-primary">Edit Data</h6>
+                                        </div>
+                                        <div class="card-body">
+
+                                            <?php
+                                            include 'koneksi.php';
+                                            $id = $_GET['id_alat'];
+                                            $query = mysqli_query($koneksi, "select * from alat where id_alat='$id'");
+                                            $data  = mysqli_fetch_array($query);
+                                            ?>
+
+                                            <!-- </div> -->
+                                            <div class="panel-body">
+                                                <form class="form-horizontal style-form" style="margin-top: 20px;" action="edit_aksi.php" method="post" enctype="multipart/form-data" name="form1" id="form1">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 col-sm-2 control-label">ID Alat</label>
+                                                        <div class="col-sm-8">
+                                                            <input name="id_alat" type="text" id="id_alat" class="form-control" value="<?php echo $data['id_alat']; ?>" readonly />
+                                                            <!--<span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 col-sm-2 control-label">Nama Alat</label>
+                                                        <div class="col-sm-8">
+                                                            <input name="nama_alat" type="text" id="nama_alat" class="form-control" value="<?php echo $data['nama_alat']; ?>" required />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 col-sm-2 control-label">Alamat</label>
+                                                        <div class="col-sm-8">
+                                                            <input name="alamat" class="form-control" id="alamat" type="text" value="<?php echo $data['alamat']; ?>" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 col-sm-2 control-label">Deskripsi</label>
+                                                        <div class="col-sm-8">
+                                                            <input name="deskripsi" class="form-control" id="deskripsi" type="text" value="<?php echo $data['deskripsi']; ?>" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 col-sm-2 control-label">Latitude</label>
+                                                        <div class="col-sm-8">
+                                                            <input name="latitude" class="form-control" id="latitude" type="text" value="<?php echo $data['latitude']; ?>" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 col-sm-2 control-label">Longitude</label>
+                                                        <div class="col-sm-8">
+                                                            <input name="longitude" class="form-control" id="longitude" type="text" value="<?php echo $data['longitude']; ?>" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" style="margin-bottom: 20px;">
+                                                        <label class="col-sm-2 col-sm-2 control-label"></label>
+                                                        <div class="col-sm-8">
+                                                            <input type="submit" value="Simpan" class="btn btn-sm btn-primary" />&nbsp;
+                                                        </div>
+                                                    </div>
+                                                    <div style="margin-top: 20px;"></div>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
                     <!-- /.container-fluid -->
                 </div>
 
