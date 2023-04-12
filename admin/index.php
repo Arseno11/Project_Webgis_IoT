@@ -18,8 +18,24 @@ if (!isset($_SESSION['username'])) {
 
 <style>
 #chart {
-  max-width: 100%;
+  width: 100%;
   height: auto;
+}
+
+.chart-container {
+  position: relative !important;
+  height: 0 !important;
+  padding-bottom: 60% !important;
+  overflow: auto !important;
+}
+
+.chart-container canvas {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
 }
 
 .loader {
@@ -48,32 +64,6 @@ if (!isset($_SESSION['username'])) {
 @keyframes spin {
   to {
     transform: rotate(360deg);
-  }
-}
-
-.card {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
-.chart-container {
-  position: relative;
-  height: 0;
-  padding-bottom: 50%;
-  margin-bottom: 1rem;
-}
-
-.chart-container canvas {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-
-@media screen and (max-width: 767px) {
-  .chart-container {
-    padding-bottom: 100%;
   }
 }
 </style>
@@ -303,29 +293,25 @@ if (!isset($_SESSION['username'])) {
                   </div>
                 </div>
               </div>
-            </div>
-        </section>
-
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-md-8">
-              <div class="card">
-                <div class="card-header">
-                  <h4>Value Chart</h4>
-                </div>
-                <div class="card-body">
-                  <div class="chart-container">
-                    <canvas id="chart"></canvas>
+              <!-- Add a canvas element to hold the chart -->
+              <div class="row">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h4>Value Chart</h4>
+                    </div>
+                    <div class="card-body">
+                      <button id="reset-data" class="btn btn-danger float-right btn-sm">Reset Data</button>
+                      <div class="chart-container">
+                        <canvas id="chart"></canvas>
+                      </div>
+                    </div>
                   </div>
-                  <button id="reset-data" class="btn btn-danger float-right btn-sm">Reset Data</button>
                 </div>
               </div>
+
             </div>
-          </div>
-        </div>
-
-
-
+        </section>
       </div>
 
 
