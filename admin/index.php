@@ -405,6 +405,7 @@ if (!isset($_SESSION['username'])) {
               if (!chartData[id]) {
                 // If data doesn't exist, create a new dataset for this id
                 chartData[id] = {
+                  type: 'line',
                   label: data.nama_alat,
                   data: {
                     labels: [],
