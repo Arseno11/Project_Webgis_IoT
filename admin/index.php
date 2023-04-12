@@ -387,7 +387,8 @@ canvas {
               data: JSON.parse(localStorage.getItem('chartDataHujan')) || [],
               backgroundColor: 'rgba(54, 162, 235, 0.2)',
               borderColor: 'rgba(54, 162, 235, 1)',
-              borderWidth: 1
+              borderWidth: 1,
+              borderDash: [5, 5]
             }
           ]
         },
@@ -461,7 +462,6 @@ canvas {
                 borderDash: [5, 5]
               });
             });
-
             // Hide or reduce width of older data
             const newDataLength = myChart.data.labels.length;
             for (let j = 0; j < newDataLength - 1; j++) {
@@ -490,6 +490,7 @@ canvas {
           })
           .catch(error => console.error(error));
       }
+
 
       setInterval(updateChart, 5000);
       </script>
