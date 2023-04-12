@@ -428,11 +428,16 @@ canvas {
             }
 
             // Update chart data
-
             myChart.data.labels.push(lastUpdateTime);
-            myChart.data.datasets[datasetIndex].data.push(data.results.length > 0 ? data.results[0].jarak : null);
-            myChart.data.datasets[datasetIndex + 1].data.push(data.results.length > 0 ? data.results[0].hujan :
-              null);
+
+            // Check if dataset exists before accessing it
+            if (datasetIndex >= 0) {
+              myChart.data.datasets[datasetIndex].data.push(data.results.length > 0 ? data.results[0].jarak : null);
+            }
+            if (datasetIndex + 1 >= 0) {
+              myChart.data.datasets[datasetIndex + 1].data.push(data.results.length > 0 ? data.results[0].hujan :
+                null);
+            }
 
 
             // Hide or reduce width of older data
