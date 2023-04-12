@@ -394,7 +394,7 @@ if (!isset($_SESSION['username'])) {
                 if (datasetIndex === -1) {
                   // If dataset for this id does not exist, create new dataset
                   myChart.data.datasets.push({
-                    label: 'Jarak ' + result.nama_alat + result.id_alat,
+                    label: 'Jarak ' + result.id_alat,
                     data: [],
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgba(255, 99, 132, 1)',
@@ -424,6 +424,9 @@ if (!isset($_SESSION['username'])) {
                 if (datasetIndex > -1) {
                   myChart.data.datasets[datasetIndex].data.push(result.hujan);
                 }
+
+                // Store the updated chart data in localStorage
+                localStorage.setItem('myChartData', JSON.stringify(myChart.data));
               });
 
               // Update chart labels
@@ -435,8 +438,23 @@ if (!isset($_SESSION['username'])) {
             .catch(error => console.error(error));
         }
 
+        // Function to load chart data from localStorage
+        function loadChartData() {
+          var chartData = localStorage.getItem('myChartData');
+          if (chartData) {
+            myChart.data = JSON.parse(chartData);
+            myChart.update();
+          }
+        }
+
+        // Load chart data from localStorage on page load
+        loadChartData();
+
         // Update the chart every second
-        setInterval(updateChart, 1000);
+        setInterval(updateChart, 3000);
+
+        // Store the initial chart data in localStorage on page load
+        localStorage.setItem('myChartData', JSON.stringify(myChart.data));
       </script>
 </body>
 
