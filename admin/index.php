@@ -361,26 +361,15 @@ if (!isset($_SESSION['username'])) {
         // Get the canvas element
         var ctx = document.getElementById('chart').getContext('2d');
 
+        // Chart data
+        var chartData = {};
+
         // Create the initial chart
         var myChart = new Chart(ctx, {
           type: 'line',
           data: {
-            labels: JSON.parse(localStorage.getItem('chartLabels')) || [],
-            datasets: [{
-                label: 'Jarak(cm)',
-                data: JSON.parse(localStorage.getItem('chartDataJarak')) || [],
-                backgroundColor: 'rgba(255, 16, 88, 0.2)',
-                borderColor: 'rgba(38, 228, 81, 1)',
-                borderWidth: 1
-              },
-              {
-                label: 'Hujan',
-                data: JSON.parse(localStorage.getItem('chartDataHujan')) || [],
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-              }
-            ]
+            labels: [],
+            datasets: []
           },
           options: {
             scales: {
@@ -409,7 +398,6 @@ if (!isset($_SESSION['username'])) {
             .then(data => {
               // Get the last updated time from the first data entry
               var lastUpdateTime = data.results.length > 0 ? data.results[0].waktu : null;
-
               // Check if data for this id already exists
               var id = data.id;
               if (!chartData[id]) {
@@ -419,36 +407,39 @@ if (!isset($_SESSION['username'])) {
                   data: {
                     labels: [],
                     datasets: [{
-                      label: data.alat,
+                      label: 'Hujan',
                       data: [],
                       backgroundColor: 'rgba(255, 16, 88, 0.2)',
                       borderColor: 'rgba(38, 228, 81, 1)',
+                      borderWidth: 1
+                    }, {
+                      label: 'Jarak',
+                      data: [],
+                      backgroundColor: 'rgba(16, 88, 255, 0.2)',
+                      borderColor: 'rgba(228, 81, 38, 1)',
                       borderWidth: 1
                     }]
                   }
                 };
                 myChart.data.datasets.push(chartData[id].data.datasets[0]);
+                myChart.data.datasets.push(chartData[id].data.datasets[1]);
               }
               // Add data to chart for this id
               var lastDataIndex = chartData[id].data.labels.length;
-              chartData[id].data.datasets[0].label = data.alat;
               chartData[id].data.labels.push(lastUpdateTime);
-              chartData[id].data.datasets[0].data.push(data.results.length > 0 ? data.results[0].jarak : null);
-
-              // Update chart data
-              myChart.data.labels.push(lastUpdateTime);
-              myChart.data.datasets[0].data.push(data.results.length > 0 ? data.results[0].jarak : null);
-              myChart.data.datasets[1].data.push(data.results.length > 0 ? data.results[0].hujan : null);
+              chartData[id].data.datasets[0].data.push(data.results.length > 0 ? data.results[0].hujan : null);
+              chartData[id].data.datasets[1].data.push(data.results.length > 0 ? data.results[0].jarak : null);
 
               // Hide or reduce width of older data
-              const newDataLength = myChart.data.labels.length;
+              const newDataLength = chartData[id].data.labels.length;
               for (let j = 0; j < newDataLength - 1; j++) {
-                const currentDataTime = moment(myChart.data.labels[j], 'DD/MM/YY HH:mm:ss');
+                const currentDataTime = moment(chartData[id].data.labels[j], 'DD/MM/YY HH:mm:ss');
                 const timeDiff = moment.duration(moment().diff(currentDataTime)).asMinutes();
                 if (timeDiff > 5) {
-                  myChart.data.datasets[0].borderWidth = 0;
-                  myChart.data.datasets[1].borderWidth = 0.5;
-                  myChart.data.datasets[1].borderDash = [5, 5];
+                  chartData[id].data.datasets[0].borderWidth = 0;
+                  chartData[id].data.datasets[0].borderDash = [5, 5];
+                  chartData[id].data.datasets[1].borderWidth = 0;
+                  chartData[id].data.datasets[1].borderDash = [5, 5];
                 } else if (timeDiff > 4) {
                   myChart.data.datasets[0].borderWidth = 0.5;
                   myChart.data.datasets[0].borderDash = [5, 5];
@@ -472,8 +463,7 @@ if (!isset($_SESSION['username'])) {
               }
               myChart.update();
               localStorage.setItem('chartLabels', JSON.stringify(myChart.data.labels));
-              localStorage.setItem('chartDataJarak', JSON.stringify(myChart.data.datasets[0].data));
-              localStorage.setItem('chartDataHujan', JSON.stringify(myChart.data.datasets[1].data));
+              localStorage.setItem(`chartData${id}`, JSON.stringify(chartData[id].data.datasets));
             })
             .catch(error => console.error(error));
 
