@@ -391,25 +391,28 @@ if (!isset($_SESSION['username'])) {
                 // Check if dataset for this id already exists
                 var datasetIndex = myChart.data.datasets.findIndex(dataset => dataset.label === 'Jarak ' + result
                   .id_alat);
-                if (datasetIndex === -1) {
-                  // If dataset for this id does not exist, create new dataset
-                  myChart.data.datasets.push({
-                    label: 'Jarak ' + result.id_alat,
-                    data: [],
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1
-                  });
+                // If dataset for this id does not exist, create new dataset
+                var name_alat = result.nama_alat;
+                var jarak_dataset = {
+                  label: 'Jarak ' + name_alat,
+                  data: [],
+                  backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                  borderColor: 'rgba(255, 99, 132, 1)',
+                  borderWidth: 1
+                };
+                var hujan_dataset = {
+                  label: 'Hujan ' + name_alat,
+                  data: [],
+                  backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                  borderColor: 'rgba(54, 162, 235, 1)',
+                  borderWidth: 1
+                };
+                myChart.data.datasets.push(jarak_dataset);
+                myChart.data.datasets.push(hujan_dataset);
 
-                  // Create new dataset for hujan
-                  myChart.data.datasets.push({
-                    label: 'Hujan ' + result.id_alat,
-                    data: [],
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                  });
-                }
+                // Update the dataset labels to the name of the alat
+                myChart.data.datasets[myChart.data.datasets.length - 2].label = 'Jarak ' + name_alat;
+                myChart.data.datasets[myChart.data.datasets.length - 1].label = 'Hujan ' + name_alat;
 
                 // Update chart data for jarak
                 datasetIndex = myChart.data.datasets.findIndex(dataset => dataset.label === 'Jarak ' + result
