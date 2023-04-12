@@ -1,17 +1,17 @@
 <?php include "header.php"; ?>
 
 <style>
-#map {
-  border: 1px solid #ccc;
-  height: 500px;
-  z-index: 1;
-}
-
-@media (min-width: 992px) {
   #map {
-    height: 800px;
+    border: 1px solid #ccc;
+    height: 500px;
+    z-index: 1;
   }
-}
+
+  @media (min-width: 992px) {
+    #map {
+      height: 800px;
+    }
+  }
 </style>
 
 <body>
@@ -35,9 +35,8 @@
     <div class="container main-menu">
       <div class="row align-items-center justify-content-between d-flex">
         <div id="logo"">
-                    <a href=" index.php"><img src="./img/logo.png" alt="Logo" title=""
-            style="width: 30px; height: 30px;" /><span style="color: white; font-weight: 500; padding: 5px;">PENDETEKSI
-            BANJIR</span>
+                    <a href=" index.php"><img src="./img/logo.png" alt="Logo" title="" style="width: 30px; height: 30px;" /><span style="color: white; font-weight: 500; padding: 5px;">PENDETEKSI
+            BANJIR 1</span>
           </a>
         </div>
         <nav id=" nav-menu-container">
@@ -155,13 +154,8 @@
   <!-- Load EasyButton JavaScript -->
   <script src="https://unpkg.com/leaflet-easybutton/src/easy-button.js"></script>
   <!-- Load Leaflet Routing Machine CSS dan JavaScript -->
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.css"
-    integrity="sha512-qng4v4a4lWljj9K63DRElN5vS8Fmq5Kln13hPCwulLFGUv7mUy+Qbl9acFq+B3gOv7qwBm1Jz6DNxlY6Ov4izA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js"
-    integrity="sha512-5Z1nU6RljLpOhwYFgzsyI1x8y9JpcTfyTJPNMfE3nbVDsZzffJQ3q3G1BLb0xIy8PjjhLoC0yJ+0XXdPzZL/Xw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.css" integrity="sha512-qng4v4a4lWljj9K63DRElN5vS8Fmq5Kln13hPCwulLFGUv7mUy+Qbl9acFq+B3gOv7qwBm1Jz6DNxlY6Ov4izA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js" integrity="sha512-5Z1nU6RljLpOhwYFgzsyI1x8y9JpcTfyTJPNMfE3nbVDsZzffJQ3q3G1BLb0xIy8PjjhLoC0yJ+0XXdPzZL/Xw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
 
@@ -170,36 +164,36 @@
 
 
   <script type="text/javascript">
-  function tampilkanWaktu() {
-    // Mengambil objek tanggal dan waktu saat ini
-    const tanggal = new Date();
+    function tampilkanWaktu() {
+      // Mengambil objek tanggal dan waktu saat ini
+      const tanggal = new Date();
 
-    // Menyiapkan array hari
-    const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+      // Menyiapkan array hari
+      const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 
-    // Menampilkan waktu, nama hari, dan tanggal dalam elemen div dengan ID "waktu"
-    document.getElementById('waktu').innerHTML =
-      days[tanggal.getDay()] +
-      ', ' +
-      tanggal.getDate() +
-      ' ' +
-      getMonthName(tanggal.getMonth()) +
-      ' ' +
-      tanggal.getFullYear() +
-      '</br>' +
-      tanggal.toLocaleTimeString()
-  }
+      // Menampilkan waktu, nama hari, dan tanggal dalam elemen div dengan ID "waktu"
+      document.getElementById('waktu').innerHTML =
+        days[tanggal.getDay()] +
+        ', ' +
+        tanggal.getDate() +
+        ' ' +
+        getMonthName(tanggal.getMonth()) +
+        ' ' +
+        tanggal.getFullYear() +
+        '</br>' +
+        tanggal.toLocaleTimeString()
+    }
 
-  // Mengembalikan nama bulan dari nomor bulan
-  function getMonthName(month) {
-    const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
-      'Oktober', 'November', 'Desember'
-    ];
-    return monthNames[month];
-  }
+    // Mengembalikan nama bulan dari nomor bulan
+    function getMonthName(month) {
+      const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
+        'Oktober', 'November', 'Desember'
+      ];
+      return monthNames[month];
+    }
 
-  // Jalankan fungsi tampilkanWaktu setiap 1 detik
-  setInterval(tampilkanWaktu, 1000);
+    // Jalankan fungsi tampilkanWaktu setiap 1 detik
+    setInterval(tampilkanWaktu, 1000);
   </script>
 
 </body>
