@@ -296,7 +296,7 @@ if (!isset($_SESSION['username'])) {
             </div>
         </section>
 
-        <section class="row">
+        <section class="flex">
           <!-- Add a canvas element to hold the chart -->
           <div class="row">
             <div class="col-12">
