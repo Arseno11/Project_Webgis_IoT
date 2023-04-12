@@ -22,6 +22,23 @@ if (!isset($_SESSION['username'])) {
   height: auto;
 }
 
+.chart-container {
+  position: relative;
+  height: 0;
+  padding-bottom: 60%;
+  /* adjust as needed */
+  overflow: auto;
+}
+
+.chart-container canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 .loader {
   position: fixed;
   top: 0;
@@ -286,11 +303,14 @@ if (!isset($_SESSION['username'])) {
                     </div>
                     <div class="card-body">
                       <button id="reset-data" class="btn btn-danger float-right btn-sm">Reset Data</button>
-                      <canvas id="chart"></canvas>
+                      <div class="chart-container">
+                        <canvas id="chart"></canvas>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+
             </div>
         </section>
       </div>
