@@ -432,34 +432,35 @@ canvas {
             }
 
 
-            // Hide or reduce width of older data
+            // Hide or reduce width of older data for each dataset
             const newDataLength = myChart.data.labels.length;
-            for (let j = 0; j < newDataLength - 1; j++) {
-              const currentDataTime = moment(myChart.data.labels[j], 'DD/MM/YY HH:mm:ss');
-              const timeDiff = moment.duration(moment().diff(currentDataTime)).asMinutes();
-              if (timeDiff > 5) {
-                myChart.data.datasets[0].borderWidth = 0;
-                myChart.data.datasets[1].borderWidth = 0.5;
-                myChart.data.datasets[1].borderDash = [5, 5];
-              } else if (timeDiff > 4) {
-                myChart.data.datasets[0].borderWidth = 0.5;
-                myChart.data.datasets[0].borderDash = [5, 5];
-                myChart.data.datasets[1].borderWidth = 1;
-                myChart.data.datasets[1].borderDash = [];
-              } else {
-                myChart.data.datasets[0].borderWidth = 1;
-                myChart.data.datasets[0].borderDash = [];
-                myChart.data.datasets[1].borderWidth = 1;
-                myChart.data.datasets[1].borderDash = [];
-              }
-
-              // Change color of the line based on the value of the data point
-              if (myChart.data.datasets[0].data[j] < 10) {
-                myChart.data.datasets[0].borderColor = 'rgba(255, 0, 0, 1)';
-              } else if (myChart.data.datasets[0].data[j] > 10 && myChart.data.datasets[0].data[j] <= 20) {
-                myChart.data.datasets[0].borderColor = 'rgba(255, 255, 0, 1)';
-              } else {
-                myChart.data.datasets[0].borderColor = 'rgba(16, 255, 79, 1)';
+            for (let i = 0; i < myChart.data.datasets.length; i++) {
+              const dataset = myChart.data.datasets[i];
+              for (let j = 0; j < dataset.data.length - 1; j++) {
+                const currentDataTime = moment(dataset.data[j].x, 'DD/MM/YY HH:mm:ss');
+                const timeDiff = moment.duration(moment().diff(currentDataTime)).asMinutes();
+                if (timeDiff > 5) {
+                  dataset.borderWidth = 0;
+                  dataset.borderColor = 'rgba(0, 0, 0, 0)';
+                  dataset.backgroundColor = 'rgba(0, 0, 0, 0)';
+                } else if (timeDiff > 4) {
+                  dataset.borderWidth = 0.5;
+                  dataset.borderDash = [5, 5];
+                } else {
+                  dataset.borderWidth = 1;
+                  dataset.borderDash = [];
+                  // Change color of the line based on the value of the data point
+                  if (dataset.data[j].y < 10) {
+                    dataset.borderColor = 'rgba(255, 0, 0, 1)';
+                    dataset.backgroundColor = 'rgba(255, 16, 88, 0.2)';
+                  } else if (dataset.data[j].y > 10 && dataset.data[j].y <= 20) {
+                    dataset.borderColor = 'rgba(255, 255, 0, 1)';
+                    dataset.backgroundColor = 'rgba(54, 162, 235, 0.2)';
+                  } else {
+                    dataset.borderColor = 'rgba(16, 255, 79, 1)';
+                    dataset.backgroundColor = 'rgba(38, 228, 81, 0.2)';
+                  }
+                }
               }
             }
             myChart.update();
