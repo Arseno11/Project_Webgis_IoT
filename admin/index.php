@@ -432,13 +432,13 @@ if (!isset($_SESSION['username'])) {
                 if (datasetIndex > -1) {
                   myChart.data.datasets[datasetIndex].data.push(result.hujan);
                 }
-
-                // Store the updated chart data in localStorage
-                localStorage.setItem('myChartData', JSON.stringify(myChart.data));
               });
 
               // Update chart labels
               myChart.data.labels.push(lastUpdateTime);
+
+              // Save chart data to localStorage
+              localStorage.setItem('chartData', JSON.stringify(myChart.data));
 
               // Update chart
               myChart.update();
@@ -446,23 +446,15 @@ if (!isset($_SESSION['username'])) {
             .catch(error => console.error(error));
         }
 
-        // Function to load chart data from localStorage
-        function loadChartData() {
-          var chartData = localStorage.getItem('myChartData');
-          if (chartData) {
-            myChart.data = JSON.parse(chartData);
-            myChart.update();
-          }
+        // Load chart data from localStorage on page load
+        var savedChartData = localStorage.getItem('chartData');
+        if (savedChartData !== null) {
+          myChart.data = JSON.parse(savedChartData);
+          myChart.update();
         }
 
-        // Load chart data from localStorage on page load
-        loadChartData();
-
         // Update the chart every second
-        setInterval(updateChart, 3000);
-
-        // Store the initial chart data in localStorage on page load
-        localStorage.setItem('myChartData', JSON.stringify(myChart.data));
+        setInterval(updateChart, 1000);
       </script>
 </body>
 
