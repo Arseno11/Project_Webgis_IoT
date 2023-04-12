@@ -441,9 +441,9 @@ canvas {
               }
             });
 
-            // Remove old labels and data
-            myChart.data.labels = [];
-            myChart.data.datasets = [];
+            // // Remove old labels and data
+            // myChart.data.labels = [];
+            // myChart.data.datasets = [];
 
             // Add new labels and data for each id
             Object.keys(groupedData).forEach((key) => {
