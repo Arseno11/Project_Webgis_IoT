@@ -361,154 +361,125 @@ if (!isset($_SESSION['username'])) {
         // Get the canvas element
         var ctx = document.getElementById('chart').getContext('2d');
 
-        // Create object to store chart data
-        var chartData = {};
-
-        // Function to create chart
-        function createChart(id) {
-          // Create new chart
-          chartData[id] = new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: [],
-              datasets: [{
+        // Create the initial chart
+        var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: JSON.parse(localStorage.getItem('chartLabels')) || [],
+            datasets: [{
                 label: 'Jarak(cm)',
-                data: [],
+                data: JSON.parse(localStorage.getItem('chartDataJarak')) || [],
                 backgroundColor: 'rgba(255, 16, 88, 0.2)',
                 borderColor: 'rgba(38, 228, 81, 1)',
                 borderWidth: 1
-              }]
-            },
-            options: {
-              scales: {
-                xAxes: [{
-                  type: 'time',
-                  time: {
-                    tooltipFormat: 'DD/MM/YY',
-                    displayFormats: {
-                      day: 'DD/MM/YY'
-                    }
-                  }
-                }],
-                yAxes: [{
-                  ticks: {
-                    beginAtZero: true
-                  }
-                }]
+              },
+              {
+                label: 'Hujan',
+                data: JSON.parse(localStorage.getItem('chartDataHujan')) || [],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
               }
-            }
-          });
-        }
-
-        // Function to update chart with new data
-        function updateChart(id, data) {
-          // Check if chart exists for this id
-          if (!chartData[id]) {
-            // If chart doesn't exist, create a new chart
-            createChart(id);
-          }
-
-          // Get the last updated time from the first data entry
-          var lastUpdateTime = data.results.length > 0 ? data.results[0].waktu : null;
-
-          // Update chart data
-          chartData[id].data.labels.push(lastUpdateTime);
-          chartData[id].data.datasets[0].data.push(data.results.length > 0 ? data.results[0].jarak : null);
-
-          // Change color of the line based on the value of the data point
-          var lastDataIndex = chartData[id].data.datasets[0].data.length - 1;
-          if (chartData[id].data.datasets[0].data[lastDataIndex] < 10) {
-            chartData[id].data.datasets[0].borderColor = 'rgba(255, 0, 0, 1)';
-          } else if (chartData[id].data.datasets[0].data[lastDataIndex] > 10 && chartData[id].data.datasets[0].data[
-              lastDataIndex] <= 20) {
-            chartData[id].data.datasets[0].borderColor = 'rgba(255, 255, 0, 1)';
-          } else {
-            chartData[id].data.datasets[0].borderColor = 'rgba(16, 255, 79, 1)';
-          }
-
-          // Check if label for this id exists
-          var labelExists = false;
-          for (var i = 0; i < chartData[id].data.datasets.length; i++) {
-            if (chartData[id].data.datasets[i].label === data.alat) {
-              labelExists = true;
-              chartData[id].data.datasets[i].data[lastDataIndex] = data.results.length > 0 ? data.results[0].jarak : null;
-              break;
+            ]
+          },
+          options: {
+            scales: {
+              xAxes: [{
+                type: 'time',
+                time: {
+                  tooltipFormat: 'DD/MM/YY',
+                  displayFormats: {
+                    day: 'DD/MM/YY'
+                  }
+                }
+              }],
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
             }
           }
-
-          // If label doesn't exist, create a new dataset with the label
-          if (!labelExists) {
-            chartData[id].data.datasets.push({
-              label: data.alat,
-              data: [data.results.length > 0 ? data.results[0].jarak : null],
-              backgroundColor: generateRandomColor(),
-              borderColor: generateRandomColor(),
-              borderWidth: 1
-            });
-          }
-
-          // Update chart with new data
-          chartData[id].chart.update();
-
-          // Update local storage with updated data
-          localStorage.setItem(`chartData${id}`, JSON.stringify(chartData[id].data.datasets));
-        }
-
-        // Function to generate a random color
-        function generateRandomColor() {
-          const red = Math.floor(Math.random() * 256);
-          const green = Math.floor(Math.random() * 256);
-          const blue = Math.floor(Math.random() * 256);
-          return `rgba(${red}, ${green}, ${blue}, 1)`;
-        }
+        });
 
         // Function to fetch data and update chart
         function updateChart() {
-          fetch(ambildata.php)
+          fetch(`ambildata.php`)
             .then(response => response.json())
             .then(data => {
               // Get the last updated time from the first data entry
               var lastUpdateTime = data.results.length > 0 ? data.results[0].waktu : null;
-              // Update chart data for each id
-              for (const id in chartData) {
-                // Check if data is available for this id
-                if (data.results.some(result => result.id === id)) {
-                  const lastDataIndex = chartData[id].data.labels.length - 1;
-                  // Check if label for this id exists
-                  var labelExists = false;
-                  for (var i = 0; i < chartData[id].data.datasets.length; i++) {
-                    if (chartData[id].data.datasets[i].label === data.alat) {
-                      labelExists = true;
-                      chartData[id].data.datasets[i].data[lastDataIndex] = data.results.filter(result => result.id ===
-                        id)[0].jarak;
-                      break;
-                    }
-                  }
 
-                  // If label doesn't exist, create a new dataset with the label
-                  if (!labelExists) {
-                    chartData[id].data.datasets.push({
+              // Check if data for this id already exists
+              var id = data.id;
+              if (!chartData[id]) {
+                // If data doesn't exist, create a new dataset for this id
+                chartData[id] = {
+                  label: data.alat,
+                  data: {
+                    labels: [],
+                    datasets: [{
                       label: data.alat,
-                      data: [data.results.filter(result => result.id === id)[0].jarak],
-                      backgroundColor: generateRandomColor(),
-                      borderColor: generateRandomColor(),
+                      data: [],
+                      backgroundColor: 'rgba(255, 16, 88, 0.2)',
+                      borderColor: 'rgba(38, 228, 81, 1)',
                       borderWidth: 1
-                    });
+                    }]
                   }
+                };
+                myChart.data.datasets.push(chartData[id].data.datasets[0]);
+              }
+              // Add data to chart for this id
+              var lastDataIndex = chartData[id].data.labels.length;
+              chartData[id].data.datasets[0].label = data.alat;
+              chartData[id].data.labels.push(lastUpdateTime);
+              chartData[id].data.datasets[0].data.push(data.results.length > 0 ? data.results[0].jarak : null);
 
-                  // Update chart with new data
-                  chartData[id].chart.update();
+              // Update chart data
+              myChart.data.labels.push(lastUpdateTime);
+              myChart.data.datasets[0].data.push(data.results.length > 0 ? data.results[0].jarak : null);
+              myChart.data.datasets[1].data.push(data.results.length > 0 ? data.results[0].hujan : null);
 
-                  // Update local storage with updated data
-                  localStorage.setItem(`chartData${id}`, JSON.stringify(chartData[id].data.datasets));
+              // Hide or reduce width of older data
+              const newDataLength = myChart.data.labels.length;
+              for (let j = 0; j < newDataLength - 1; j++) {
+                const currentDataTime = moment(myChart.data.labels[j], 'DD/MM/YY HH:mm:ss');
+                const timeDiff = moment.duration(moment().diff(currentDataTime)).asMinutes();
+                if (timeDiff > 5) {
+                  myChart.data.datasets[0].borderWidth = 0;
+                  myChart.data.datasets[1].borderWidth = 0.5;
+                  myChart.data.datasets[1].borderDash = [5, 5];
+                } else if (timeDiff > 4) {
+                  myChart.data.datasets[0].borderWidth = 0.5;
+                  myChart.data.datasets[0].borderDash = [5, 5];
+                  myChart.data.datasets[1].borderWidth = 1;
+                  myChart.data.datasets[1].borderDash = [];
+                } else {
+                  myChart.data.datasets[0].borderWidth = 1;
+                  myChart.data.datasets[0].borderDash = [];
+                  myChart.data.datasets[1].borderWidth = 1;
+                  myChart.data.datasets[1].borderDash = [];
+                }
+
+                // Change color of the line based on the value of the data point
+                if (myChart.data.datasets[0].data[j] < 10) {
+                  myChart.data.datasets[0].borderColor = 'rgba(255, 0, 0, 1)';
+                } else if (myChart.data.datasets[0].data[j] > 10 && myChart.data.datasets[0].data[j] <= 20) {
+                  myChart.data.datasets[0].borderColor = 'rgba(255, 255, 0, 1)';
+                } else {
+                  myChart.data.datasets[0].borderColor = 'rgba(16, 255, 79, 1)';
                 }
               }
+              myChart.update();
+              localStorage.setItem('chartLabels', JSON.stringify(myChart.data.labels));
+              localStorage.setItem('chartDataJarak', JSON.stringify(myChart.data.datasets[0].data));
+              localStorage.setItem('chartDataHujan', JSON.stringify(myChart.data.datasets[1].data));
             })
             .catch(error => console.error(error));
 
         }
 
-        setInterval(updateChart, 2000);
+        setInterval(updateChart, 2000); // Update the chart every 5 seconds.
       </script>
 </body>
 
