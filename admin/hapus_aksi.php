@@ -13,20 +13,10 @@ $query = mysqli_query($koneksi, "DELETE FROM alat WHERE id_alat='$id'");
 
 if ($query) {
     echo "<script>
-            Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-            );
             window.location = 'tampil_data.php';
           </script>";
 } else {
     echo "<script>
-            Swal.fire(
-                'Failed to delete!',
-                'Your file has not been deleted.',
-                'error'
-            );
             window.location = 'tampil_data.php';
           </script>";
 }

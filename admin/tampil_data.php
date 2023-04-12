@@ -274,6 +274,32 @@ include "koneksi.php";
 
       <?php include "footer.php"; ?>
 
+      <script>
+      // Add SweetAlert confirmation dialog to delete link
+      var deleteLinks = document.querySelectorAll('.delete-link');
+      deleteLinks.forEach(function(link) {
+        link.addEventListener('click', function(event) {
+          event.preventDefault();
+
+          Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // If user confirms delete, redirect to delete script
+              window.location.href = link.href;
+
+            }
+          })
+        });
+      });
+      </script>
+
 </body>
 
 </html>
