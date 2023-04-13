@@ -23,14 +23,6 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 
-    # Redirect to home page if URL contains pesan=logout
-    RewriteCond %{QUERY_STRING} pesan=logout
-    RewriteRule ^(.*)$ / [R=301,L]
-
     # Custom error page for 403 Forbidden error
     ErrorDocument 403 /error/403error.html
-    # Custom error page for 404 Not Found error
-    ErrorDocument 404 /error/404error.html
-    # Custom error page for 500 Internal Server error
-    ErrorDocument 500 /error/500error.html
 </IfModule>
