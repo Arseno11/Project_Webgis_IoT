@@ -318,9 +318,10 @@ function updateData() {
     });
 }
 
-$(document).ready(function() {
+// fungsi untuk menghapus data localStorage
+function clearLocalStorage() {
   localStorage.clear();
-});
+}
 
 // tambahkan event listener untuk event beforeunload
 window.addEventListener('beforeunload', clearLocalStorage);
