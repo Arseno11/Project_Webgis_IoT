@@ -325,12 +325,12 @@ function refreshData() {
 
 
 
-window.addEventListener('DOMContentLoaded', function () {
-  if (localStorage.getItem('showAlert') !== 'false') {
-    showAlert('info', 'Selamat Datang', 'Ini adalah halaman deteksi banjir');
-    localStorage.setItem('showAlert', 'false');
-  }
-});
+// window.addEventListener('DOMContentLoaded', function () {
+//   if (localStorage.getItem('showAlert') !== 'false') {
+//     showAlert('info', 'Selamat Datang', 'Ini adalah halaman deteksi banjir');
+//     localStorage.setItem('showAlert', 'false');
+//   }
+// });
 
 window.addEventListener('beforeunload', function () {
   localStorage.removeItem('showAlert');
