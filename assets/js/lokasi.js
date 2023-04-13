@@ -237,7 +237,7 @@ navigator.geolocation.getCurrentPosition(function (location) {
   function refreshData() {
     setInterval(function () {
       loadData();
-    }, 5000); // set interval ke 5 detik (5000 ms)
+    }, 3000); // set interval ke 5 detik (5000 ms)
   }
 
   // panggil fungsi refreshData() saat halaman dimuat
@@ -333,7 +333,7 @@ function updateData() {
 function refreshData() {
   setInterval(function () {
     updateData();
-  }, 5000); // set interval ke 5 detik (5000 ms)
+  }, 3000); // set interval ke 5 detik (5000 ms)
 }
 
 // panggil fungsi refreshData() saat halaman dimuat
