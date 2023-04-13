@@ -27,11 +27,12 @@
     RewriteCond %{THE_REQUEST} \.php[\ /?].*HTTP/ [NC]
     RewriteRule ^ - [R=404,L]
 
-    # Allow access to the admin directory
-    RewriteRule ^admin/ - [L]
+    # Allow access to admin directory
+    RewriteCond %{REQUEST_URI} ^/admin/.*$ [NC]
+    RewriteRule ^ - [L]
 
     # Redirect to login page if user is not authenticated
-    RewriteCond %{REQUEST_URI} !^/admin/ [NC]
+    RewriteCond %{REQUEST_URI} !^/admin/login\.php$ [NC]
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{ENV:REDIRECT_STATUS} ^$
