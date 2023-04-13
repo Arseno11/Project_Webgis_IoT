@@ -113,19 +113,27 @@
               </p>
             </div>
           </div>
-          <table class="table table-striped table-dark mb-10">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Device Name</th>
-                <th scope="col">Jarak</th>
-                <th scope="col">Status</th>
-                <th scope="col">Cuaca</th>
-              </tr>
-            </thead>
-            <tbody id="data">
-            </tbody>
-          </table>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Daftar Device</h5>
+              <div class="table-responsive">
+                <table class="table table-striped table-dark">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Device Name</th>
+                      <th scope="col">Jarak</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Cuaca</th>
+                    </tr>
+                  </thead>
+                  <tbody id="data">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
 
         </div>
     </section>
