@@ -191,8 +191,8 @@ navigator.geolocation.getCurrentPosition(function (location) {
       marker.addTo(map);
       markers.push(marker);
       // Menambahkan event listener mouseover pada marker
-      marker.on('mouseover', function () {
-        this.openPopup();
+      marker.on('click', function () {
+        this.openPopup(5000);
       });
     }
   }
