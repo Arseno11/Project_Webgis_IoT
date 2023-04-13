@@ -23,10 +23,6 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 
-    # Redirect Direct Access To Files To Error Page
-    RewriteCond %{THE_REQUEST} \.php[\ /?].*HTTP/ [NC]
-    RewriteRule ^ - [R=404,L]
-
     # Allow access to admin directory
     RewriteCond %{REQUEST_URI} ^/admin/.*$ [NC]
     RewriteRule ^ - [L]
