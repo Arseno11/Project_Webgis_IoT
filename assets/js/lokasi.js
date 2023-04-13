@@ -264,7 +264,7 @@ function updateData() {
           }
 
           if (result.hujan < 500) {
-            hujan = '<td>Hujan Deras</td>';
+            hujan = '<td>Hujan</td>';
           } else {
             hujan = '<td>Cerah</td>';
           }
