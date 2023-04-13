@@ -237,7 +237,7 @@ navigator.geolocation.getCurrentPosition(function (location) {
   function refreshData() {
     setInterval(function () {
       loadData();
-    }, 2000); // set interval ke 5 detik (5000 ms)
+    }, 5000); // set interval ke 5 detik (5000 ms)
   }
 
   // panggil fungsi refreshData() saat halaman dimuat
@@ -320,12 +320,16 @@ function updateData() {
 
 $(document).ready(function() {
   showAlertOnLoad();
-  setInterval(updateData, 2000);
 });
 
+// fungsi untuk melakukan refresh data setiap 5 detik
+function refreshData() {
+  setInterval(function () {
+    updateData();
+  }, 5000); // set interval ke 5 detik (5000 ms)
+}
 
-
-
+refreshData();
 
 // window.addEventListener('DOMContentLoaded', function () {
 //   if (localStorage.getItem('showAlert') !== 'false') {
