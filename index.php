@@ -109,27 +109,28 @@
           <div class="menu-content pb-9 col-lg-8">
             <div class="title text-center">
               <h1 class="mt-20 mb-10">Tabel Alat</h1>
-              <p>Menampilkan jumlah alat yang terpasang
-              </p>
+              <p>Menampilkan jumlah alat yang terpasang</p>
             </div>
           </div>
-          <div class="card mx-auto">
-            <div class="card-body">
-              <h5 class="card-title">Daftar Device</h5>
-              <div class="table-responsive">
-                <table class="table table-striped table-dark w-75">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Device Name</th>
-                      <th scope="col">Jarak</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Cuaca</th>
-                    </tr>
-                  </thead>
-                  <tbody id="data">
-                  </tbody>
-                </table>
+          <div class="col-lg-8">
+            <div class="card mx-auto h-100">
+              <div class="card-body">
+                <h5 class="card-title">Daftar Device</h5>
+                <div class="table-responsive">
+                  <table class="table table-striped table-dark w-100">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Device Name</th>
+                        <th scope="col">Jarak</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Cuaca</th>
+                      </tr>
+                    </thead>
+                    <tbody id="data">
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
