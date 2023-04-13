@@ -258,17 +258,6 @@ function showAlert(icon, title, text) {
   });
 }
 
-window.addEventListener('DOMContentLoaded', function () {
-  if (localStorage.getItem('showAlert') !== 'false') {
-    showAlert('info', 'Selamat Datang', 'Ini adalah halaman deteksi banjir');
-    localStorage.setItem('showAlert', 'false');
-  }
-});
-
-window.addEventListener('beforeunload', function () {
-  localStorage.removeItem('showAlert');
-});
-
 function updateData() {
   fetch('ambildata.php', {
     headers: {
@@ -326,12 +315,26 @@ function updateData() {
     });
 }
 
+
 // fungsi untuk melakukan refresh data setiap 5 detik
 function refreshData() {
   setInterval(function () {
     updateData();
   }, 5000); // set interval ke 5 detik (5000 ms)
 }
+
+
+
+window.addEventListener('DOMContentLoaded', function () {
+  if (localStorage.getItem('showAlert') !== 'false') {
+    showAlert('info', 'Selamat Datang', 'Ini adalah halaman deteksi banjir');
+    localStorage.setItem('showAlert', 'false');
+  }
+});
+
+window.addEventListener('beforeunload', function () {
+  localStorage.removeItem('showAlert');
+});
 
 // panggil fungsi refreshData() saat halaman dimuat
 refreshData();
