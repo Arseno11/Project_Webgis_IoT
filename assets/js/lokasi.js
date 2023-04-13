@@ -306,8 +306,8 @@ function updateData() {
               <td>${i + 1}</td>
               <td>${result.nama_alat}</td>
               <td>${result.jarak} cm</td>
-              <i class="fa-solid fa-cloud-rain"></i>
               ${siaga}
+              <i class="fa-solid fa-cloud-rain"></i>
               ${hujan}
             </tr>
           `;
