@@ -114,9 +114,9 @@
             </div>
           </div>
           <table class="table table-striped table-dark mb-10">
-            <thead class="table-dark">
+            <thead class="thead-dark">
               <tr>
-                <th scope=" col">#</th>
+                <th scope="col">#</th>
                 <th scope="col">Device Name</th>
                 <th scope="col">Jarak</th>
                 <th scope="col">Status</th>
@@ -126,6 +126,7 @@
             <tbody id="data">
             </tbody>
           </table>
+
         </div>
     </section>
 
