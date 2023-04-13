@@ -258,11 +258,15 @@ function showAlert(icon, title, text) {
   });
 }
 
-// Menampilkan SweetAlert ketika halaman pertama kali dibuka
 window.addEventListener('DOMContentLoaded', function () {
   if (localStorage.getItem('showAlert') !== 'false') {
     showAlert('info', 'Selamat Datang', 'Ini adalah halaman deteksi banjir');
+    localStorage.setItem('showAlert', 'false');
   }
+});
+
+window.addEventListener('beforeunload', function() {
+  localStorage.removeItem('showAlert');
 });
 
 function updateData() {
@@ -302,6 +306,7 @@ function updateData() {
               <td>${i + 1}</td>
               <td>${result.nama_alat}</td>
               <td>${result.jarak} cm</td>
+              <i class="fa-solid fa-cloud-rain"></i>
               ${siaga}
               ${hujan}
             </tr>
