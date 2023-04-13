@@ -191,8 +191,14 @@ navigator.geolocation.getCurrentPosition(function (location) {
       marker.addTo(map);
       markers.push(marker);
       // Menambahkan event listener mouseover pada marker
+      // Menghapus event listener click dan menambahkan event listener mouseover
+      marker.off('click');
       marker.on('click', function () {
-        this.openPopup(5000);
+        this.openPopup();
+        // Menambahkan setTimeout untuk menutup popup setelah 5 detik
+        setTimeout(() => {
+          this.closePopup();
+        }, 5000);
       });
     }
   }
