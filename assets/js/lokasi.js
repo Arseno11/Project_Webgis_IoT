@@ -296,7 +296,7 @@ function updateData() {
           }
 
           if (result.hujan < 500) {
-            hujan = '<td>Hujan</td>';
+            hujan = '<td><i class="fa-solid fa-cloud-rain"></i> Hujan</td>';
           } else {
             hujan = '<td>Cerah</td>';
           }
@@ -307,7 +307,6 @@ function updateData() {
               <td>${result.nama_alat}</td>
               <td>${result.jarak} cm</td>
               ${siaga}
-              <i class="fa-solid fa-cloud-rain"></i>
               ${hujan}
             </tr>
           `;
