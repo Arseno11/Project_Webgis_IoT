@@ -35,6 +35,7 @@
       <link rel="stylesheet" href="assets/css/animate.min.css">
       <link rel="stylesheet" href="assets/css/owl.carousel.css">
       <link rel="stylesheet" href="assets/css/main.css">
+      <link rel="stylesheet" href="assets/css/map.css">
 
       <!-- Tambahkan stylesheet Leaflet dan Font Awesome -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" integrity="sha512-hadz8h4w4lJcNUm2QZZyq3T8hWfyJvKZP/M/0IOzoB8tfzQbd/6hN/6lnb1NS+8U6J9X6o5ijDZ5d5ZDWV5wFg==" crossorigin="" />

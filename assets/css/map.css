@@ -1,0 +1,17 @@
+  #map {
+    border: 1px solid #ccc;
+    height: 500px;
+    z-index: 1;
+  }
+
+  @media (min-width: 992px) {
+    #map {
+      height: 800px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    #logo span {
+      display: none;
+    }
+  }
