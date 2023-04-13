@@ -1,23 +1,23 @@
 <?php include "header.php"; ?>
 
 <style>
+#map {
+  border: 1px solid #ccc;
+  height: 500px;
+  z-index: 1;
+}
+
+@media (min-width: 992px) {
   #map {
-    border: 1px solid #ccc;
-    height: 500px;
-    z-index: 1;
+    height: 800px;
   }
+}
 
-  @media (min-width: 992px) {
-    #map {
-      height: 800px;
-    }
+@media screen and (max-width: 480px) {
+  #logo span {
+    display: none;
   }
-
-  @media screen and (max-width: 480px) {
-    #logo span {
-      display: none;
-    }
-  }
+}
 </style>
 
 <body>
@@ -41,7 +41,8 @@
     <div class="container main-menu">
       <div class="row align-items-center justify-content-between d-flex">
         <div id="logo"">
-                    <a href=" index.php"><img src="./img/logo.png" alt="Logo" title="" style="width: 30px; height: 30px;" /><span style="color: white; font-weight: 500; padding: 5px;">PENDETEKSI
+                    <a href=" index.php"><img src="./img/logo.png" alt="Logo" title=""
+            style="width: 30px; height: 30px;" /><span style="color: white; font-weight: 500; padding: 5px;">PENDETEKSI
             BANJIR</span>
           </a>
         </div>
@@ -102,9 +103,8 @@
 
 
     <!-- End about-info Area -->
-
     <section id="list-alat" class="mt-15 mb-5">
-      <div class="container mt-2">
+      <div class="container-fluid mt-2">
         <div class="row d-flex justify-content-center mt-10">
           <div class="menu-content pb-9 col-lg-8">
             <div class="title text-center">
@@ -113,7 +113,7 @@
               </p>
             </div>
           </div>
-          <div class="card">
+          <div class="card mx-auto">
             <div class="card-body">
               <h5 class="card-title">Daftar Device</h5>
               <div class="table-responsive">
@@ -133,10 +133,10 @@
               </div>
             </div>
           </div>
-
-
         </div>
+      </div>
     </section>
+
 
     <div>
       <section class="mb-5 mt-10">
@@ -169,46 +169,53 @@
   <!-- Load EasyButton JavaScript -->
   <script src="https://unpkg.com/leaflet-easybutton/src/easy-button.js"></script>
   <!-- Load Leaflet Routing Machine CSS dan JavaScript -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.css" integrity="sha512-qng4v4a4lWljj9K63DRElN5vS8Fmq5Kln13hPCwulLFGUv7mUy+Qbl9acFq+B3gOv7qwBm1Jz6DNxlY6Ov4izA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js" integrity="sha512-5Z1nU6RljLpOhwYFgzsyI1x8y9JpcTfyTJPNMfE3nbVDsZzffJQ3q3G1BLb0xIy8PjjhLoC0yJ+0XXdPzZL/Xw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.css"
+    integrity="sha512-qng4v4a4lWljj9K63DRElN5vS8Fmq5Kln13hPCwulLFGUv7mUy+Qbl9acFq+B3gOv7qwBm1Jz6DNxlY6Ov4izA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js"
+    integrity="sha512-5Z1nU6RljLpOhwYFgzsyI1x8y9JpcTfyTJPNMfE3nbVDsZzffJQ3q3G1BLb0xIy8PjjhLoC0yJ+0XXdPzZL/Xw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
   <script src="assets/js/lokasi.js"></script>
 
 
   <script type="text/javascript">
-    function tampilkanWaktu() {
-      // Mengambil objek tanggal dan waktu saat ini
-      const tanggal = new Date();
+  function tampilkanWaktu() {
+    // Mengambil objek tanggal dan waktu saat ini
+    const tanggal = new Date();
 
-      // Menyiapkan array hari
-      const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+    // Menyiapkan array hari
+    const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 
-      // Menampilkan waktu, nama hari, dan tanggal dalam elemen div dengan ID "waktu"
-      document.getElementById('waktu').innerHTML =
-        days[tanggal.getDay()] +
-        ', ' +
-        tanggal.getDate() +
-        ' ' +
-        getMonthName(tanggal.getMonth()) +
-        ' ' +
-        tanggal.getFullYear() +
-        '</br>' +
-        tanggal.toLocaleTimeString()
-    }
+    // Menampilkan waktu, nama hari, dan tanggal dalam elemen div dengan ID "waktu"
+    document.getElementById('waktu').innerHTML =
+      days[tanggal.getDay()] +
+      ', ' +
+      tanggal.getDate() +
+      ' ' +
+      getMonthName(tanggal.getMonth()) +
+      ' ' +
+      tanggal.getFullYear() +
+      '</br>' +
+      tanggal.toLocaleTimeString()
+  }
 
-    // Mengembalikan nama bulan dari nomor bulan
-    function getMonthName(month) {
-      const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
-        'Oktober', 'November', 'Desember'
-      ];
-      return monthNames[month];
-    }
+  // Mengembalikan nama bulan dari nomor bulan
+  function getMonthName(month) {
+    const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
+      'Oktober', 'November', 'Desember'
+    ];
+    return monthNames[month];
+  }
 
-    // Jalankan fungsi tampilkanWaktu setiap 1 detik
-    setInterval(tampilkanWaktu, 1000);
+  // Jalankan fungsi tampilkanWaktu setiap 1 detik
+  setInterval(tampilkanWaktu, 1000);
   </script>
 
 </body>
