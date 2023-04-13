@@ -117,7 +117,7 @@
             <div class="card-body">
               <h5 class="card-title">Daftar Device</h5>
               <div class="table-responsive">
-                <table class="table table-striped table-dark">
+                <table class="table table-striped table-dark w-75">
                   <thead class="thead-dark">
                     <tr>
                       <th scope="col">#</th>
@@ -136,8 +136,6 @@
         </div>
       </div>
     </section>
-
-
 
     <div>
       <section class="mb-5 mt-10">
