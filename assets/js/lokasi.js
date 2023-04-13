@@ -237,7 +237,7 @@ navigator.geolocation.getCurrentPosition(function (location) {
   function refreshData() {
     setInterval(function () {
       loadData();
-    }, 2000); // set interval ke 5 detik (5000 ms)
+    }, 5000); // set interval ke 5 detik (5000 ms)
   }
 
   // panggil fungsi refreshData() saat halaman dimuat
@@ -257,6 +257,17 @@ function showAlert(icon, title, text) {
     }
   });
 }
+
+// Fungsi untuk menghapus item local storage ketika halaman di-reload atau ditutup
+window.addEventListener('beforeunload', function () {
+  localStorage.removeItem('showAlert');
+  for (let i = 0; i < localStorage.length; i++) {
+    let key = localStorage.key(i);
+    if (key.includes('showAlert_')) {
+      localStorage.removeItem(key);
+    }
+  }
+});
 
 function updateData() {
   fetch('ambildata.php', {
@@ -278,19 +289,18 @@ function updateData() {
 
           if (result.jarak <= 10) {
             siaga = '<td style=color:red>Siaga 1</td>';
-            if (!localStorage.getItem('showAlert_' + result.id_alat)) {
+            if (localStorage.getItem('showAlert_' + result.id_alat) !== 'false') {
               showAlert('error', 'Peringatan Banjir', 'Jarak sensor telah mencapai Siaga 1 untuk Alat ID ' + result.nama_alat);
-              localStorage.setItem('showAlert_' + result.id_alat, true);
+              localStorage.setItem('showAlert_' + result.id_alat, 'false');
             }
           } else if (result.jarak > 10 && result.jarak <= 25) {
             siaga = '<td style=color:yellow>Siaga 2</td>';
-            if (!localStorage.getItem('showAlert_' + result.id_alat)) {
+            if (localStorage.getItem('showAlert_' + result.id_alat) !== 'false') {
               showAlert('error', 'Peringatan Banjir', 'Jarak sensor telah mencapai Siaga 2 untuk Alat ID ' + result.nama_alat);
-              localStorage.setItem('showAlert_' + result.id_alat, true);
+              localStorage.setItem('showAlert_' + result.id_alat, 'false');
             }
           } else {
             siaga = '<td style=color:green>Aman</td>';
-            localStorage.setItem('showAlert_' + result.id_alat, false);
           }
 
           if (result.hujan < 500) {
@@ -300,14 +310,14 @@ function updateData() {
           }
 
           html += `
-          <tr>
-            <td>${i + 1}</td>
-            <td>${result.nama_alat}</td>
-            <td>${result.jarak} cm</td>
-            ${siaga}
-            ${hujan}
-          </tr>
-        `;
+            <tr>
+              <td>${i + 1}</td>
+              <td>${result.nama_alat}</td>
+              <td>${result.jarak} cm</td>
+              ${siaga}
+              ${hujan}
+            </tr>
+          `;
         }
 
         $("#data").html(html);
@@ -318,28 +328,13 @@ function updateData() {
     });
 }
 
-// fungsi untuk menghapus data localStorage
-function clearLocalStorage() {
-  localStorage.clear();
-}
-
-// tambahkan event listener untuk event beforeunload
-window.addEventListener('beforeunload', clearLocalStorage);
 
 // fungsi untuk melakukan refresh data setiap 5 detik
 function refreshData() {
   setInterval(function () {
     updateData();
-  }, 2000); // set interval ke 5 detik (5000 ms)
+  }, 5000); // set interval ke 5 detik (5000 ms)
 }
 
+// panggil fungsi refreshData() saat halaman dimuat
 refreshData();
-
-// window.addEventListener('DOMContentLoaded', function () {
-//   if (localStorage.getItem('showAlert') !== 'false') {
-//     showAlert('info', 'Selamat Datang', 'Ini adalah halaman deteksi banjir');
-//     localStorage.setItem('showAlert', 'false');
-//   }
-// });
-
-
