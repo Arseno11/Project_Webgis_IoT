@@ -18,9 +18,6 @@
 <section class="about-info-area section-gap">
   <div class="container">
     <div class="row align-items-center">
-      <div class="col-lg-6 info-left">
-        <img class="img-fluid" src="img/about/info-img.jpg" alt="">
-      </div>
       <div class="col-lg-6 info-right" data-aos="fade-up" data-aos-delay="100">
 
         <div class="panel panel-info panel-dashboard">
