@@ -23,16 +23,6 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 
-    # Allow access to admin directory
-    RewriteCond %{REQUEST_URI} ^/admin/.*$ [NC]
-    RewriteRule ^ - [L]
-
-    # Redirect to login page if user is not authenticated
-    RewriteCond %{REQUEST_URI} !^/admin/login\.php$ [NC]
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{ENV:REDIRECT_STATUS} ^$
-    RewriteRule ^ /admin/login.php [L]
 
     # Custom error page for 403 Forbidden error
     ErrorDocument 403 /error/403error.html
