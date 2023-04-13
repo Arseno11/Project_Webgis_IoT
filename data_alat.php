@@ -21,53 +21,54 @@
       <div class="col-lg-6 info-left">
         <img class="img-fluid" src="img/about/info-img.jpg" alt="">
       </div>
+      <div class="col-lg-6 info-right" data-aos="fade-up" data-aos-delay="100">
 
-      <div class="col-lg-30 into-right" data-aos="fade-up" data-aos-delay="100">
+        <div class="panel panel-info panel-dashboard">
+          <div class="panel-heading centered">
+            <!-- judul panel -->
+          </div>
+          <div class="panel-body">
+            <table class="table table-bordered table-striped table-admin text-center">
+              <thead>
+                <tr>
+                  <th width="5%">No.</th>
+                  <th width="30%">Nama Alat</th>
+                  <th width="30%">Alamat</th>
+                  <th width="20%">Deskripsi</th>
+                  <th width="15%">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                $data = file_get_contents('https://arsen.asistenrumahkopi.com/ambildata.php');
+                $no = 1;
+                if (json_decode($data, true)) {
+                  $obj = json_decode($data);
+                  foreach ($obj->results as $item) {
+                ?>
+                    <tr>
+                      <td><?php echo $no; ?></td>
+                      <td><?php echo $item->nama_alat; ?></td>
+                      <td><?php echo $item->alamat; ?></td>
+                      <td><?php echo $item->deskripsi; ?></td>
+                      <td class="text-center">
+                        <div class="btn-group">
+                          <a href="detail.php?id_alat=<?php echo $item->id_alat; ?>" rel="tooltip" data-original-title="Lihat Detail" data-placement="top" class="btn btn-primary">
+                            <i class="fa fa-map-marker"></i> Detail dan Lokasi
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                <?php
+                    $no++;
+                  }
+                } else {
+                  echo "<tr><td colspan='5'>Data tidak ada.</td></tr>";
+                }
+                ?>
 
-        <div class="col-md-12">
-          <div class="panel panel-info panel-dashboard">
-            <div class="panel-heading centered">
-
-            </div>
-            <div class="panel-body">
-              <table class="table table-bordered table-striped table-admin">
-                <thead>
-                  <tr>
-                    <th width="5%">No.</th>
-                    <th width="30%">Nama Alat</th>
-                    <th width="30%">Alamat</th>
-                    <th width="20%">Deskripsi</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php
-                  $data = file_get_contents('https://arsen.asistenrumahkopi.com/ambildata.php');
-                  $no = 1;
-                  if (json_decode($data, true)) {
-                    $obj = json_decode($data);
-                    foreach ($obj->results as $item) {
-                  ?>
-                      <tr>
-                        <td><?php echo $no; ?></td>
-                        <td><?php echo $item->nama_alat; ?></td>
-                        <td><?php echo $item->alamat; ?></td>
-                        <td><?php echo $item->deskripsi; ?></td>
-                        <td class="ctr">
-                          <div class="btn-group">
-                            <a href="detail.php?id_alat=<?php echo $item->id_alat; ?>" rel="tooltip" data-original-title="Lihat File" data-placement="top" class="btn btn-primary">
-                              <i class="fa fa-map-marker"> </i> Detail dan Lokasi</a>&nbsp;
-                          </div>
-                        </td>
-                      </tr>
-                  <?php $no++;
-                    }
-                  } else {
-                    echo "data tidak ada.";
-                  } ?>
-
-                </tbody>
-              </table>
-            </div>
+              </tbody>
+            </table>
           </div>
         </div>
 
