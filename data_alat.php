@@ -1,41 +1,5 @@
 <?php include "header.php"; ?>
 
-<header id="header">
-  <div class="header-top">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6 col-sm-6 col-6 header-top-left">
-        </div>
-        <div class="col-lg-6 col-sm-6 col-6 header-top-right">
-          <div class="header-social">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-dribbble"></i></a>
-            <a href="#"><i class="fa fa-behance"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container main-menu">
-    <div class="row align-items-center justify-content-between d-flex">
-      <div id="logo"">
-                    <a href=" index.php"><img src="./img/logo.png" alt="Logo" title=""
-          style="width: 30px; height: 30px;" /><span style="color: white; font-weight: 500; padding: 5px;">PENDETEKSI
-          BANJIR</span>
-        </a>
-      </div>
-      <nav id=" nav-menu-container">
-        <ul class="nav-menu">
-          <li><a href="index.php">Home</a></li>
-          <li><a href="data_alat.php">List Alat</a></li>
-          <li><a href="admin/login.php">Login Admin</a></li>
-        </ul>
-      </nav><!-- #nav-menu-container -->
-    </div>
-  </div>
-</header><!-- #header -->
-
 <!-- start banner Area -->
 <section class="about-banner relative">
   <div class="overlay overlay-bg"></div>
@@ -80,20 +44,19 @@
                     $obj = json_decode($data);
                     foreach ($obj->results as $item) {
                   ?>
-                  <tr>
-                    <td><?php echo $no; ?></td>
-                    <td><?php echo $item->nama_alat; ?></td>
-                    <td><?php echo $item->alamat; ?></td>
-                    <td><?php echo $item->deskripsi; ?></td>
-                    <td class="text-center">
-                      <div class="btn-group">
-                        <a href="detail.php?id_alat=<?php echo $item->id_alat; ?>" rel="tooltip"
-                          data-original-title="Lihat Detail" data-placement="top" class="btn btn-primary">
-                          <i class="fa fa-map-marker"></i> Detail dan Lokasi
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
+                      <tr>
+                        <td><?php echo $no; ?></td>
+                        <td><?php echo $item->nama_alat; ?></td>
+                        <td><?php echo $item->alamat; ?></td>
+                        <td><?php echo $item->deskripsi; ?></td>
+                        <td class="text-center">
+                          <div class="btn-group">
+                            <a href="detail.php?id_alat=<?php echo $item->id_alat; ?>" rel="tooltip" data-original-title="Lihat Detail" data-placement="top" class="btn btn-primary">
+                              <i class="fa fa-map-marker"></i> Detail dan Lokasi
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
                   <?php
                       $no++;
                     }

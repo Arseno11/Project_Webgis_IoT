@@ -4494,3 +4494,26 @@ body.mobile-nav-active #mobile-nav-toggle {
 .footer-text a, .footer-text i {
   color: #f8b600;
 }
+
+
+
+/* baru */
+
+
+  #map {
+    border: 1px solid #ccc;
+    height: 500px;
+    z-index: 1;
+  }
+
+  @media (min-width: 992px) {
+    #map {
+      height: 800px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    #logo span {
+      display: none;
+    }
+  }
