@@ -3,29 +3,30 @@
         Options -MultiViews
     </IfModule>
 
-    RewriteEngine On
+RewriteEngine On
 
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^([^.]+)$ $1.php [NC,L]
+# Remove .php extension from URL
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^.]+)$ $1.php [NC,L]
 
-    # Handle Authorization Header
-    RewriteCond %{HTTP:Authorization} .
-    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+# Handle Authorization Header
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
-    # Redirect Trailing Slashes If Not A Folder...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R=301]
+# Redirect Trailing Slashes If Not A Folder...
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} (.+)/$
+RewriteRule ^ %1 [L,R=301]
 
-    # Redirect directories to non-trailing slash URL
-    RewriteCond %{REQUEST_FILENAME} -d
-    RewriteRule ^(.*)/$ /$1 [L,R=301]
+# Redirect directories to non-trailing slash URL
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.*)/$ /$1 [L,R=301]
 
-    # Send Requests To Front Controller...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [L]
+# Send Requests To Front Controller...
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [L]
 
-    # Custom error page for 403 Forbidden error
-    ErrorDocument 403 /error/403error.html
+# Custom error page for 403 Forbidden error
+ErrorDocument 403 /error/403error.html
 </IfModule>
