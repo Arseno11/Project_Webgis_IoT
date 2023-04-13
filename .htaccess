@@ -1,6 +1,6 @@
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
-        Options -MultiViews -Indexes
+        Options -MultiViews
     </IfModule>
 
     RewriteEngine On
@@ -23,25 +23,6 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 
-    # Redirect Direct Access To Files To Error Page
-    RewriteCond %{THE_REQUEST} \.php[\ /?].*HTTP/ [NC]
-    RewriteRule ^ - [R=404,L]
-
-    # Allow access to admin directory
-    RewriteCond %{REQUEST_URI} ^/admin/.*$ [NC]
-    RewriteRule ^ - [L]
-
-    # Redirect to login page if user is not authenticated
-    RewriteCond %{REQUEST_URI} !^/admin/login\.php$ [NC]
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{ENV:REDIRECT_STATUS} ^$
-    RewriteRule ^ /admin/login.php [L]
-
     # Custom error page for 403 Forbidden error
     ErrorDocument 403 /error/403error.html
-    # Custom error page for 404 Not Found error
-    ErrorDocument 404 /error/404error.html
-    # Custom error page for 500 Internal Server error
-    ErrorDocument 500 /error/500error.html
 </IfModule>
