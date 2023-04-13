@@ -79,9 +79,9 @@
             </div>
             <nav id=" nav-menu-container">
               <ul class="nav-menu">
-                <li><a href="index.php">Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li><a href="data_alat.php">List Alat</a></li>
-                <li><a href="admin/login.php">Login Admin</a></li>
+                <li><a href="/admin/login.php">Login Admin</a></li>
               </ul>
             </nav><!-- #nav-menu-container -->
           </div>
