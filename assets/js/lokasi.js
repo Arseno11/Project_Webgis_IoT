@@ -296,9 +296,9 @@ function updateData() {
           }
 
           if (result.hujan < 500) {
-            hujan = '<td><i class="bi bi-cloud-rain-fill"></i>  Hujan</td>';
+            hujan = '<td><i class="fas fa-cloud-showers-heavy"></i> Hujan</td>';
           } else {
-            hujan = '<i class="bi bi-brightness-high-fill"></i> Cerah</td>';
+            hujan = '<td><i class="fas fa-sun"></i> Cerah</td>';
           }
 
           html += `
