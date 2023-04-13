@@ -1,5 +1,25 @@
 <?php include "header.php"; ?>
 
+<style>
+#map {
+  border: 1px solid #ccc;
+  height: 500px;
+  z-index: 1;
+}
+
+@media (min-width: 992px) {
+  #map {
+    height: 800px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #logo span {
+    display: none;
+  }
+}
+</style>
+
 <body>
   <header id="header">
     <div class="header-top">
@@ -50,7 +70,7 @@
             dipasang.
             Aplikasi ini memuat informasi dan lokasi dari Alat.
           </p>
-          <a href="#peta_alat" class="primary-btn text-uppercase">Lihat Detail</a>
+          <a href="#main" class="primary-btn text-uppercase">Lihat Detail</a>
         </div>
 
       </div>
@@ -63,56 +83,58 @@
 
 
     <!-- Start about-info Area -->
-    <section class="price-area mb-10 section-gap">
-      <section id="peta_alat" class="about-info-area mt-5">
-        <div class="container col-xl-8">
-
+    <section id="peta" class="price-area mb-10 mt-30 ">
+      <section id="peta_alat" class="about-info-area mt-50">
+        <div class="col-12">
           <div class="title text-center">
             <h1 class="mb-10">Peta Lokasi Alat</h1>
-            <br>
           </div>
-          <div class="col-xl-12">
-            <div class="card ">
-              <div class="card-body ">
-                <div id="map" style="width:100%;height:680px; z-index: 1;"></div>
-              </div>
+        </div>
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <div id="map"></div>
             </div>
           </div>
         </div>
       </section>
-      <!-- End about-info Area -->
+    </section>
 
-      <section id="list-alat">
-        <div class="container mt-5">
-          <div class="row d-flex justify-content-center mt-10">
-            <div class="menu-content pb-9 col-lg-8">
-              <div class="title text-center">
-                <h1 class="mb-10">Tabel Alat</h1>
-                <p>Menampilkan jumlah alat yang terpasang
-                </p>
-              </div>
+
+
+    <!-- End about-info Area -->
+
+    <section id="list-alat" class="mt-15 mb-5">
+      <div class="container mt-2">
+        <div class="row d-flex justify-content-center mt-10">
+          <div class="menu-content pb-9 col-lg-8">
+            <div class="title text-center">
+              <h1 class="mt-20 mb-10">Tabel Alat</h1>
+              <p>Menampilkan jumlah alat yang terpasang
+              </p>
             </div>
-            <table class="table table-striped table-dark mb-10">
-              <thead class="table-dark">
-                <tr>
-                  <th scope=" col">#</th>
-                  <th scope="col">Device Name</th>
-                  <th scope="col">Jarak</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Cuaca</th>
-                </tr>
-              </thead>
-              <tbody id="data">
-              </tbody>
-            </table>
           </div>
-      </section>
+          <table class="table table-striped table-dark mb-10">
+            <thead class="table-dark">
+              <tr>
+                <th scope=" col">#</th>
+                <th scope="col">Device Name</th>
+                <th scope="col">Jarak</th>
+                <th scope="col">Status</th>
+                <th scope="col">Cuaca</th>
+              </tr>
+            </thead>
+            <tbody id="data">
+            </tbody>
+          </table>
+        </div>
+    </section>
 
-
-      <section>
+    <div>
+      <section class="mb-5 mt-10">
         <div class='waktu text-center' id='waktu'></div></br>
       </section>
-
+    </div>
     </section>
     <!-- End testimonial Area -->
 
@@ -136,6 +158,8 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
   <script src="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
 
+  <!-- Load EasyButton JavaScript -->
+  <script src="https://unpkg.com/leaflet-easybutton/src/easy-button.js"></script>
   <!-- Load Leaflet Routing Machine CSS dan JavaScript -->
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.css"
@@ -144,6 +168,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js"
     integrity="sha512-5Z1nU6RljLpOhwYFgzsyI1x8y9JpcTfyTJPNMfE3nbVDsZzffJQ3q3G1BLb0xIy8PjjhLoC0yJ+0XXdPzZL/Xw=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
 
 
   <script src="assets/js/lokasi.js"></script>

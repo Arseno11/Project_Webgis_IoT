@@ -1,8 +1,8 @@
 <?php
 $host = "localhost";
-$user = "root";
-$pass = "";
-$name = "tugas_akhir";
+$user = "asiw6467_arsen";
+$pass = "Arseno123#";
+$name = "asiw6467_banjir";
 
 $koneksi = mysqli_connect($host, $user, $pass, $name);
 if (mysqli_connect_errno()) {

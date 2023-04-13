@@ -264,6 +264,51 @@ include "koneksi.php";
 
             <?php include "footer.php"; ?>
 
+            <script>
+                // Add SweetAlert confirmation dialog to delete link
+                var deleteLinks = document.querySelectorAll('.delete-link');
+                deleteLinks.forEach(function(link) {
+                    link.addEventListener('click', function(event) {
+                        event.preventDefault();
+
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: "You won't be able to revert this!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, delete it!'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // If user confirms delete, redirect to delete script
+                                window.location.href = link.href;
+                            }
+                        })
+                    });
+                });
+
+                // Get parameter from URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const deleteStatus = urlParams.get('delete');
+
+                if (deleteStatus === 'success') {
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Your file has been deleted.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                } else if (deleteStatus === 'failed') {
+                    Swal.fire({
+                        title: 'Failed to delete!',
+                        text: 'Your file has not been deleted.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            </script>
+
 </body>
 
 </html>
