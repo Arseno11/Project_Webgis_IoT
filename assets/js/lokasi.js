@@ -319,6 +319,7 @@ function updateData() {
 }
 
 $(document).ready(function() {
+  localStorage.clear();
   showAlertOnLoad();
 });
 

@@ -177,9 +177,9 @@
     integrity="sha512-5Z1nU6RljLpOhwYFgzsyI1x8y9JpcTfyTJPNMfE3nbVDsZzffJQ3q3G1BLb0xIy8PjjhLoC0yJ+0XXdPzZL/Xw=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
 
 
   <script src="assets/js/lokasi.js"></script>
