@@ -41,7 +41,7 @@
                 </thead>
                 <tbody>
                   <?php
-                  $data = file_get_contents('ambildata.php');
+                  $data = file_get_contents('https://arsen.asistenrumahkopi.com/ambildata.php');
                   $no = 1;
                   if (json_decode($data, true)) {
                     $obj = json_decode($data);
