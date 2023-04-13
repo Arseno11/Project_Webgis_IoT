@@ -104,7 +104,7 @@
 
     <!-- End about-info Area -->
     <section id="list-alat" class="mt-15 mb-5">
-      <div class="container-fluid mt-2">
+      <div class="container mt-2">
         <div class="row d-flex justify-content-center mt-10">
           <div class="menu-content pb-9 col-lg-8">
             <div class="title text-center">
@@ -136,6 +136,7 @@
         </div>
       </div>
     </section>
+
 
 
     <div>
