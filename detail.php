@@ -24,6 +24,42 @@ $title = "Detail dan Lokasi : " . $nama_alat;
 ?>
 
 
+<header id="header">
+  <div class="header-top">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 col-sm-6 col-6 header-top-left">
+        </div>
+        <div class="col-lg-6 col-sm-6 col-6 header-top-right">
+          <div class="header-social">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-dribbble"></i></a>
+            <a href="#"><i class="fa fa-behance"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container main-menu">
+    <div class="row align-items-center justify-content-between d-flex">
+      <div id="logo"">
+                    <a href=" index.php"><img src="./img/logo.png" alt="Logo" title=""
+          style="width: 30px; height: 30px;" /><span style="color: white; font-weight: 500; padding: 5px;">PENDETEKSI
+          BANJIR</span>
+        </a>
+      </div>
+      <nav id=" nav-menu-container">
+        <ul class="nav-menu">
+          <li><a href="index.php">Home</a></li>
+          <li><a href="data_alat.php">List Alat</a></li>
+          <li><a href="admin/login.php">Login Admin</a></li>
+        </ul>
+      </nav><!-- #nav-menu-container -->
+    </div>
+  </div>
+</header><!-- #header -->
+
 <!-- start banner Area -->
 <section class="about-banner relative">
   <div class="overlay overlay-bg"></div>
@@ -95,22 +131,22 @@ $title = "Detail dan Lokasi : " . $nama_alat;
 </script>
 
 <script>
-  function initialize() {
-    // Buat objek peta
-    var map = L.map('map-canvas').setView([<?php echo $lat ?>, <?php echo $long ?>], 13);
+function initialize() {
+  // Buat objek peta
+  var map = L.map('map-canvas').setView([<?php echo $lat ?>, <?php echo $long ?>], 13);
 
-    // Tambahkan layer peta
-    L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-      maxZoom: 20,
-      subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
-    }).addTo(map);
+  // Tambahkan layer peta
+  L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+    maxZoom: 20,
+    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+  }).addTo(map);
 
-    // Tambahkan marker pada peta
-    var marker = L.marker([<?php echo $lat ?>, <?php echo $long ?>]).addTo(map);
+  // Tambahkan marker pada peta
+  var marker = L.marker([<?php echo $lat ?>, <?php echo $long ?>]).addTo(map);
 
-    // Tambahkan pop-up pada marker
-    marker.bindPopup('<h5><?php echo $nama_alat ?></h5><p><?php echo $alamat ?></p>').openPopup();
-  }
-  initialize();
+  // Tambahkan pop-up pada marker
+  marker.bindPopup('<h5><?php echo $nama_alat ?></h5><p><?php echo $alamat ?></p>').openPopup();
+}
+initialize();
 </script>
 <?php include "footer.php"; ?>
