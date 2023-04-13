@@ -191,25 +191,8 @@ navigator.geolocation.getCurrentPosition(function (location) {
       marker.addTo(map);
       markers.push(marker);
       // Menambahkan event listener mouseover pada marker
-      // Menghapus event listener click dan menambahkan event listener mouseover
-      // Menambahkan event listener click pada marker
       marker.on('click', function () {
-        // Jika popup belum terbuka
-        if (!currentPopup) {
-          // Buka popup
-          this.openPopup();
-          // Simpan popup yang sedang terbuka
-          currentPopup = this.getPopup();
-        } else {
-          // Jika popup sudah terbuka
-          // Tutup popup
-          this.closePopup();
-          // Jika popup yang sedang terbuka adalah popup dari marker ini
-          if (currentPopup === this.getPopup()) {
-            // Ubah nilai dari currentPopup menjadi null
-            currentPopup = null;
-          }
-        }
+        this.openPopup();
       });
     }
   }
@@ -254,7 +237,7 @@ navigator.geolocation.getCurrentPosition(function (location) {
   function refreshData() {
     setInterval(function () {
       loadData();
-    }, 2000); // set interval ke 5 detik (5000 ms)
+    }, 3000); // set interval ke 5 detik (5000 ms)
   }
 
   // panggil fungsi refreshData() saat halaman dimuat
@@ -350,7 +333,7 @@ function updateData() {
 function refreshData() {
   setInterval(function () {
     updateData();
-  }, 1000); // set interval ke 5 detik (5000 ms)
+  }, 2000); // set interval ke 5 detik (5000 ms)
 }
 
 // panggil fungsi refreshData() saat halaman dimuat
