@@ -320,8 +320,10 @@ function updateData() {
 
 $(document).ready(function() {
   localStorage.clear();
-  showAlertOnLoad();
 });
+
+// tambahkan event listener untuk event beforeunload
+window.addEventListener('beforeunload', clearLocalStorage);
 
 // fungsi untuk melakukan refresh data setiap 5 detik
 function refreshData() {
