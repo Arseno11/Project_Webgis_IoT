@@ -265,7 +265,7 @@ window.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-window.addEventListener('beforeunload', function() {
+window.addEventListener('beforeunload', function () {
   localStorage.removeItem('showAlert');
 });
 
@@ -296,9 +296,9 @@ function updateData() {
           }
 
           if (result.hujan < 500) {
-            hujan = '<td><i class="fa-solid fa-cloud-rain"></i> Hujan</td>';
+            hujan = '<td><i class="fas fa-cloud-sun"></i> Hujan</td>';
           } else {
-            hujan = '<td>Cerah</td>';
+            hujan = '<td><i class="fas fa-sun"></i> Cerah</td>';
           }
 
           html += `
