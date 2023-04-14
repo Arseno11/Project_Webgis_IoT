@@ -34,8 +34,8 @@
       <div class="col-12" data-aos="fade-up" data-aos-delay="100">
         <div class="card">
           <div class="card-body">
+            <div id="loading">Loading map...</div>
             <div id="map">
-              <div id="loading">Loading map...</div>
             </div>
           </div>
         </div>

@@ -12,16 +12,16 @@ navigator.geolocation.getCurrentPosition(function (location) {
       scrollWheelZoom: false // Menonaktifkan zoom dengan scroll
     });
 
+    // Tambahkan layer base map dari Google Maps
+    L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+      maxZoom: 20,
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+    }).addTo(map);
+
     map.on('load', function () {
       document.getElementById('loading').style.display = 'none';
     });
   }, 3000);
-
-  // Tambahkan layer base map dari Google Maps
-  L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-    maxZoom: 20,
-    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
-  }).addTo(map);
 
   var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
