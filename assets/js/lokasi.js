@@ -1,6 +1,3 @@
-
-  AOS.init();
-
 navigator.geolocation.getCurrentPosition(function (location) {
   var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
 
@@ -15,8 +12,6 @@ navigator.geolocation.getCurrentPosition(function (location) {
     maxZoom: 20,
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
   }).addTo(map);
-
-
 
   var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
