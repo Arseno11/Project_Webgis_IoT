@@ -18,93 +18,95 @@ navigator.geolocation.getCurrentPosition(function (location) {
       subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
     }).addTo(map);
 
+
+
+    var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
+    });
+
+    var googleSatelliteLayer = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+      maxZoom: 20,
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+      detectRetina: true
+    });
+
+    var googleStreetsLayer = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+      maxZoom: 20,
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+      detectRetina: true
+    });
+
+
+    var populationLayer = L.tileLayer('https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
+    });
+
+    var bordersLayer = L.tileLayer('https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, <a href="https://hot.openstreetmap.org/">Humanitarian OpenStreetMap Team</a>'
+    });
+
+
+    var baseMaps = {
+      "OpenStreetMap": osmLayer,
+      "Google Satellite": googleSatelliteLayer,
+      "Google Streets": googleStreetsLayer,
+    };
+
+    var overlayMaps = {
+      "Population Density": populationLayer,
+      "Borders": bordersLayer,
+    };
+
+    L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+    const legend = L.control.Legend({
+      title: "Status Icon",
+      position: "bottomright",
+      collapsed: true, // Set default state to collapsed
+      symbolWidth: 30,
+      opacity: 1,
+      column: 2,
+      legends: [{
+        label: "Bahaya",
+        type: "image",
+        url: "img/bahaya.png",
+      }, {
+        label: "Awas",
+        type: "image",
+        url: "img/awas.png"
+      }, {
+        label: "Aman",
+        type: "image",
+        url: "img/aman.png"
+      }]
+    }).addTo(map);
+
+    var lc = L.control.locate({
+      position: 'topleft',
+      icon: 'fa fa-user', // menggunakan ikon map-marker
+      iconLoading: 'fa fa-spinner fa-spin',
+      setView: 'once',
+      locateOptions: {
+        maxZoom: 30,
+        enableHighAccuracy: true
+      },
+      style: {
+        // mengubah gaya ikon untuk membuatnya lebih besar dan berwarna biru seperti Google
+        fillColor: '#4285F4',
+        fillOpacity: 0.8,
+        stroke: false,
+        radius: 10
+      },
+      iconSize: [50, 50]
+    }).addTo(map);
+
     map.on('load', function () {
       document.getElementById('loader').style.display = 'none';
     });
   }, 3000);
-
-  var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
-  });
-
-  var googleSatelliteLayer = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
-    maxZoom: 20,
-    subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-    detectRetina: true
-  });
-
-  var googleStreetsLayer = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-    maxZoom: 20,
-    subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-    detectRetina: true
-  });
-
-
-  var populationLayer = L.tileLayer('https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
-    maxZoom: 18,
-    attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
-  });
-
-  var bordersLayer = L.tileLayer('https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, <a href="https://hot.openstreetmap.org/">Humanitarian OpenStreetMap Team</a>'
-  });
-
-
-  var baseMaps = {
-    "OpenStreetMap": osmLayer,
-    "Google Satellite": googleSatelliteLayer,
-    "Google Streets": googleStreetsLayer,
-  };
-
-  var overlayMaps = {
-    "Population Density": populationLayer,
-    "Borders": bordersLayer,
-  };
-
-  L.control.layers(baseMaps, overlayMaps).addTo(map);
-
-  const legend = L.control.Legend({
-    title: "Status Icon",
-    position: "bottomright",
-    collapsed: true, // Set default state to collapsed
-    symbolWidth: 30,
-    opacity: 1,
-    column: 2,
-    legends: [{
-      label: "Bahaya",
-      type: "image",
-      url: "img/bahaya.png",
-    }, {
-      label: "Awas",
-      type: "image",
-      url: "img/awas.png"
-    }, {
-      label: "Aman",
-      type: "image",
-      url: "img/aman.png"
-    }]
-  }).addTo(map);
-
-  var lc = L.control.locate({
-    position: 'topleft',
-    icon: 'fa fa-user', // menggunakan ikon map-marker
-    iconLoading: 'fa fa-spinner fa-spin',
-    setView: 'once',
-    locateOptions: {
-      maxZoom: 30,
-      enableHighAccuracy: true
-    },
-    style: {
-      // mengubah gaya ikon untuk membuatnya lebih besar dan berwarna biru seperti Google
-      fillColor: '#4285F4',
-      fillOpacity: 0.8,
-      stroke: false,
-      radius: 10
-    },
-    iconSize: [50, 50]
-  }).addTo(map);
 
   // deklarasi variabel untuk menyimpan popup yang sedang terbuka
   let currentPopup = null;
