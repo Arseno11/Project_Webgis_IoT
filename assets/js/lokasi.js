@@ -2,7 +2,7 @@ navigator.geolocation.getCurrentPosition(function (location) {
   var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
 
   // Tampilkan elemen loading
-  document.getElementById('loading').style.display = 'block';
+  document.getElementById('loader').style.display = 'block';
 
   // Setelah 3 detik, muat peta dan sembunyikan elemen loading
   setTimeout(function () {
@@ -19,7 +19,7 @@ navigator.geolocation.getCurrentPosition(function (location) {
     }).addTo(map);
 
     map.on('load', function () {
-      document.getElementById('loading').style.display = 'none';
+      document.getElementById('loader').style.display = 'none';
     });
   }, 3000);
 
