@@ -103,155 +103,156 @@ navigator.geolocation.getCurrentPosition(function (location) {
       iconSize: [50, 50]
     }).addTo(map);
 
-    map.on('load', function () {
-      document.getElementById('loader').style.display = 'none';
-    });
-  }, 3000);
 
-  // deklarasi variabel untuk menyimpan popup yang sedang terbuka
-  let currentPopup = null;
+    // deklarasi variabel untuk menyimpan popup yang sedang terbuka
+    let currentPopup = null;
 
 
-  // fungsi untuk memanggil data dari API
-  async function loadData() {
-    try {
-      const response = await fetch('ambildata.php');
-      if (!response.ok) {
-        throw new Error('Terjadi kesalahan saat memuat data.');
+    // fungsi untuk memanggil data dari API
+    async function loadData() {
+      try {
+        const response = await fetch('ambildata.php');
+        if (!response.ok) {
+          throw new Error('Terjadi kesalahan saat memuat data.');
+        }
+        const data = await response.json();
+
+        // memformat data menjadi objek yang diinginkan
+        const deviceLocations = data.results.map(item => ({
+          id: item.id_alat,
+          name: item.nama_alat,
+          address: item.alamat,
+          jarak: item.jarak,
+          rainfall: item.hujan,
+          longitude: item.longitude,
+          latitude: item.latitude
+        }));
+
+        // Menghapus marker yang telah ada sebelumnya
+        for (let i = 0; i < markers.length; i++) {
+          map.removeLayer(markers[i]);
+        }
+        markers = [];
+
+
+        // Menutup popup yang sedang terbuka jika ada
+        if (currentPopup) {
+          currentPopup._close();
+        }
+
+        // memanggil fungsi untuk menampilkan marker di peta
+        showMarkers(deviceLocations);
+      } catch (error) {
+        console.error(error);
       }
-      const data = await response.json();
-
-      // memformat data menjadi objek yang diinginkan
-      const deviceLocations = data.results.map(item => ({
-        id: item.id_alat,
-        name: item.nama_alat,
-        address: item.alamat,
-        jarak: item.jarak,
-        rainfall: item.hujan,
-        longitude: item.longitude,
-        latitude: item.latitude
-      }));
-
-      // Menghapus marker yang telah ada sebelumnya
-      for (let i = 0; i < markers.length; i++) {
-        map.removeLayer(markers[i]);
-      }
-      markers = [];
-
-
-      // Menutup popup yang sedang terbuka jika ada
-      if (currentPopup) {
-        currentPopup._close();
-      }
-
-      // memanggil fungsi untuk menampilkan marker di peta
-      showMarkers(deviceLocations);
-    } catch (error) {
-      console.error(error);
     }
-  }
 
-  // fungsi untuk menampilkan marker di peta
-  function showMarkers(deviceLocations) {
+    // fungsi untuk menampilkan marker di peta
+    function showMarkers(deviceLocations) {
 
-    // Membuat loop untuk setiap lokasi alat
-    for (var i = 0; i < deviceLocations.length; i++) {
-      var deviceLocation = deviceLocations[i];
+      // Membuat loop untuk setiap lokasi alat
+      for (var i = 0; i < deviceLocations.length; i++) {
+        var deviceLocation = deviceLocations[i];
 
-      // Memeriksa status hujan dan jarak air
-      // Memeriksa status hujan dan jarak air
-      let iconUrl;
-      let status;
-      let currentCircle = null; // inisialisasi variabel
+        // Memeriksa status hujan dan jarak air
+        // Memeriksa status hujan dan jarak air
+        let iconUrl;
+        let status;
+        let currentCircle = null; // inisialisasi variabel
 
-      if (deviceLocation.jarak <= 10) {
-        // Menentukan ikon marker dan konten popup
-        iconUrl = 'img/bahaya.png';
-        status = 'Bahaya';
-      } else if (deviceLocation.jarak <= 25) {
-        iconUrl = 'img/awas.png';
-        status = 'Awas';
-      } else {
-        iconUrl = 'img/aman.png';
-        status = 'Aman';
-      }
+        if (deviceLocation.jarak <= 10) {
+          // Menentukan ikon marker dan konten popup
+          iconUrl = 'img/bahaya.png';
+          status = 'Bahaya';
+        } else if (deviceLocation.jarak <= 25) {
+          iconUrl = 'img/awas.png';
+          status = 'Awas';
+        } else {
+          iconUrl = 'img/aman.png';
+          status = 'Aman';
+        }
 
-      // Membuat marker di peta
-      var marker = L.marker([deviceLocation.latitude, deviceLocation.longitude], {
-        title: deviceLocation.name,
-        icon: L.icon({
-          iconUrl: iconUrl,
-          iconSize: [30, 45], // ukuran ikon
-          popupAnchor: [-1, -20]
-        })
-      });
+        // Membuat marker di peta
+        var marker = L.marker([deviceLocation.latitude, deviceLocation.longitude], {
+          title: deviceLocation.name,
+          icon: L.icon({
+            iconUrl: iconUrl,
+            iconSize: [30, 45], // ukuran ikon
+            popupAnchor: [-1, -20]
+          })
+        });
 
-      // Menambahkan popup ke marker
-      var popupContent =
-        `<h6> Nama Alat: ${deviceLocation.name}</h6> 
+        // Menambahkan popup ke marker
+        var popupContent =
+          `<h6> Nama Alat: ${deviceLocation.name}</h6> 
       <h6><p> Status: ${status}</p></h6>
       <h6>Jarak Air: ${deviceLocation.jarak} cm</h6></br>
       <a class='btn btn-success btn-sm' href='detail.php?id_alat=${deviceLocation.id}'> Info Detail </a>
       <a class='btn btn-warning btn-sm' target='_blank' href='https://www.google.com/maps/dir/?api=1&origin=${location.coords.latitude},${location.coords.longitude}&destination=${deviceLocation.latitude},${deviceLocation.longitude}&travelmode=driving'>Rute</a>`;
 
-      // Menambahkan konten popup ke marker
-      marker.bindPopup(popupContent);
-      // Menambahkan marker ke peta dan ke array markers
-      marker.addTo(map);
-      markers.push(marker);
-      // Menambahkan event listener mouseover pada marker
-      marker.on('click', function () {
-        this.openPopup();
-      });
-    }
-  }
-
-  // Array untuk menyimpan marker
-  markers = [];
-
-  // fungsi untuk memanggil data dari API
-  async function loadData() {
-    try {
-      const response = await fetch('ambildata.php');
-      if (!response.ok) {
-        throw new Error('Terjadi kesalahan saat memuat data.');
+        // Menambahkan konten popup ke marker
+        marker.bindPopup(popupContent);
+        // Menambahkan marker ke peta dan ke array markers
+        marker.addTo(map);
+        markers.push(marker);
+        // Menambahkan event listener mouseover pada marker
+        marker.on('click', function () {
+          this.openPopup();
+        });
       }
-      const data = await response.json(); // memformat data menjadi objek yang diinginkan
-      const deviceLocations = data.results.map(item => ({
-        id: item.id_alat,
-        name: item.nama_alat,
-        address: item.alamat,
-        jarak: item.jarak,
-        rainfall: item.hujan,
-        longitude: item.longitude,
-        latitude: item.latitude
-      }));
-
-      // Menghapus marker yang telah ada sebelumnya
-      for (let i = 0; i < markers.length; i++) {
-        map.removeLayer(markers[i]);
-      }
-      markers = [];
-
-      // memanggil fungsi untuk menampilkan marker di peta
-      showMarkers(deviceLocations);
-
-    } catch (error) {
-      console.error(error);
     }
 
-  }
+    // Array untuk menyimpan marker
+    markers = [];
 
-  // fungsi untuk melakukan refresh data setiap 5 detik
-  function refreshData() {
-    setInterval(function () {
-      loadData();
-    }, 3000); // set interval ke 5 detik (5000 ms)
-  }
+    // fungsi untuk memanggil data dari API
+    async function loadData() {
+      try {
+        const response = await fetch('ambildata.php');
+        if (!response.ok) {
+          throw new Error('Terjadi kesalahan saat memuat data.');
+        }
+        const data = await response.json(); // memformat data menjadi objek yang diinginkan
+        const deviceLocations = data.results.map(item => ({
+          id: item.id_alat,
+          name: item.nama_alat,
+          address: item.alamat,
+          jarak: item.jarak,
+          rainfall: item.hujan,
+          longitude: item.longitude,
+          latitude: item.latitude
+        }));
 
-  // panggil fungsi refreshData() saat halaman dimuat
-  refreshData();
-});
+        // Menghapus marker yang telah ada sebelumnya
+        for (let i = 0; i < markers.length; i++) {
+          map.removeLayer(markers[i]);
+        }
+        markers = [];
+
+        // memanggil fungsi untuk menampilkan marker di peta
+        showMarkers(deviceLocations);
+
+      } catch (error) {
+        console.error(error);
+      }
+
+    }
+
+    // fungsi untuk melakukan refresh data setiap 5 detik
+    function refreshData() {
+      setInterval(function () {
+        loadData();
+      }, 3000); // set interval ke 5 detik (5000 ms)
+    }
+
+    // panggil fungsi refreshData() saat halaman dimuat
+    refreshData();
+  });
+
+  map.on('load', function () {
+    document.getElementById('loader').style.display = 'none';
+  });
+}, 3000);
 
 // Fungsi untuk menampilkan SweetAlert
 function showAlert(icon, title, text) {
