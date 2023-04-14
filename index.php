@@ -2,7 +2,7 @@
 
 <!-- start banner Area -->
 <section class="banner-area relative">
-  <div class="overlay overlay-bg" data-aos="fade-up" data-aos-delay="100"></div>
+  <div class="overlay overlay-bg"></div>
   <div class="container">
     <div class="row fullscreen align-items-center justify-content-between">
       <div class="col-lg-6 col-md-6 banner-left">
