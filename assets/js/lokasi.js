@@ -1,3 +1,6 @@
+
+  AOS.init();
+
 navigator.geolocation.getCurrentPosition(function (location) {
   var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
 
