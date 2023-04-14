@@ -248,7 +248,6 @@ window.addEventListener('DOMContentLoaded', function() {
   if (localStorage.getItem('showAlert') !== 'false') {
     showAlert('success', 'Selamat Datang', 'Ini adalah halaman deteksi dini banjir');
   }
-  localStorage.removeItem('showAlert');
 });
 
 // Fungsi untuk menampilkan SweetAlert
