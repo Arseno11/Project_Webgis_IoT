@@ -114,8 +114,9 @@
 <!-- Load EasyButton JavaScript -->
 <script src="https://unpkg.com/leaflet-easybutton/src/easy-button.js"></script>
 <!-- Load Leaflet Routing Machine CSS dan JavaScript -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.css" integrity="sha512-qng4v4a4lWljj9K63DRElN5vS8Fmq5Kln13hPCwulLFGUv7mUy+Qbl9acFq+B3gOv7qwBm1Jz6DNxlY6Ov4izA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js" integrity="sha512-5Z1nU6RljLpOhwYFgzsyI1x8y9JpcTfyTJPNMfE3nbVDsZzffJQ3q3G1BLb0xIy8PjjhLoC0yJ+0XXdPzZL/Xw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js">
+</script>
 
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
