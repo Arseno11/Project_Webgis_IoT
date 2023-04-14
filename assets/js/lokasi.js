@@ -79,12 +79,11 @@ navigator.geolocation.getCurrentPosition(function (location) {
 
   var lc = L.control.locate({
     position: 'topleft',
-    icon: 'fa fa-map-marker', // menggunakan ikon map-marker
+    icon: 'fa fa-user', // menggunakan ikon map-marker
     iconLoading: 'fa fa-spinner fa-spin',
     setView: 'once',
     locateOptions: {
-      maxZoom: 16,
-      setView: 'once',
+      maxZoom: 30,
       enableHighAccuracy: true
     },
     style: {
@@ -94,7 +93,7 @@ navigator.geolocation.getCurrentPosition(function (location) {
       stroke: false,
       radius: 10
     },
-    iconSize: [40, 40]
+    iconSize: [50, 50]
   }).addTo(map);
 
   // deklarasi variabel untuk menyimpan popup yang sedang terbuka
