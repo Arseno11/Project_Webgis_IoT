@@ -246,7 +246,7 @@ navigator.geolocation.getCurrentPosition(function (location) {
 // Menampilkan SweetAlert ketika halaman pertama kali dibuka
 window.addEventListener('DOMContentLoaded', function() {
   if (localStorage.getItem('showAlert') !== 'false') {
-    showAlert('seccess', 'Selamat Datang', 'Ini adalah halaman deteksi dini banjir');
+    showAlert('success', 'Selamat Datang', 'Ini adalah halaman deteksi dini banjir');
   }
   localStorage.removeItem('showAlert');
 });
@@ -303,7 +303,7 @@ function updateData() {
           } else if (result.jarak > 10 && result.jarak <= 25) {
             siaga = '<td style=color:yellow>Siaga 2</td>';
             if (localStorage.getItem('showAlert_' + result.id_alat) !== 'false') {
-              showAlert('warning', 'Peringatan Banjir', 'Jarak sensor telah mencapai Siaga 2 untuk Alat Dengan Nama ' + result.nama_alat);
+              showAlert('info', 'Peringatan Banjir', 'Jarak sensor telah mencapai Siaga 2 untuk Alat Dengan Nama ' + result.nama_alat);
               localStorage.setItem('showAlert_' + result.id_alat, 'false');
             }
           } else {
