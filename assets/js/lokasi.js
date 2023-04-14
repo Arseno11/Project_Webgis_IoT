@@ -1,10 +1,21 @@
 navigator.geolocation.getCurrentPosition(function (location) {
   var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
 
-  var map = L.map('map', {
+var map = L.map('map', {
     center: [-7.782793615552607, 110.36728950566525],
     zoom: 13,
-    scrollWheelZoom: false // Menonaktifkan zoom dengan scroll
+    scrollWheelZoom: false,
+    // menambahkan opsi loading
+    loadingControl: true
+  });
+
+  L.Control.loading({
+    separate: true // mengatur agar kontrol loading ditampilkan di luar peta
+  }).addTo(map);
+
+  // Setelah peta dimuat, hilangkan tampilan loading
+  map.on('load', function() {
+    map.removeControl(map.loadingControl);
   });
 
   // Tambahkan layer base map dari Google Maps

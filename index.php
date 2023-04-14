@@ -93,10 +93,15 @@
 <link rel="stylesheet" href="assets/leaflet/leaflet.css" />
 <script src="assets/leaflet/leaflet.js"></script>
 <link rel="stylesheet" href="js/LeafletLegend/src/leaflet.legend.css">
+
 <script src="js/LeafletLegend/src/leaflet.legend.js"> </script>
 
-<script src="/js/L.switchBasemap/src/L.switchBasemap.css"></script>
+<link rel="stylesheet" href="/js/L.switchBasemap/src/L.switchBasemap.css">
 <script src="/js/L.switchBasemap/src/L.switchBasemap.js"></script>
+
+
+<link rel="stylesheet" href="/js/Leaflet.loading/src/Control.Loading.css">
+<script src="/js/Leaflet.loading/src/Control.Loading.js"></script>
 
 <link rel="stylesheet" href="/js/tagfilter/src/leaflet-tag-filter-button.css" />
 <script src="/js/tagfilter/src/leaflet-tag-filter-button.js"></script>
