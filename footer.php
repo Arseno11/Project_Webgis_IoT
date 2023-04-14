@@ -78,7 +78,3 @@
 <script src="assets/js/owl.carousel.min.js"></script>
 <script src="assets/js/mail-script.js"></script>
 <script src="assets/js/main.js"></script>
-
-<script>
-  AOS.init();
-</script>

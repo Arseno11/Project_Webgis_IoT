@@ -121,6 +121,8 @@
 
 
 <script type="text/javascript">
+  AOS.init();
+
   function tampilkanWaktu() {
     // Mengambil objek tanggal dan waktu saat ini
     const tanggal = new Date();
