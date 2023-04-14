@@ -23,32 +23,11 @@
             </div>
             <div class="col">
               <ul>
-                <!-- <li><a href="#">Team</a></li>
-									<li><a href="#">Pricing</a></li>
-									<li><a href="#">Blog</a></li>
-									<li><a href="#">Contact</a></li> -->
               </ul>
             </div>
           </div>
         </div>
       </div>
-      <!-- <div class="col-lg-3  col-md-6 col-sm-6">
-                <div class="single-footer-widget">
-                    <h6>Newsletter</h6>
-                    <p>
-                        For business professionals caught between high OEM price and mediocre print and graphic
-                        output.
-                    </p>
-                </div>
-            </div> -->
-      <!-- <div class="col-lg-3  col-md-6 col-sm-6">
-        <div class="single-footer-widget mail-chimp">
-          <h6 class="mb-20">InstaFeed</h6>
-          <ul class="instafeed d-flex flex-wrap">
-
-          </ul>
-        </div>
-      </div> -->
     </div>
 
     <div class="row footer-bottom d-flex justify-content-between align-items-center">

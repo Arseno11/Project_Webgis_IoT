@@ -2,7 +2,7 @@
 
 <!-- start banner Area -->
 <section class="banner-area relative">
-  <div class="overlay overlay-bg"></div>
+  <div class="overlay overlay-bg" data-aos="fade-up" data-aos-delay="100"></div>
   <div class="container">
     <div class="row fullscreen align-items-center justify-content-between">
       <div class="col-lg-6 col-md-6 banner-left">
@@ -23,8 +23,6 @@
 <!-- End banner Area -->
 
 <main id="main">
-
-
   <!-- Start about-info Area -->
   <section id="peta" class="price-area mb-10 mt-30" data-aos="fade-up" data-aos-delay="100">
     <section id="peta_alat" class="about-info-area mt-50">
@@ -33,7 +31,7 @@
           <h1 class="mb-10">Peta Lokasi Alat</h1>
         </div>
       </div>
-      <div class="col-12">
+      <div class="col-12" data-aos="fade-up" data-aos-delay="100">
         <div class="card">
           <div class="card-body">
             <div id="map"></div>
