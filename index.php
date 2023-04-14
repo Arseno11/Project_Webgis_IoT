@@ -131,8 +131,6 @@
 
 
 <script type="text/javascript">
-  AOS.init();
-
   // delay selama 3 detik
   setTimeout(function() {
     // menyembunyikan loader setelah delay selesai
@@ -140,7 +138,9 @@
 
     // menampilkan konten setelah loader disembunyikan
     document.getElementById("map").style.display = "block";
-  }, 3000);
+  }, 5000);
+
+  AOS.init();
 
   function tampilkanWaktu() {
     // Mengambil objek tanggal dan waktu saat ini
