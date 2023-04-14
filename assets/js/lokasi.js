@@ -299,17 +299,16 @@ function updateData() {
             if (localStorage.getItem('showAlert_' + result.id_alat) !== 'false') {
               showAlert('warning', 'Peringatan Banjir', 'Jarak sensor telah mencapai Siaga 1 untuk Alat Dengan Nama ' + result.nama_alat);
               localStorage.setItem('showAlert_' + result.id_alat, 'false');
-              localStorage.removeItem('showAlert');
             }
           } else if (result.jarak > 10 && result.jarak <= 25) {
             siaga = '<td style=color:yellow>Siaga 2</td>';
             if (localStorage.getItem('showAlert_' + result.id_alat) !== 'false') {
               showAlert('info', 'Peringatan Banjir', 'Jarak sensor telah mencapai Siaga 2 untuk Alat Dengan Nama ' + result.nama_alat);
               localStorage.setItem('showAlert_' + result.id_alat, 'false');
-              localStorage.removeItem('showAlert');
             }
           } else {
             siaga = '<td style=color:green>Aman</td>';
+            localStorage.removeItem('showAlert_' + result.id_alat);
           }
 
           if (result.hujan < 500) {
