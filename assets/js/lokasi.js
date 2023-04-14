@@ -4,24 +4,26 @@ navigator.geolocation.getCurrentPosition(function (location) {
   // Tampilkan elemen loading
   document.getElementById('loader').style.display = 'block';
 
-  // Setelah 3 detik, muat peta dan sembunyikan elemen loading
-  setTimeout(function () {
-    var map = L.map('map', {
+      var map = L.map('map', {
       center: [-7.782793615552607, 110.36728950566525],
       zoom: 13,
       scrollWheelZoom: false // Menonaktifkan zoom dengan scroll
     });
+
+  // Setelah 3 detik, muat peta dan sembunyikan elemen loading
+  setTimeout(function () {
+    // Tambahkan layer base map dari Google Maps
+    L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+      maxZoom: 20,
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+    }).addTo(map);
     
     map.on('load', function () {
       document.getElementById('loader').style.display = 'none';
     });
   }, 3000);
 
-    // Tambahkan layer base map dari Google Maps
-    L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-      maxZoom: 20,
-      subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
-    }).addTo(map);
+
 
 
   var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
