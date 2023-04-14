@@ -26,12 +26,12 @@
   <!-- Start about-info Area -->
   <section id="peta" class="price-area mb-10 mt-30" data-aos="fade-up" data-aos-delay="100">
     <section id="peta_alat" class="about-info-area mt-50">
-      <div class="col-12">
+      <div class="col-12" data-aos="fade-up" data-aos-delay="100">
         <div class="title text-center">
           <h1 class="mb-10">Peta Lokasi Alat</h1>
         </div>
       </div>
-      <div class="col-12" data-aos="fade-up" data-aos-delay="100">
+      <div class="col-12">
         <div class="card">
           <div class="card-body">
             <div class="loader-container">
