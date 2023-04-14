@@ -51,14 +51,13 @@
       <div class="row d-flex justify-content-center mt-10">
         <div class="menu-content pb-9 col-lg-8">
           <div class="title text-center">
-            <h1 class="mt-20 mb-10">Tabel Alat</h1>
+            <h1 class="mt-20 mb-10">Daftar Device</h1>
             <p>Menampilkan jumlah alat yang terpasang</p>
           </div>
         </div>
         <div class="col-lg-8">
           <div class="card mx-auto h-100">
             <div class="card-body">
-              <h5 class="card-title">Daftar Device</h5>
               <div class="table-responsive">
                 <table class="table table-striped table-dark w-100">
                   <thead class="thead-dark">
@@ -112,8 +111,13 @@
 <!-- Load EasyButton JavaScript -->
 <script src="https://unpkg.com/leaflet-easybutton/src/easy-button.js"></script>
 <!-- Load Leaflet Routing Machine CSS dan JavaScript -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.css" integrity="sha512-qng4v4a4lWljj9K63DRElN5vS8Fmq5Kln13hPCwulLFGUv7mUy+Qbl9acFq+B3gOv7qwBm1Jz6DNxlY6Ov4izA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js" integrity="sha512-5Z1nU6RljLpOhwYFgzsyI1x8y9JpcTfyTJPNMfE3nbVDsZzffJQ3q3G1BLb0xIy8PjjhLoC0yJ+0XXdPzZL/Xw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.css"
+  integrity="sha512-qng4v4a4lWljj9K63DRElN5vS8Fmq5Kln13hPCwulLFGUv7mUy+Qbl9acFq+B3gOv7qwBm1Jz6DNxlY6Ov4izA=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js"
+  integrity="sha512-5Z1nU6RljLpOhwYFgzsyI1x8y9JpcTfyTJPNMfE3nbVDsZzffJQ3q3G1BLb0xIy8PjjhLoC0yJ+0XXdPzZL/Xw=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
@@ -124,36 +128,36 @@
 
 
 <script type="text/javascript">
-  function tampilkanWaktu() {
-    // Mengambil objek tanggal dan waktu saat ini
-    const tanggal = new Date();
+function tampilkanWaktu() {
+  // Mengambil objek tanggal dan waktu saat ini
+  const tanggal = new Date();
 
-    // Menyiapkan array hari
-    const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+  // Menyiapkan array hari
+  const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 
-    // Menampilkan waktu, nama hari, dan tanggal dalam elemen div dengan ID "waktu"
-    document.getElementById('waktu').innerHTML =
-      days[tanggal.getDay()] +
-      ', ' +
-      tanggal.getDate() +
-      ' ' +
-      getMonthName(tanggal.getMonth()) +
-      ' ' +
-      tanggal.getFullYear() +
-      '</br>' +
-      tanggal.toLocaleTimeString()
-  }
+  // Menampilkan waktu, nama hari, dan tanggal dalam elemen div dengan ID "waktu"
+  document.getElementById('waktu').innerHTML =
+    days[tanggal.getDay()] +
+    ', ' +
+    tanggal.getDate() +
+    ' ' +
+    getMonthName(tanggal.getMonth()) +
+    ' ' +
+    tanggal.getFullYear() +
+    '</br>' +
+    tanggal.toLocaleTimeString()
+}
 
-  // Mengembalikan nama bulan dari nomor bulan
-  function getMonthName(month) {
-    const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
-      'Oktober', 'November', 'Desember'
-    ];
-    return monthNames[month];
-  }
+// Mengembalikan nama bulan dari nomor bulan
+function getMonthName(month) {
+  const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
+    'Oktober', 'November', 'Desember'
+  ];
+  return monthNames[month];
+}
 
-  // Jalankan fungsi tampilkanWaktu setiap 1 detik
-  setInterval(tampilkanWaktu, 1000);
+// Jalankan fungsi tampilkanWaktu setiap 1 detik
+setInterval(tampilkanWaktu, 1000);
 </script>
 
 </body>
