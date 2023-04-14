@@ -24,9 +24,9 @@
 
 <main id="main">
   <!-- Start about-info Area -->
-  <section id="peta" class="price-area mb-10 mt-30" data-aos="fade-up" data-aos-delay="100">
+  <section id="peta" class="price-area mb-10 mt-30">
     <section id="peta_alat" class="about-info-area mt-50">
-      <div class="col-12">
+      <div class="col-12" data-aos="fade-up" data-aos-delay="100">
         <div class="title text-center">
           <h1 class="mb-10">Peta Lokasi Alat</h1>
         </div>
@@ -48,9 +48,9 @@
 
 
   <!-- End about-info Area -->
-  <section id="list-alat" class="mt-15 mb-5" data-aos="fade-up" data-aos-delay="100">
+  <section id="list-alat" class="mt-15 mb-5">
     <div class="container mt-2">
-      <div class="row d-flex justify-content-center mt-10">
+      <div class="row d-flex justify-content-center mt-10" data-aos="fade-up" data-aos-delay="100">
         <div class="menu-content pb-9 col-lg-8">
           <div class="title text-center">
             <h1 class="mt-20 mb-10">Daftar Device</h1>
