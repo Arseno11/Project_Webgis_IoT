@@ -85,6 +85,7 @@
       <div class='waktu text-center' id='waktu'></div></br>
     </section>
   </div>
+
   </section>
   <!-- End testimonial Area -->
 

@@ -248,6 +248,7 @@ window.addEventListener('DOMContentLoaded', function() {
   if (localStorage.getItem('showAlert') !== 'false') {
     showAlert('success', 'Selamat Datang', 'Ini adalah halaman deteksi dini banjir');
   }
+  localStorage.removeItem('showAlert');
 });
 
 // Fungsi untuk menampilkan SweetAlert
@@ -298,12 +299,14 @@ function updateData() {
             if (localStorage.getItem('showAlert_' + result.id_alat) !== 'false') {
               showAlert('warning', 'Peringatan Banjir', 'Jarak sensor telah mencapai Siaga 1 untuk Alat Dengan Nama ' + result.nama_alat);
               localStorage.setItem('showAlert_' + result.id_alat, 'false');
+              localStorage.removeItem('showAlert');
             }
           } else if (result.jarak > 10 && result.jarak <= 25) {
             siaga = '<td style=color:yellow>Siaga 2</td>';
             if (localStorage.getItem('showAlert_' + result.id_alat) !== 'false') {
               showAlert('info', 'Peringatan Banjir', 'Jarak sensor telah mencapai Siaga 2 untuk Alat Dengan Nama ' + result.nama_alat);
               localStorage.setItem('showAlert_' + result.id_alat, 'false');
+              localStorage.removeItem('showAlert');
             }
           } else {
             siaga = '<td style=color:green>Aman</td>';
