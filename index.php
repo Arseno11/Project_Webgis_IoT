@@ -34,7 +34,9 @@
       <div class="col-12" data-aos="fade-up" data-aos-delay="100">
         <div class="card">
           <div class="card-body">
-            <div id="loader"></div>
+            <div class="loader-container">
+              <div id="loader"></div>
+            </div>
             <div id="map">
             </div>
           </div>
@@ -130,6 +132,15 @@
 
 <script type="text/javascript">
   AOS.init();
+
+  // delay selama 3 detik
+  setTimeout(function() {
+    // menyembunyikan loader setelah delay selesai
+    document.getElementById("loader").style.display = "none";
+
+    // menampilkan konten setelah loader disembunyikan
+    document.getElementById("map").style.display = "block";
+  }, 3000);
 
   function tampilkanWaktu() {
     // Mengambil objek tanggal dan waktu saat ini
