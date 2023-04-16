@@ -243,14 +243,6 @@ navigator.geolocation.getCurrentPosition(function (location) {
 });
 
 
-// Menampilkan SweetAlert ketika halaman pertama kali dibuka
-window.addEventListener('DOMContentLoaded', function() {
-  if (localStorage.getItem('showAlert') !== 'false') {
-    showAlert('success', 'Selamat Datang', 'Ini adalah halaman deteksi dini banjir');
-  }
-  localStorage.removeItem('showAlert');
-});
-
 // Fungsi untuk menampilkan SweetAlert
 function showAlert(icon, title, text) {
   Swal.fire({
