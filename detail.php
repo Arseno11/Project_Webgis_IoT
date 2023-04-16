@@ -45,7 +45,7 @@ $title = "Detail dan Lokasi : " . $nama_alat;
   <div class="container" style="padding-top: 120px;">
     <div class="row">
 
-      <div class="col-md-7" data-aos="fade-up" data-aos-delay="200">
+      <div class="col-md-7">
         <div class="panel panel-info panel-dashboard">
           <div class="panel-heading centered">
             <h2 class="panel-title"><strong>Informasi alat </strong></h4>

@@ -19,7 +19,7 @@
 <section class="about-info-area section-gap">
   <div class="container">
     <div class="row align-items-center">
-      <div class="col-lg-8 mx-auto" data-aos="fade-up" data-aos-delay="100">
+      <div class="col-lg-8 mx-auto">
         <div class="panel panel-info panel-dashboard">
           <div class="panel-heading centered">
             <!-- judul panel -->
