@@ -117,60 +117,55 @@
 <!-- Load EasyButton JavaScript -->
 <script src="https://unpkg.com/leaflet-easybutton/src/easy-button.js"></script>
 <!-- Load Leaflet Routing Machine CSS dan JavaScript -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.css" />
+<link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js">
 </script>
-
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
-
-
 <script src="assets/js/lokasi.js"></script>
 
 
 <script type="text/javascript">
-  // delay selama 3 detik
-  setTimeout(function() {
-    // menyembunyikan loader setelah delay selesai
-    document.getElementById("loader").style.display = "none";
+// delay selama 3 detik
+setTimeout(function() {
+  // menyembunyikan loader setelah delay selesai
+  document.getElementById("loader").style.display = "none";
 
-    // menampilkan konten setelah loader disembunyikan
-    document.getElementById("map").style.display = "block";
-  }, 10000);
+  // menampilkan konten setelah loader disembunyikan
+  document.getElementById("map").style.display = "block";
+}, 10000);
 
-  AOS.init();
+AOS.init();
 
-  function tampilkanWaktu() {
-    // Mengambil objek tanggal dan waktu saat ini
-    const tanggal = new Date();
+function tampilkanWaktu() {
+  // Mengambil objek tanggal dan waktu saat ini
+  const tanggal = new Date();
 
-    // Menyiapkan array hari
-    const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+  // Menyiapkan array hari
+  const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 
-    // Menampilkan waktu, nama hari, dan tanggal dalam elemen div dengan ID "waktu"
-    document.getElementById('waktu').innerHTML =
-      days[tanggal.getDay()] +
-      ', ' +
-      tanggal.getDate() +
-      ' ' +
-      getMonthName(tanggal.getMonth()) +
-      ' ' +
-      tanggal.getFullYear() +
-      '</br>' +
-      tanggal.toLocaleTimeString()
-  }
+  // Menampilkan waktu, nama hari, dan tanggal dalam elemen div dengan ID "waktu"
+  document.getElementById('waktu').innerHTML =
+    days[tanggal.getDay()] +
+    ', ' +
+    tanggal.getDate() +
+    ' ' +
+    getMonthName(tanggal.getMonth()) +
+    ' ' +
+    tanggal.getFullYear() +
+    '</br>' +
+    tanggal.toLocaleTimeString()
+}
 
-  // Mengembalikan nama bulan dari nomor bulan
-  function getMonthName(month) {
-    const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
-      'Oktober', 'November', 'Desember'
-    ];
-    return monthNames[month];
-  }
+// Mengembalikan nama bulan dari nomor bulan
+function getMonthName(month) {
+  const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
+    'Oktober', 'November', 'Desember'
+  ];
+  return monthNames[month];
+}
 
-  // Jalankan fungsi tampilkanWaktu setiap 1 detik
-  setInterval(tampilkanWaktu, 1000);
+// Jalankan fungsi tampilkanWaktu setiap 1 detik
+setInterval(tampilkanWaktu, 1000);
 </script>
 
 </body>

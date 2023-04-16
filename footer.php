@@ -62,12 +62,10 @@
 <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
 <script src="assets/vendor/venobox/venobox.min.js"></script>
 <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
-<script src="assets/vendor/aos/aos.js"></script>
 
 <script src="assets/js/vendor/jquery-2.2.4.min.js"></script>
 <script src="assets/js/popper.min.js"></script>
 <script src="assets/js/vendor/bootstrap.min.js"></script>
-<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script> -->
 <script src="assets/js/jquery-ui.js"></script>
 <script src="assets/js/easing.min.js"></script>
 <script src="assets/js/hoverIntent.js"></script>
