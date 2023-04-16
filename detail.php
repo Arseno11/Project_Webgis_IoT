@@ -74,6 +74,18 @@ $title = "Detail dan Lokasi : " . $nama_alat;
                   <h5><?php echo $deskripsi ?></h5>
                 </td>
               </tr>
+              <tr>
+                <td>Latitude</td>
+                <td>
+                  <h5><?php echo $lat ?></h5>
+                </td>
+              </tr>
+              <tr>
+                <td>longitude</td>
+                <td>
+                  <h5><?php echo $long ?></h5>
+                </td>
+              </tr>
             </table>
           </div>
         </div>
