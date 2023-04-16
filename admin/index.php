@@ -258,19 +258,17 @@ canvas {
                   </div>
                 </div>
               </div>
-
-              <div class="row">
-                <div class="col-6 col-lg-2 col-md-4">
-                  <div class="card">
-                    <div class="card-body px-4 py-4-5">
-                      <div class="row">
-                        <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                          <div class="stats-icon purple mb-2">
-                            <i class="iconly-boldSetting"></i>
-                          </div>
+              <div class="col-6 col-lg-2 col-md-4">
+                <div class="card">
+                  <div class="card-body px-4 py-4-5">
+                    <div class="row">
+                      <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                        <div class="stats-icon purple mb-2">
+                          <i class="iconly-boldSetting"></i>
                         </div>
-                        <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                          <?php
+                      </div>
+                      <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                        <?php
                         include_once "countalat.php";
                         $obj = json_decode($data);
                         $jmlhalat = "";
@@ -278,55 +276,55 @@ canvas {
                           $jmlhalat .= $item->alatcount;
                         }
                         ?>
-                          <h6 class="text-muted font-semibold">Jumlah Alat</h6>
-                          <h6 class="font-extrabold mb-0"><?php echo $jmlhalat; ?></h6>
-                        </div>
+                        <h6 class="text-muted font-semibold">Jumlah Alat</h6>
+                        <h6 class="font-extrabold mb-0"><?php echo $jmlhalat; ?></h6>
                       </div>
                     </div>
                   </div>
                 </div>
-
-                <div class="row">
-                  <div class="col-12">
-                    <div class="card">
-                      <div class="card-header">
-                        <h4>Web Visit</h4>
-                      </div>
-                      <div class="card-body">
-                        <h2>
-                          <center><b>SISTEM INFORMASI GEOGRAFIS </b> </center>
-                        </h2>
-                        <h2>
-                          <center><b>PENDETEKSI DINI BANJIR </b> </center>
-                        </h2>
-                        <h2>
-                          <center><a href="../index.php"><button class="btn btn-primary" type="button"
-                                href="../index.php">Lihat
-                                Web</button></a>
-                          </center>
-                        </h2>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- Add a canvas element to hold the chart -->
-                <div class="row">
-                  <div class="col-12">
-                    <div class="card">
-                      <div class="card-header">
-                        <h4>Value Chart</h4>
-                      </div>
-                      <div class="card-body">
-                        <button id="reset-data" class="btn btn-danger float-right btn-sm">Reset Data</button>
-                        <div class="chart-container">
-                          <canvas id="chart"></canvas>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
               </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h4>Web Visit</h4>
+                    </div>
+                    <div class="card-body">
+                      <h2>
+                        <center><b>SISTEM INFORMASI GEOGRAFIS </b> </center>
+                      </h2>
+                      <h2>
+                        <center><b>PENDETEKSI DINI BANJIR </b> </center>
+                      </h2>
+                      <h2>
+                        <center><a href="../index.php"><button class="btn btn-primary" type="button"
+                              href="../index.php">Lihat
+                              Web</button></a>
+                        </center>
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Add a canvas element to hold the chart -->
+              <div class="row">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h4>Value Chart</h4>
+                    </div>
+                    <div class="card-body">
+                      <button id="reset-data" class="btn btn-danger float-right btn-sm">Reset Data</button>
+                      <div class="chart-container">
+                        <canvas id="chart"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
         </section>
       </div>
 
