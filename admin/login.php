@@ -7,6 +7,8 @@
   <link href="" rel="stylesheet" />
   <title>Login</title>
 
+  <link rel="shortcut icon" href="assets/images/logo/logo.png" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/images/logo/logo.png" type="image/png">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css">
@@ -16,16 +18,16 @@
 <body>
 
   <?php
-    if (isset($_GET['pesan'])) {
-        if ($_GET['pesan'] == "gagal") {
-            echo "Login gagal! username dan password salah!";
-        } else if ($_GET['pesan'] == "logout") {
-            echo "Anda telah berhasil logout";
-        } else if ($_GET['pesan'] == "belum_login") {
-            echo "Anda harus login untuk mengakses halaman admin";
-        }
+  if (isset($_GET['pesan'])) {
+    if ($_GET['pesan'] == "gagal") {
+      echo "Login gagal! username dan password salah!";
+    } else if ($_GET['pesan'] == "logout") {
+      echo "Anda telah berhasil logout";
+    } else if ($_GET['pesan'] == "belum_login") {
+      echo "Anda harus login untuk mengakses halaman admin";
     }
-    ?>
+  }
+  ?>
 
   <div class="section">
     <div class="container">
@@ -43,13 +45,11 @@
                       <div class="section text-center">
                         <h4 class="mb-4 pb-3">Log In</h4>
                         <div class="form-group">
-                          <input type="text" name="username" class="form-style" placeholder="Username" id="logemail"
-                            autocomplete="off">
+                          <input type="text" name="username" class="form-style" placeholder="Username" id="logemail" autocomplete="off">
                           <i class="input-icon uil uil-users-alt"></i>
                         </div>
                         <div class="form-group mt-2">
-                          <input type="password" name="password" class="form-style" placeholder="Password" id="logpass"
-                            autocomplete="off">
+                          <input type="password" name="password" class="form-style" placeholder="Password" id="logpass" autocomplete="off">
                           <i class="input-icon uil uil-lock-alt"></i>
                         </div>
                         <button type="submit" class="btn mt-4">submit</button>
@@ -64,18 +64,15 @@
                     <div class="section text-center">
                       <h4 class="mb-4 pb-3">Sign Up</h4>
                       <div class="form-group">
-                        <input type="text" name="logname" class="form-style" placeholder="Your Full Name" id="logname"
-                          autocomplete="off">
+                        <input type="text" name="logname" class="form-style" placeholder="Your Full Name" id="logname" autocomplete="off">
                         <i class="input-icon uil uil-user"></i>
                       </div>
                       <div class="form-group mt-2">
-                        <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail"
-                          autocomplete="off">
+                        <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off">
                         <i class="input-icon uil uil-at"></i>
                       </div>
                       <div class="form-group mt-2">
-                        <input type="password" name="logpass" class="form-style" placeholder="Your Password"
-                          id="logpass" autocomplete="off">
+                        <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
                         <i class="input-icon uil uil-lock-alt"></i>
                       </div>
                       <a href="#" class="btn mt-4">submit</a>
