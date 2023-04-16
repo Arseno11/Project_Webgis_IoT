@@ -79,7 +79,7 @@ $title = "Detail dan Lokasi : " . $nama_alat;
         </div>
       </div>
 
-      <div class="col-md-5" data-aos="zoom-in">
+      <div class="col-md-5">
         <div class="panel panel-info panel-dashboard">
           <div class="panel-heading centered">
             <h2 class="panel-title"><strong>Lokasi</strong></h4>
