@@ -52,6 +52,25 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
       <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+      <script>
+      function encryptUrl(url) {
+        var key = CryptoJS.enc.Utf8.parse('kuncirahasia1234567890'); // kunci enkripsi
+        var iv = CryptoJS.enc.Utf8.parse('0123456789abcdef'); // initialization vector
+        var encrypted = CryptoJS.AES.encrypt(url, key, {
+          iv: iv,
+          mode: CryptoJS.mode.CBC
+        });
+        return encrypted.toString();
+      }
+
+      var url = "https://arsen.asistenrumahkopi.com/ambildata.php";
+      var encryptedUrl = encryptUrl(url);
+      console.log(encryptedUrl); // Output: "U2FsdGVkX1+LGpP0n0JcUKbSkXYH51cLl8+0WmzzJyQ="
+      </script>
+
+
+
     </head>
 
     <body>
@@ -73,7 +92,9 @@
         <div class="container main-menu">
           <div class="row align-items-center justify-content-between d-flex">
             <div id="logo"">
-                    <a href=" index.php"><img src="./img/logo.png" alt="Logo" title="" style="width: 30px; height: 30px;" /><span style="color: white; font-weight: 500; padding: 5px;">PENDETEKSI
+                    <a href=" index.php"><img src="./img/logo.png" alt="Logo" title=""
+                style="width: 30px; height: 30px;" /><span
+                style="color: white; font-weight: 500; padding: 5px;">PENDETEKSI
                 BANJIR</span>
               </a>
             </div>
