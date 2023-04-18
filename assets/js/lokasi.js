@@ -101,10 +101,21 @@ navigator.geolocation.getCurrentPosition(function (location) {
   let currentPopup = null;
 
 
+  // fungsi untuk enkripsi URL
+function encryptUrl(url) {
+  var key = CryptoJS.enc.Utf8.parse('kuncirahasia1234567890'); // kunci enkripsi
+  var iv = CryptoJS.enc.Utf8.parse('0123456789abcdef'); // initialization vector
+  var encrypted = CryptoJS.AES.encrypt(url, key, { iv: iv, mode: CryptoJS.mode.CBC });
+  return encrypted.toString();
+}
+
   // fungsi untuk memanggil data dari API
-  async function loadData() {
-    try {
-      const response = await fetch('ambildata.php');
+ // contoh penggunaan fungsi enkripsi URL pada fetch API
+async function loadData() {
+  try {
+    const url = 'ambildata.php'; // URL yang akan dienkripsi
+    const encryptedUrl = encryptUrl(url); // enkripsi URL menggunakan fungsi encryptUrl()
+    const response = await fetch(encryptedUrl); // fetch data dari URL yang telah dienkripsi
       if (!response.ok) {
         throw new Error('Terjadi kesalahan saat memuat data.');
       }
@@ -199,9 +210,12 @@ navigator.geolocation.getCurrentPosition(function (location) {
   markers = [];
 
   // fungsi untuk memanggil data dari API
-  async function loadData() {
-    try {
-      const response = await fetch('ambildata.php');
+ // contoh penggunaan fungsi enkripsi URL pada fetch API
+async function loadData() {
+  try {
+    const url = 'ambildata.php'; // URL yang akan dienkripsi
+    const encryptedUrl = encryptUrl(url); // enkripsi URL menggunakan fungsi encryptUrl()
+    const response = await fetch(encryptedUrl); // fetch data dari URL yang telah dienkripsi
       if (!response.ok) {
         throw new Error('Terjadi kesalahan saat memuat data.');
       }
@@ -269,7 +283,10 @@ window.addEventListener('beforeunload', function () {
 });
 
 function updateData() {
-  fetch('ambildata.php', {
+  var url = 'ambildata.php';
+  var encryptedUrl = encryptUrl(url);
+  
+  fetch(encryptedUrl, {
     headers: {
       'Cache-Control': 'no-cache'
     },
