@@ -301,10 +301,8 @@ function updateData() {
             }
           } else {
             siaga = '<td style=color:green>Aman</td>';
-            if (localStorage.getItem('showAlert_' + result.id_alat) !== 'false') {
-              localStorage.removeItem('showAlert_' + result.id_alat);
-              localStorage.removeItem('showAlert_' + result.id_alat + '_siaga2');
-            }
+            localStorage.removeItem('showAlert_' + result.id_alat);
+            localStorage.removeItem('showAlert_' + result.id_alat + '_siaga2');
           }
 
           if (result.hujan < 500) {
