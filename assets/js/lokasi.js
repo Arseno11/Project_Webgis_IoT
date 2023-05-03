@@ -5,7 +5,7 @@ navigator.geolocation.getCurrentPosition(function (location) {
   var map = L.map('map', {
     center: [-7.782793615552607, 110.36728950566525],
     zoom: 13,
-    scrollWheelZoom: false // Menonaktifkan zoom dengan scroll
+    scrollWheelZoom: true // Menonaktifkan zoom dengan scroll
   });
 
   // Tambahkan layer base map dari Google Maps
