@@ -249,7 +249,6 @@ function showAlert(icon, title, text) {
     icon: icon,
     title: title,
     text: text,
-    confirmButtonText: 'OK',
   }).then((result) => {
     if (result.isConfirmed) {
       localStorage.setItem('showAlert', 'false');
