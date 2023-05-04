@@ -1,12 +1,17 @@
 navigator.geolocation.getCurrentPosition(function (location) {
   var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
-
+  var isMobile = window.matchMedia("only screen and (max-width: 768px)").matches;
 
   var map = L.map('map', {
     center: [-7.782793615552607, 110.36728950566525],
     zoom: 13,
     scrollWheelZoom: true // Menonaktifkan zoom dengan scroll
   });
+
+    // Nonaktifkan scrollWheelZoom di perangkat mobile
+  if (isMobile) {
+    map.scrollWheelZoom.disable();
+  }
 
   // Tambahkan layer base map dari Google Maps
   L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
