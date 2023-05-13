@@ -331,23 +331,25 @@ function updateData() {
         console.log(errorIds);
       }
 
-      // Jika terdapat id alat yang error, tampilkan SweetAlert
-      if (data.errors) {
-        let errorMessage = 'Data tidak diupdate pada alat dengan nama: ';
-        errorMessage += Object.keys(data.errors).join(', ');
+      // Mengecek apakah ada alat yang error
+      const hasErrors = data.errors && Object.keys(data.errors).length > 0;
 
-        // Cek apakah data masih error berdasarkan localStorage
-        if (localStorage.getItem('dataError') === 'true') {
+      if (hasErrors) {
+        // Membuat pesan error
+        const errorIds = Object.keys(data.errors);
+        const errorMessage = `Data tidak diupdate pada alat dengan nama: ${errorIds.join(', ')}`;
+
+        // Menampilkan pesan error jika belum ditampilkan sebelumnya
+        const isDataError = localStorage.getItem('dataError') === 'true';
+        if (!isDataError) {
           showAlert('error', 'Terjadi Error', errorMessage, 5000);
         }
 
         // Set localStorage berdasarkan keadaan data
-        if (errorIds.length > 0) {
-          localStorage.setItem('dataError', 'true');
-        } else {
-          localStorage.setItem('dataError', 'false');
-        }
+        const hasNewErrors = errorIds.length > 0;
+        localStorage.setItem('dataError', hasNewErrors ? 'true' : 'false');
       }
+
 
       $("#data").html(html);
     }).catch(error => {
