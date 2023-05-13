@@ -337,7 +337,7 @@ if (data.errors) {
   showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
 }
 
-console.log(data.errors);
+console.log(Object.keys(data.errors).join(', '));
 
 //       // Jika terdapat id alat yang error, tampilkan SweetAlert
 // if (data.errors) {
