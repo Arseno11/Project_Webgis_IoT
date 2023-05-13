@@ -329,21 +329,22 @@ function updateData() {
           errorIds.push(result.id_alat);
         }
       }
-      // Jika terdapat id alat yang error, tampilkan SweetAlert
+     // Jika terdapat id alat yang error, tampilkan SweetAlert
       if (data.errors) {
         let errorMessage = 'Data tidak diupdate pada alat dengan nama: ';
         errorMessage += Object.keys(data.errors).join(', ');
 
-        // Tampilkan SweetAlert hanya jika belum pernah ditampilkan sebelumnya
-        if (localStorage.getItem('showErrorAlert') !== 'false') {
-          showAlert('error', 'Terjadi Error', errorMessage, 5000);
-          localStorage.setItem('showErrorAlert', 'false');
+        // Cek apakah data masih error berdasarkan localStorage
+        if (localStorage.getItem('dataError') === 'true') {
+          showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
         }
-      } else {
-        // Simpan status SweetAlert ke localStorage
-        localStorage.setItem('showErrorAlert', 'true');
+        // Set localStorage berdasarkan keadaan data
+        if (errorIds.length > 0) {
+          localStorage.setItem('dataError', 'true');
+        } else {
+          localStorage.setItem('dataError', 'false');
+        }
       }
-
 
       $("#data").html(html);
     })
