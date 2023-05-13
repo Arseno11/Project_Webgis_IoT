@@ -340,7 +340,7 @@ function updateData() {
         const errorMessage = `Data tidak diupdate pada alat dengan nama: ${errorIds.join(', ')}`;
 
         // Menampilkan pesan error jika belum ditampilkan sebelumnya
-        const isDataError = localStorage.getItem('dataError') === 'true';
+        const isDataError = localStorage.getItem('dataError') !== 'false';
         if (!isDataError) {
           showAlert('error', 'Terjadi Error', errorMessage, 5000);
         }
