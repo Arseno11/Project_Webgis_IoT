@@ -346,15 +346,9 @@ function updateData() {
         }
 
         // Set localStorage berdasarkan keadaan data
-        localStorage.setItem('dataError', 'true');
-      } else {
-        // Menghilangkan pesan error jika sebelumnya ditampilkan
-        const isDataError = localStorage.getItem('dataError') === 'true';
-        if (isDataError) {
-          localStorage.setItem('dataError', 'false');
-        }
+        const hasNewErrors = errorIds.length > 0;
+        localStorage.setItem('dataError', hasNewErrors ? 'true' : 'false');
       }
-
 
 
       $("#data").html(html);
