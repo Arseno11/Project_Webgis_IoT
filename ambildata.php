@@ -20,6 +20,10 @@ try {
                 $posts[] = $post;
         }
 
+        if (count($errors) > 0) {
+                $errorMessage = 'Data tidak diupdate pada alat dengan id: ' . implode(', ', array_keys($errors));
+        }
+
         $data = json_encode(array('results' => $posts, 'errors' => $errors));
         echo $data;
 } catch (mysqli_sql_exception $e) {

@@ -324,38 +324,33 @@ function updateData() {
             </tr>
           `;
 
-  // Jika data alat tidak diupdate, tambahkan id alat ke array errorIds
+        // Jika data alat tidak diupdate, tambahkan id alat ke array errorIds
         if (result.updated === false) {
           errorIds.push(result.id_alat);
+          console.log(errorIds);
         }
       }
 
-      // Jika terdapat id alat yang error, tampilkan SweetAlert
+      // Set localStorage jika terdapat id alat yang error
       if (errorIds.length > 0) {
-        let errorMessage = 'Data tidak diupdate pada alat dengan id: ';
-        errorMessage += errorIds.join(', ');
-        showAlert('error', 'Error', errorMessage, 5000);
+        localStorage.setItem('errorIds', JSON.stringify(errorIds));
       }
 
+      // Tampilkan SweetAlert jika terdapat id alat yang error
+      if (localStorage.getItem('errorIds')) {
+        let errorIds = JSON.parse(localStorage.getItem('errorIds'));
 
-      // // Jika terdapat id alat yang error, tampilkan SweetAlert
-      // if (data.errors) {
-      //   let errorMessage = 'Data tidak diupdate pada alat dengan nama: ';
-      //   errorMessage += Object.keys(data.errors).join(', ');
+        if (errorIds.length > 0) {
+          let errorMessage = 'Data tidak diupdate pada alat dengan id: ' + errorIds.join(', ');
+          showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
+        }
+      }
 
-      //   // Cek apakah data masih error berdasarkan localStorage
-      //   if (localStorage.getItem('dataError') === 'true') {
-      //     showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
-      //   }
+      // Hapus localStorage errorIds ketika data sudah diupdate kembali
+      if (!localStorage.getItem('errorIds') && localStorage.getItem('dataError') === 'true') {
+        localStorage.setItem('dataError', 'false');
+      }
 
-      //   // Set localStorage berdasarkan keadaan data
-      //   if (errorIds.length > 0) {
-      //     localStorage.setItem('dataError', 'true');
-      //   } else {
-      //     localStorage.setItem('dataError', 'false');
-      //   }
-      // }
-      
       console.log(data.errors);
       $("#data").html(html);
     })
