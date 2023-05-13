@@ -324,11 +324,11 @@ function updateData() {
             </tr>
           `;
 
-        // Jika data alat tidak diupdate, tambahkan id alat ke array errorIds
-        if (result.updated === false) {
+ // Tambahkan id alat ke dalam array errorIds jika data tidak di-update
+        if (result.update_status === 'error') {
           errorIds.push(result.id_alat);
         }
-      }
+      
 
 // Jika terdapat id alat yang error, tampilkan SweetAlert
 if (data.errors) {
@@ -336,6 +336,7 @@ if (data.errors) {
   errorMessage += Object.keys(data.errors).join(', ');
   showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
 }
+      }
 
 //       // Jika terdapat id alat yang error, tampilkan SweetAlert
 // if (data.errors) {
