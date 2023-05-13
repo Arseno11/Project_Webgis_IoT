@@ -18,7 +18,7 @@ try {
                 if ($currentTime - $lastUpdateTime > 10) {
                         // Jika melebihi 10 detik, tambahkan pesan error ke data
                         $errorMsg = "Database tidak diupdate dalam 10 detik terakhir, waktu default: " . date('Y-m-d H:i:s', $lastUpdateTime);
-                        $errors[$row['id_alat']] = $errorMsg;
+                        $errors[$row['nama_alat']] = $errorMsg;
                 }
                 $posts[] = $row;
         }
