@@ -347,6 +347,7 @@ function updateData() {
           localStorage.setItem('dataError', 'false');
         }
       }
+      
       console.log(data.errors);
       $("#data").html(html);
     })
