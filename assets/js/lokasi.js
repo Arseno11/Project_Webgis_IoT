@@ -331,24 +331,32 @@ function updateData() {
       }
 
       // Jika terdapat id alat yang error, tampilkan SweetAlert
-      if (data.errors) {
-        let errorMessage = 'Data tidak diupdate pada alat dengan nama: ';
-        errorMessage += Object.keys(data.errors).join(', ');
+      if (errorIds.length > 0) {
+        let errorMessages = [];
 
-        // Cek apakah data masih error berdasarkan localStorage
-        if (localStorage.getItem('dataError') === 'true') {
-          showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
+        // Loop errorIds untuk mencari nama alat yang error dan tambahkan ke errorMessages
+        for (let id of errorIds) {
+          let alat = data.results.find(r => r.id_alat === id);
+          errorMessages.push(alat.nama_alat);
         }
 
-        // Set localStorage berdasarkan keadaan data
-        if (errorIds.length > 0) {
-          localStorage.setItem('dataError', 'true');
-        } else {
-          localStorage.setItem('dataError', 'false');
+        // Gabungkan semua nama alat yang error menjadi satu string
+        let errorMessage = 'Data tidak diupdate pada alat dengan nama: ' + errorMessages.join(', ');
+
+        // Tampilkan SweetAlert hanya jika belum pernah ditampilkan sebelumnya
+        if (localStorage.getItem('showErrorAlert') !== 'false') {
+          showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
+          localStorage.setItem('showErrorAlert', 'false');
         }
       }
 
       $("#data").html(html);
+
+      // Reset localStorage untuk menampilkan kembali SweetAlert jika ada data yang tidak diupdate di waktu yang berbeda
+      if (localStorage.getItem('dataError') === 'true') {
+        localStorage.setItem('showErrorAlert', 'true');
+        localStorage.setItem('dataError', 'false');
+      }
     })
     .catch(error => {
       showAlert('error', 'Error', 'Terjadi kesalahan saat mengambil data. Silakan coba lagi.', 5000);
