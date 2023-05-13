@@ -330,16 +330,24 @@ function updateData() {
         }
       }
 
-      if (errorIds.length > 0) {
-        let errorMessages = errorIds.map(id => data.results.find(r => r.id_alat === id).nama_alat);
-        let errorMessage = `Data tidak diupdate pada alat dengan nama: ${errorMessages.join(', ')}`;
+      if (data.errors) {
+        let errorIds = Object.keys(data.errors);
+        let errorMessages = errorIds.map((id) => {
+          let alat = data.results.find((r) => r.id_alat === id);
+          return alat ? alat.nama_alat : '';
+        }).filter(Boolean);
 
-        if (localStorage.getItem('showErrorAlert') !== 'false') {
-          showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
-          localStorage.setItem('showErrorAlert', 'false');
-        } else {
-          localStorage.setItem('showErrorAlert', 'true');
+        if (errorMessages.length > 0) {
+          let errorMessage = `Data tidak diupdate pada alat dengan nama: ${errorMessages.join(', ')}`;
+
+          // Tampilkan SweetAlert hanya jika belum pernah ditampilkan sebelumnya
+          if (localStorage.getItem('showErrorAlert') !== 'false') {
+            showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
+            localStorage.setItem('showErrorAlert', 'false');
+          }
         }
+      } else {
+        localStorage.setItem('showErrorAlert', 'true');
       }
 
       $("#data").html(html);
