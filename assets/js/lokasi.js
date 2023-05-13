@@ -323,7 +323,7 @@ function updateData() {
               ${hujan}
             </tr>
           `;
-        
+
         // Jika data alat tidak diupdate, tambahkan id alat ke array errorIds
         if (result.updated === false) {
           errorIds.push(result.id_alat);
@@ -331,10 +331,10 @@ function updateData() {
       }
 
       // Jika terdapat id alat yang error, tampilkan SweetAlert
-      if (errorIds.length > 0) {
+      if (data.errors) {
         let errorMessage = 'Data tidak diupdate pada alat dengan id: ';
-        errorMessage += errorIds.join(', ');
-        showAlert('error', 'Data tidak diupdate', 'Ada beberapa alat yang data-nya tidak terupdate. Silakan cek koneksi dan pengaturan alat.', 5000);
+        errorMessage += Object.keys(data.errors).join(', ');
+        showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
       }
 
       $("#data").html(html);
