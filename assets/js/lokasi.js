@@ -8,7 +8,7 @@ navigator.geolocation.getCurrentPosition(function (location) {
     scrollWheelZoom: true // Menonaktifkan zoom dengan scroll
   });
 
-    // Nonaktifkan scrollWheelZoom di perangkat mobile
+  // Nonaktifkan scrollWheelZoom di perangkat mobile
   if (isMobile) {
     map.scrollWheelZoom.disable();
   }
@@ -281,42 +281,40 @@ function updateData() {
   })
     .then(response => response.json())
     .then(data => {
-      if (data.hasOwnProperty('error')) {
-        $("#data").html(`<tr><td colspan="5" style="text-align: center;">${data.error}</td></tr>`);
-      } else {
-        let html = '';
+      let errorIds = []; // Inisialisasi array untuk menyimpan id alat yang error
+      let html = '';
 
-        for (let i = 0; i < data.results.length; i++) {
-          let result = data.results[i];
-          let siaga, hujan;
+      for (let i = 0; i < data.results.length; i++) {
+        let result = data.results[i];
+        let siaga, hujan;
 
-          if (result.jarak <= 10) {
-            siaga = '<td style=color:red>Siaga 1</td>';
-            if (localStorage.getItem('showAlert_' + result.id_alat) !== 'false') {
-              showAlert('error', 'Peringatan Banjir', 'Jarak sensor telah mencapai Siaga 1 untuk Alat Dengan Nama ' + result.nama_alat, 5000);
-              localStorage.setItem('showAlert_' + result.id_alat, 'false');
-              localStorage.removeItem('showAlert_' + result.id_alat + '_siaga2');
-            }
-          } else if (result.jarak > 10 && result.jarak <= 25) {
-            siaga = '<td style=color:yellow>Siaga 2</td>';
-            if (localStorage.getItem('showAlert_' + result.id_alat + '_siaga2') !== 'false') {
-              showAlert('warning', 'Peringatan Banjir', 'Jarak sensor telah mencapai Siaga 2 untuk Alat Dengan Nama ' + result.nama_alat, 5000);
-              localStorage.setItem('showAlert_' + result.id_alat + '_siaga2', 'false');
-              localStorage.removeItem('showAlert_' + result.id_alat);
-            }
-          } else {
-            siaga = '<td style=color:green>Aman</td>';
-            localStorage.removeItem('showAlert_' + result.id_alat);
+        if (result.jarak <= 10) {
+          siaga = '<td style=color:red>Siaga 1</td>';
+          if (localStorage.getItem('showAlert_' + result.id_alat) !== 'false') {
+            showAlert('error', 'Peringatan Banjir', 'Jarak sensor telah mencapai Siaga 1 untuk Alat Dengan Nama ' + result.nama_alat, 5000);
+            localStorage.setItem('showAlert_' + result.id_alat, 'false');
             localStorage.removeItem('showAlert_' + result.id_alat + '_siaga2');
           }
-
-          if (result.hujan < 500) {
-            hujan = '<td><i class="fas fa-cloud-showers-heavy"></i> Hujan</td>';
-          } else {
-            hujan = '<td><i class="fas fa-sun"></i> Cerah</td>';
+        } else if (result.jarak > 10 && result.jarak <= 25) {
+          siaga = '<td style=color:yellow>Siaga 2</td>';
+          if (localStorage.getItem('showAlert_' + result.id_alat + '_siaga2') !== 'false') {
+            showAlert('warning', 'Peringatan Banjir', 'Jarak sensor telah mencapai Siaga 2 untuk Alat Dengan Nama ' + result.nama_alat, 5000);
+            localStorage.setItem('showAlert_' + result.id_alat + '_siaga2', 'false');
+            localStorage.removeItem('showAlert_' + result.id_alat);
           }
+        } else {
+          siaga = '<td style=color:green>Aman</td>';
+          localStorage.removeItem('showAlert_' + result.id_alat);
+          localStorage.removeItem('showAlert_' + result.id_alat + '_siaga2');
+        }
 
-          html += `
+        if (result.hujan < 500) {
+          hujan = '<td><i class="fas fa-cloud-showers-heavy"></i> Hujan</td>';
+        } else {
+          hujan = '<td><i class="fas fa-sun"></i> Cerah</td>';
+        }
+
+        html += `
             <tr>
               <td>${i + 1}</td>
               <td>${result.nama_alat}</td>
@@ -325,16 +323,27 @@ function updateData() {
               ${hujan}
             </tr>
           `;
+        
+        // Jika data alat tidak diupdate, tambahkan id alat ke array errorIds
+        if (result.updated === false) {
+          errorIds.push(result.id_alat);
         }
-
-        $("#data").html(html);
       }
+
+      // Jika terdapat id alat yang error, tampilkan SweetAlert
+      if (errorIds.length > 0) {
+        let errorMessage = 'Data tidak diupdate pada alat dengan id: ';
+        errorMessage += errorIds.join(', ');
+        showAlert('error', 'Data tidak diupdate', 'Ada beberapa alat yang data-nya tidak terupdate. Silakan cek koneksi dan pengaturan alat.', 5000);
+      }
+
+      $("#data").html(html);
     })
     .catch(error => {
-      $("#data").html(`<tr><td colspan="5" style="text-align: center;">Error: ${error.message}</td></tr>`);
+      showAlert('error', 'Error', 'Terjadi kesalahan saat mengambil data. Silakan coba lagi.', 5000);
+      console.error(error);
     });
 }
-
 
 // fungsi untuk melakukan refresh data setiap 5 detik
 function refreshData() {
