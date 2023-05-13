@@ -64,7 +64,7 @@ navigator.geolocation.getCurrentPosition(function (location) {
   const legend = L.control.Legend({
     title: "Status Icon",
     position: "bottomright",
-    collapsed: true, // Set default state to collapsed
+    // collapsed: true, // Set default state to collapsed
     symbolWidth: 30,
     opacity: 1,
     column: 2,
