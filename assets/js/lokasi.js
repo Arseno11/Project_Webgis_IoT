@@ -331,16 +331,16 @@ function updateData() {
       }
 
       // Jika terdapat id alat yang error, tampilkan SweetAlert
-      if (errorIds.length > 0) {
-        let errorMessage = 'Data tidak diupdate pada alat dengan Nama: ';
-        errorMessage += errorIds.map(id => data.results.find(r => r.id_alat === id).nama_alat).join(', ');
+      if (data.errors) {
+        let errorMessage = 'Data tidak diupdate pada alat dengan nama: ';
+        errorMessage += Object.keys(data.errors).join(', ');
 
         // Tampilkan SweetAlert hanya jika belum pernah ditampilkan sebelumnya
         if (localStorage.getItem('showErrorAlert') !== 'false') {
           showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
+          localStorage.setItem('showErrorAlert', 'false');
         }
       } else {
-        // Setelah berhasil update, set nilai "showErrorAlert" menjadi true
         localStorage.setItem('showErrorAlert', 'true');
       }
 
