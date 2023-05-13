@@ -324,17 +324,19 @@ function updateData() {
             </tr>
           `;
 
-        // Jika data alat tidak diupdate, tambahkan id alat ke array errorIds
-        if (result.status === false) {
+  // Jika data alat tidak diupdate, tambahkan id alat ke array errorIds
+        if (result.updated === false) {
           errorIds.push(result.id_alat);
         }
       }
 
+      // Jika terdapat id alat yang error, tampilkan SweetAlert
       if (errorIds.length > 0) {
-    let errorMessage = 'Data tidak diupdate pada alat dengan id: ';
-    errorMessage += errorIds.join(', ');
-    showAlert('error', 'Error', errorMessage, 5000);
-}
+        let errorMessage = 'Data tidak diupdate pada alat dengan id: ';
+        errorMessage += errorIds.join(', ');
+        showAlert('error', 'Error', errorMessage, 5000);
+      }
+
 
       // // Jika terdapat id alat yang error, tampilkan SweetAlert
       // if (data.errors) {
