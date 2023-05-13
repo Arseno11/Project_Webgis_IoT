@@ -328,16 +328,17 @@ function updateData() {
         if (result.update === 'false') {
           errorIds.push(result.id_alat);
         }
+        console.log(errorIds);
       }
 
       // Jika terdapat id alat yang error, tampilkan SweetAlert
       if (data.errors) {
         let errorMessage = 'Data tidak diupdate pada alat dengan id: ';
-        errorMessage += Object.keys(errorIds).join(', ');
+        errorMessage += Object.keys(data.errors).join(', ');
 
         // Cek apakah data masih error berdasarkan localStorage
         if (localStorage.getItem('dataError') === 'true') {
-          showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
+          showAlert('error', 'Terjadi Error', errorMessage, 5000);
         }
 
         // Set localStorage berdasarkan keadaan data
