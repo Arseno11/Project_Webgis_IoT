@@ -337,7 +337,7 @@ if (data.errors) {
 
   // Tampilkan SweetAlert hanya jika belum pernah ditampilkan sebelumnya
   if (localStorage.getItem('showErrorAlert') !== 'false') {
-    showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
+    showAlert('error', 'Terjadi Error', errorMessage, 5000);
     localStorage.setItem('showErrorAlert', 'false');
   }
 } else {
