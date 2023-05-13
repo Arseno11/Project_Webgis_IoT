@@ -338,8 +338,11 @@ function updateData() {
       }
 
       $("#data").html(html);
-    }
-    )
+    }).catch(error => {
+      showAlert('error', 'Error', 'Terjadi kesalahan saat mengambil data. Silakan coba lagi.', 5000);
+      console.error(error);
+    });
+}
 
 
   // fungsi untuk melakukan refresh data setiap 5 detik
