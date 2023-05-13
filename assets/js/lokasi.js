@@ -282,7 +282,7 @@ function updateData() {
     .then(response => response.json())
     .then(data => {
       if (data.hasOwnProperty('error')) {
-        $("#data").html(`<tr><td colspan="5" style="text-align: center;">${data.posts['error']}</td></tr>`);
+        $("#data").html(`<tr><td colspan="5" style="text-align: center;">${data.error}</td></tr>`);
       } else {
         let html = '';
 
@@ -331,7 +331,7 @@ function updateData() {
       }
     })
     .catch(error => {
-      console.log('Error fetching');
+      $("#data").html(`<tr><td colspan="5" style="text-align: center;">Error: ${error.message}</td></tr>`);
     });
 }
 
