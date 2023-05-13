@@ -282,7 +282,7 @@ function updateData() {
     .then(response => response.json())
     .then(data => {
       if (data.hasOwnProperty('error')) {
-        $("#data").html(`<tr><td colspan="5" style="text-align: center;">${data.error}</td></tr>`);
+        $("#data").html(`<tr><td colspan="5" style="text-align: center;">${data.posts['error']}</td></tr>`);
       } else {
         let html = '';
 
