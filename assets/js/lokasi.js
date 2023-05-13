@@ -325,7 +325,7 @@ function updateData() {
           `;
 
         // Jika data alat tidak diupdate, tambahkan id alat ke array errorIds
-        if (result.updated === false) {
+        if (result.errors === false) {
           errorIds.push(result.id_alat);
         }
       }
