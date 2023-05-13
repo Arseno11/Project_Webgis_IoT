@@ -13,7 +13,7 @@ try {
                 // Mendapatkan waktu terakhir update untuk setiap id
                 $lastUpdateTime = strtotime($post['waktu']);
                 // Cek apakah waktu terakhir update melebihi 20 detik dari waktu sekarang
-                if (time() - $lastUpdateTime > 20) {
+                if (time() - $lastUpdateTime > 2) {
                         // Jika melebihi 20 detik, tambahkan pesan error ke data
                         $errors[$post['id_alat']] = 'Data tidak diupdate';
                 }
