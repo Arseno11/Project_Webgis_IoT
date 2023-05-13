@@ -7,7 +7,6 @@ try {
         $result = $stmt->get_result();
 
         $posts = array();
-        $errors = array();
 
         while ($post = mysqli_fetch_assoc($result)) {
                 // Mendapatkan waktu terakhir update untuk setiap id
@@ -15,12 +14,12 @@ try {
                 // Cek apakah waktu terakhir update melebihi 20 detik dari waktu sekarang
                 if (time() - $lastUpdateTime > 20) {
                         // Jika melebihi 20 detik, tambahkan pesan error ke data
-                        $errors[$post['id_alat']] = 'Data tidak diupdate';
+                        $post['error'] = 'Data tidak diupdate untuk alat ' . $post['nama_alat'];
                 }
                 $posts[] = $post;
         }
 
-        $data = json_encode(array('results' => $posts, 'errors' => $errors));
+        $data = json_encode(array('results' => $posts));
         echo $data;
 } catch (mysqli_sql_exception $e) {
         // Tambahkan pernyataan untuk menangani error dan exception di sini
