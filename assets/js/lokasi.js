@@ -337,6 +337,8 @@ function updateData() {
         if (localStorage.getItem('showErrorAlert') !== 'false') {
           showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
           localStorage.setItem('showErrorAlert', 'false');
+        } else {
+          localStorage.setItem('showErrorAlert', 'true');
         }
       }
 
