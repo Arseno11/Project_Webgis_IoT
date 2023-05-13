@@ -336,7 +336,7 @@ function updateData() {
         errorMessage += Object.keys(data.errors).join(', ');
         showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
       }
-
+console.log(data.errors);
       $("#data").html(html);
     })
     .catch(error => {
