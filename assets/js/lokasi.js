@@ -331,18 +331,9 @@ function updateData() {
       }
 
       if (errorIds.length > 0) {
-        let errorMessages = [];
+        let errorMessages = errorIds.map(id => data.results.find(r => r.id_alat === id).nama_alat);
+        let errorMessage = `Data tidak diupdate pada alat dengan nama: ${errorMessages.join(', ')}`;
 
-        // Loop errorIds untuk mencari nama alat yang error dan tambahkan ke errorMessages
-        for (let id of errorIds) {
-          let alat = data.results.find(r => r.id_alat === id);
-          errorMessages.push(alat.nama_alat);
-        }
-
-        // Gabungkan semua nama alat yang error menjadi satu string
-        let errorMessage = 'Data tidak diupdate pada alat dengan nama: ' + errorMessages.join(', ');
-
-        // Tampilkan SweetAlert hanya jika belum pernah ditampilkan sebelumnya
         if (localStorage.getItem('showErrorAlert') !== 'false') {
           showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
           localStorage.setItem('showErrorAlert', 'false');
