@@ -16,15 +16,15 @@ try {
                 $currentTime = time();
                 // Cek apakah waktu terakhir update melebihi 1 jam dari waktu sekarang
                 if ($currentTime - $lastUpdateTime > 3600) {
-                        // Jika melebihi 1 jam, reset data untuk id_alat yang tidak update
+                        // Jika melebihi 1 jam, reset kolom 'jarak' dan 'cuaca' untuk id_alat yang tidak update
                         $id_alat = $row['id_alat'];
-                        $reset_stmt = $koneksi->prepare("UPDATE alat SET data = 0 WHERE id_alat = ?");
+                        $reset_stmt = $koneksi->prepare("UPDATE alat SET jarak = 0, hujan = 0 WHERE id_alat = ?");
                         $reset_stmt->bind_param("i", $id_alat);
                         $reset_stmt->execute();
                         $reset_stmt->close();
 
                         // Tambahkan pesan error ke data
-                        $errorMsg = "Data untuk id_alat " . $id_alat . " telah direset karena tidak diupdate dalam 1 jam terakhir.";
+                        $errorMsg = "Kolom 'jarak' dan 'cuaca' untuk id_alat " . $id_alat . " telah direset karena tidak diupdate dalam 1 jam terakhir.";
                         $errors[$row['nama_alat']] = $errorMsg;
                 }
                 $posts[] = $row;
