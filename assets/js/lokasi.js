@@ -331,15 +331,27 @@ function updateData() {
         console.log(errorIds);
       }
 
-// Cek apakah data belum terupdate
-const isDataError = localStorage.getItem('dataError') === 'true';
+      // Mengecek apakah ada alat yang error
+      const hasErrors = data.errors && Object.keys(data.errors).length > 0;
 
-if (isDataError && hasErrors) {
-  const errorIds = Object.keys(data.errors);
-  const errorMessage = `Data tidak diupdate pada alat dengan nama: ${errorIds.join(', ')}`;
+      // Cek apakah data masih error berdasarkan localStorage
+      const isDataError = localStorage.getItem('dataError') === 'true';
 
-  showAlert('error', 'Terjadi Error', errorMessage, 5000);
-}
+      // Tampilkan pesan error jika data belum diupdate dan alert belum ditampilkan sebelumnya
+      if (hasErrors && !isDataError) {
+        const errorIds = Object.keys(data.errors);
+        const errorMessage = `Data tidak diupdate pada alat dengan nama: ${errorIds.join(', ')}`;
+
+        showAlert('error', 'Terjadi Error', errorMessage, 5000);
+
+        // Set localStorage agar alert tidak ditampilkan lagi
+        localStorage.setItem('dataError', 'true');
+      }
+
+      // Hapus localStorage jika data sudah diupdate
+      if (!hasErrors) {
+        localStorage.removeItem('dataError');
+      }
 
       $("#data").html(html);
     }).catch(error => {
