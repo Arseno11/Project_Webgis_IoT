@@ -14,12 +14,8 @@ try {
                 $lastUpdateTime = strtotime($post['waktu']);
                 // Cek apakah waktu terakhir update melebihi 20 detik dari waktu sekarang
                 if (time() - $lastUpdateTime > 20) {
-                        // Jika melebihi 20 detik, tambahkan ID alat ke array errors dan set updated ke 0
-                        $post['updated'] = 0;
-                        $errors[] = $post['nama_alat'];
-                } else {
-                        // Jika belum melebihi 20 detik, set updated ke 1
-                        $post['updated'] = 1;
+                        // Jika melebihi 20 detik, tambahkan pesan error ke data
+                        $errors[$post['nama_alat']] = 'Terjadi Error';
                 }
                 $posts[] = $post;
         }
