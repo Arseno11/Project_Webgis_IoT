@@ -330,11 +330,13 @@ function updateData() {
         }
       }
 
+      // Jika terdapat id alat yang error, tampilkan SweetAlert
       if (errorIds.length > 0) {
         let errorMessage = 'Data tidak diupdate pada alat dengan id: ';
         errorMessage += errorIds.join(', ');
         showAlert('error', 'Error', errorMessage, 5000);
       }
+
       $("#data").html(html);
     })
     .catch(error => {
