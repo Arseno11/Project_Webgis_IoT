@@ -16,7 +16,7 @@ try {
                 if (time() - $lastUpdateTime > 20) {
                         // Jika melebihi 20 detik, tambahkan ID alat ke array errors dan set updated ke 0
                         $post['updated'] = 0;
-                        $errors[] = $post['id_alat'];
+                        $errors[] = $post['nama_alat'];
                 } else {
                         // Jika belum melebihi 20 detik, set updated ke 1
                         $post['updated'] = 1;
