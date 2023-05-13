@@ -329,14 +329,12 @@ function updateData() {
           errorIds.push(result.id_alat);
         }
       }
-      
-      if (data.errors) {
-  let errorIds = Object.keys(data.errors);
-  if (errorIds.length > 0) {
-    let errorMessage = 'Data tidak diupdate pada alat dengan id: ';
-    errorMessage += errorIds.join(', ');
-    showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
-  }
+
+// Jika terdapat id alat yang error, tampilkan SweetAlert
+if (data.errors) {
+  let errorMessage = 'Data tidak diupdate pada alat dengan id: ';
+  errorMessage += Object.keys(data.errors).join(', ');
+  showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
 }
 
 //       // Jika terdapat id alat yang error, tampilkan SweetAlert
