@@ -334,23 +334,23 @@ function updateData() {
       // Mengecek apakah ada alat yang error
       const hasErrors = data.errors && Object.keys(data.errors).length > 0;
 
-      if (hasErrors) {
-        // Membuat pesan error
+      // Cek apakah data masih error berdasarkan localStorage
+      const isDataError = localStorage.getItem('dataError') === 'true';
+
+      // Tampilkan pesan error jika data belum diupdate dan alert belum ditampilkan sebelumnya
+      if (hasErrors && !isDataError) {
         const errorIds = Object.keys(data.errors);
         const errorMessage = `Data tidak diupdate pada alat dengan nama: ${errorIds.join(', ')}`;
 
-        // Menampilkan pesan error jika belum ditampilkan sebelumnya
-        const isDataError = localStorage.getItem('dataError') === 'true';
-        if (!isDataError) {
-          showAlert('error', 'Terjadi Error', errorMessage, 5000);
-        }
+        showAlert('error', 'Terjadi Error', errorMessage, 5000);
 
-        // Set localStorage berdasarkan keadaan data
-        const hasNewErrors = errorIds.length > 0;
-        localStorage.setItem('dataError', hasNewErrors ? 'true' : 'false');
-      } else {
-        // Menghapus pesan error jika data sudah diupdate
-        localStorage.setItem('dataError', 'false');
+        // Set localStorage agar alert tidak ditampilkan lagi
+        localStorage.setItem('dataError', 'true');
+      }
+
+      // Hapus localStorage jika data sudah diupdate
+      if (!hasErrors) {
+        localStorage.removeItem('dataError');
       }
 
       $("#data").html(html);
