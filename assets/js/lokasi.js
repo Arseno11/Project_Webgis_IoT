@@ -324,8 +324,8 @@ function updateData() {
             </tr>
           `;
 
-        // Jika data alat tidak diupdate, tambahkan id alat ke array errorIds
-        if (result.updated === false) {
+        // Tambahkan id alat ke dalam array errorIds jika data tidak di-update
+        if (result.update_status === 'error') {
           errorIds.push(result.id_alat);
         }
       }
@@ -338,19 +338,16 @@ function updateData() {
       }
 
       $("#data").html(html);
-    })
-    .catch(error => {
-      showAlert('error', 'Error', 'Terjadi kesalahan saat mengambil data. Silakan coba lagi.', 5000);
-      console.error(error);
-    });
-}
+    }
+    )
 
-// fungsi untuk melakukan refresh data setiap 5 detik
-function refreshData() {
-  setInterval(function () {
-    updateData();
-  }, 2000); // set interval ke 5 detik (5000 ms)
-}
 
-// panggil fungsi refreshData() saat halaman dimuat
-refreshData();
+  // fungsi untuk melakukan refresh data setiap 5 detik
+  function refreshData() {
+    setInterval(function () {
+      updateData();
+    }, 2000); // set interval ke 5 detik (5000 ms)
+  }
+
+  // panggil fungsi refreshData() saat halaman dimuat
+  refreshData();
