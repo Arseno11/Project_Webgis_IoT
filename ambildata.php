@@ -24,5 +24,7 @@ try {
         echo $data;
 } catch (mysqli_sql_exception $e) {
         // Tambahkan pernyataan untuk menangani error dan exception di sini
-        echo "Error: " . $e->getMessage();
+        $errors = array('error' => $e->getMessage());
+        $data = json_encode(array('results' => array(), 'errors' => $errors));
+        echo $data;
 }
