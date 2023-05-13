@@ -330,7 +330,6 @@ function updateData() {
         }
       }
 
-      // Jika terdapat id alat yang error, tampilkan SweetAlert
       if (errorIds.length > 0) {
         let errorMessages = [];
 
