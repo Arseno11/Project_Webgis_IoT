@@ -341,12 +341,6 @@ function updateData() {
       }
 
       $("#data").html(html);
-
-      // Reset localStorage untuk menampilkan kembali SweetAlert jika ada data yang tidak diupdate di waktu yang berbeda
-      if (localStorage.getItem('dataError') === 'true') {
-        localStorage.setItem('showErrorAlert', 'true');
-        localStorage.setItem('dataError', 'false');
-      }
     })
     .catch(error => {
       showAlert('error', 'Error', 'Terjadi kesalahan saat mengambil data. Silakan coba lagi.', 5000);
