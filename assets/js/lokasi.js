@@ -330,21 +330,14 @@ function updateData() {
         }
       }
 
-     // Jika terdapat id alat yang error, tampilkan SweetAlert
-      if (errorIds.length > 0) {
-        let errorMessage = 'Data tidak diupdate pada alat dengan nama: ';
-        errorMessage += errorIds.map(id => data.results.find(r => r.id_alat === id).nama_alat).join(', ');
-
-        // Cek apakah data masih error berdasarkan localStorage
-        if (localStorage.getItem('dataError') === 'true') {
-          showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
-        } else {
-          localStorage.setItem('dataError', 'true');
-          showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
-        }
-      } else {
-        localStorage.setItem('dataError', 'false');
-      }
+     if (data.errors) {
+  let errorIds = Object.keys(data.errors);
+  if (errorIds.length > 0) {
+    let errorMessage = 'Data tidak diupdate pada alat dengan id: ';
+    errorMessage += errorIds.join(', ');
+    showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
+  }
+}
 
       $("#data").html(html);
     }).catch(error => {
