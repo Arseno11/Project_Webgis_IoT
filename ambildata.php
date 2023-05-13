@@ -9,19 +9,24 @@ try {
         $posts = array();
         $errors = array();
 
-        while ($post = mysqli_fetch_assoc($result)) {
+        while ($row = mysqli_fetch_array($result)) {
                 // Mendapatkan waktu terakhir update untuk setiap id
-                $lastUpdateTime = strtotime($post['waktu']);
-                // Cek apakah waktu terakhir update melebihi 20 detik dari waktu sekarang
-                if (time() - $lastUpdateTime > 2) {
-                        // Jika melebihi 20 detik, tambahkan pesan error ke data
-                        $errors[$post['id_alat']] = 'Data tidak diupdate';
+                $lastUpdateTime = strtotime($row['waktu']);
+                // Mendapatkan waktu sekarang
+                $currentTime = time();
+                // Cek apakah waktu terakhir update melebihi 10 detik dari waktu sekarang
+                if ($currentTime - $lastUpdateTime > 10) {
+                        // Jika melebihi 10 detik, tambahkan pesan error ke data
+                        $errorMsg = "Database tidak diupdate dalam 10 detik terakhir, waktu default: " . date('Y-m-d H:i:s', $lastUpdateTime);
+                        $errors[$row['id_alat']] = $errorMsg;
                 }
-                $posts[] = $post;
+                $posts[] = $row;
         }
 
         $data = json_encode(array('results' => $posts, 'errors' => $errors));
         echo $data;
+
+        $koneksi->close();
 } catch (mysqli_sql_exception $e) {
         // Tambahkan pernyataan untuk menangani error dan exception di sini
         echo "Error: " . $e->getMessage();
