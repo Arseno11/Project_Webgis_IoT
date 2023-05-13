@@ -325,28 +325,34 @@ function updateData() {
           `;
 
         // Jika data alat tidak diupdate, tambahkan id alat ke array errorIds
-        if (result.errors === false) {
+        if (result.status === false) {
           errorIds.push(result.id_alat);
         }
       }
 
-      // Jika terdapat id alat yang error, tampilkan SweetAlert
-      if (data.errors) {
-        let errorMessage = 'Data tidak diupdate pada alat dengan nama: ';
-        errorMessage += Object.keys(data.errors).join(', ');
+      if (errorIds.length > 0) {
+    let errorMessage = 'Data tidak diupdate pada alat dengan id: ';
+    errorMessage += errorIds.join(', ');
+    showAlert('error', 'Error', errorMessage, 5000);
+}
 
-        // Cek apakah data masih error berdasarkan localStorage
-        if (localStorage.getItem('dataError') === 'true') {
-          showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
-        }
+      // // Jika terdapat id alat yang error, tampilkan SweetAlert
+      // if (data.errors) {
+      //   let errorMessage = 'Data tidak diupdate pada alat dengan nama: ';
+      //   errorMessage += Object.keys(data.errors).join(', ');
 
-        // Set localStorage berdasarkan keadaan data
-        if (errorIds.length > 0) {
-          localStorage.setItem('dataError', 'true');
-        } else {
-          localStorage.setItem('dataError', 'false');
-        }
-      }
+      //   // Cek apakah data masih error berdasarkan localStorage
+      //   if (localStorage.getItem('dataError') === 'true') {
+      //     showAlert('error', 'Data tidak diupdate', errorMessage, 5000);
+      //   }
+
+      //   // Set localStorage berdasarkan keadaan data
+      //   if (errorIds.length > 0) {
+      //     localStorage.setItem('dataError', 'true');
+      //   } else {
+      //     localStorage.setItem('dataError', 'false');
+      //   }
+      // }
       
       console.log(data.errors);
       $("#data").html(html);
