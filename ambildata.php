@@ -15,7 +15,7 @@ try {
                 // Cek apakah waktu terakhir update melebihi 20 detik dari waktu sekarang
                 if (time() - $lastUpdateTime > 20) {
                         // Jika melebihi 20 detik, tambahkan pesan error ke data
-                        $errors[$post['id_alat']] = 'Data tidak diupdate';
+                        $errors[$post['nama_alat']] = 'Data tidak diupdate';
                 }
                 $posts[] = $post;
         }
@@ -24,7 +24,5 @@ try {
         echo $data;
 } catch (mysqli_sql_exception $e) {
         // Tambahkan pernyataan untuk menangani error dan exception di sini
-        $errors = array('error' => $e->getMessage());
-        $data = json_encode(array('results' => array(), 'errors' => $errors));
-        echo $data;
+        echo "Error: " . $e->getMessage();
 }
