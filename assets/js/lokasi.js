@@ -327,7 +327,6 @@ function updateData() {
         // Tambahkan id alat ke dalam array errorIds jika data tidak di-update
         if (result.update === 'false') {
           errorIds.push(result.id_alat);
-          console.log(errorIds);
         }
       }
 
