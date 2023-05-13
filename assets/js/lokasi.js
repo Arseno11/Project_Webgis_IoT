@@ -333,7 +333,7 @@ function updateData() {
       // Jika terdapat id alat yang error, tampilkan SweetAlert
       if (data.errors) {
         let errorMessage = 'Data tidak diupdate pada alat dengan id: ';
-        errorMessage += Object.keys(data.errors).join(', ');
+        errorMessage += Object.keys(errorIds).join(', ');
 
         // Cek apakah data masih error berdasarkan localStorage
         if (localStorage.getItem('dataError') === 'true') {
