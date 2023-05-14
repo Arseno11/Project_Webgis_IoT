@@ -156,13 +156,12 @@ navigator.geolocation.getCurrentPosition(function (location) {
       // Memeriksa status hujan dan jarak air
       let iconUrl;
       let status;
-      let currentCircle = null; // inisialisasi variabel
 
       if (deviceLocation.jarak <= 10) {
         // Menentukan ikon marker dan konten popup
         iconUrl = 'img/bahaya.png';
         status = 'Bahaya';
-      } else if (deviceLocation.jarak <= 25) {
+      } else if (deviceLocation.jarak > 10 && deviceLocation.jarak <= 20) {
         iconUrl = 'img/awas.png';
         status = 'Awas';
       } else {
@@ -295,7 +294,7 @@ function updateData() {
             localStorage.setItem('showAlert_' + result.id_alat, 'false');
             localStorage.removeItem('showAlert_' + result.id_alat + '_siaga2');
           }
-        } else if (result.jarak > 10 && result.jarak <= 25) {
+        } else if (result.jarak > 10 && result.jarak <= 20) {
           siaga = '<td style=color:yellow>Siaga 2</td>';
           if (localStorage.getItem('showAlert_' + result.id_alat + '_siaga2') !== 'false') {
             showAlert('warning', 'Peringatan Banjir', 'Jarak sensor telah mencapai Siaga 2 untuk Alat Dengan Nama ' + result.nama_alat, 5000);
