@@ -51,61 +51,16 @@
 
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
       <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-      <script>
-        function encryptUrl(url) {
-          var key = CryptoJS.enc.Utf8.parse('kuncirahasia1234567890'); // kunci enkripsi
-          var iv = CryptoJS.enc.Utf8.parse('0123456789abcdef'); // initialization vector
-          var encrypted = CryptoJS.AES.encrypt(url, key, {
-            iv: iv,
-            mode: CryptoJS.mode.CBC
-          });
-          return encrypted.toString();
-        }
-
-        var links = document.getElementsByTagName('a'); // ambil semua elemen <a>
-        for (var i = 0; i < links.length; i++) {
-          var url = links[i].href;
-          if (url.indexOf('ambildata.php') > -1) { // jika URL mengandung "ambildata.php"
-            var encryptedUrl = encryptUrl(url);
-            links[i].href = "javascript:void(0);"; // hilangkan tautan asli
-            links[i].setAttribute("data-encrypted-url", encryptedUrl); // simpan URL terenkripsi dalam atribut data
-            links[i].addEventListener('click', function(e) { // tambahkan event click pada setiap elemen <a>
-              var encryptedUrl = this.getAttribute("data-encrypted-url");
-              var decryptedUrl = CryptoJS.AES.decrypt(encryptedUrl, 'kuncirahasia1234567890').toString(CryptoJS.enc
-                .Utf8);
-              window.location.href = decryptedUrl; // buka URL terdekripsi saat elemen <a> di klik
-              e.preventDefault(); // mencegah tindakan default klik tautan
-            });
-          }
-        }
-      </script>
-
-
-
     </head>
 
     <body>
       <header id="header">
-        <div class="header-top">
-          <div class="container">
-            <div class="row align-items-center">
-              <div class="col-lg-6 col-sm-6 col-6 header-top-left">
-              </div>
-              <div class="col-lg-6 col-sm-6 col-6 header-top-right">
-                <div class="header-social">
-                  <a href="#"><i class="fa fa-facebook"></i></a>
-                  <a href="#"><i class="fa fa-twitter"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="container main-menu">
           <div class="row align-items-center justify-content-between d-flex">
             <div id="logo"">
-                    <a href=" index.php"><img src="./img/logo.png" alt="Logo" title="" style="width: 30px; height: 30px;" /><span style="color: white; font-weight: 500; padding: 5px;">PENDETEKSI
+                    <a href=" index.php"><img src="./img/logo.png" alt="Logo" title=""
+                style="width: 30px; height: 30px;" /><span
+                style="color: white; font-weight: 500; padding: 5px;">PENDETEKSI
                 BANJIR</span>
               </a>
             </div>
@@ -113,7 +68,7 @@
               <ul class="nav-menu">
                 <li><a href="/">Home</a></li>
                 <li><a href="data_alat.php">List Alat</a></li>
-                <li><a href="/admin/login.php">Login Admin</a></li>
+                <!-- <li><a href="/admin/login.php">Login Admin</a></li> -->
               </ul>
             </nav><!-- #nav-menu-container -->
           </div>
