@@ -55,12 +55,16 @@
 
     <body>
       <header id="header">
+        <div class="header-top">
+          <div class="container">
+            <div class="row align-items-center">
+            </div>
+          </div>
+        </div>
         <div class="container main-menu">
           <div class="row align-items-center justify-content-between d-flex">
             <div id="logo"">
-                    <a href=" index.php"><img src="./img/logo.png" alt="Logo" title=""
-                style="width: 30px; height: 30px;" /><span
-                style="color: white; font-weight: 500; padding: 5px;">PENDETEKSI
+                    <a href=" index.php"><img src="./img/logo.png" alt="Logo" title="" style="width: 30px; height: 30px;" /><span style="color: white; font-weight: 500; padding: 5px;">PENDETEKSI
                 BANJIR</span>
               </a>
             </div>
