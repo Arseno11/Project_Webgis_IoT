@@ -102,86 +102,86 @@ navigator.geolocation.getCurrentPosition(function (location) {
     iconSize: [50, 50]
   }).addTo(map);
 
-const intervalTime = 3000; // Waktu polling dalam milidetik
-let lastData = null;
+  const intervalTime = 3000; // Waktu polling dalam milidetik
+  let lastData = null;
 
-async function loadData() {
-  try {
-    const response = await fetch('ambildata.php');
-    const data = await response.json();
+  async function loadData() {
+    try {
+      const response = await fetch('ambildata.php');
+      const data = await response.json();
 
-    if (!response.ok || !data || typeof data.results !== 'object') {
-      throw new Error('Terjadi kesalahan saat memuat data.');
-    }
-
-    const deviceLocations = data.results.map(item => ({
-      id: item.id_alat,
-      name: item.nama_alat,
-      address: item.alamat,
-      jarak: item.jarak,
-      rainfall: item.hujan,
-      longitude: item.longitude,
-      latitude: item.latitude,
-      status: 'Aman'
-    }));
-
-    // Check jika data terbaru dari server sudah berubah
-    if (JSON.stringify(deviceLocations) !== JSON.stringify(lastData)) {
-      lastData = deviceLocations;
-      for (const marker of markers) {
-        map.removeLayer(marker);
+      if (!response.ok || !data || typeof data.results !== 'object') {
+        throw new Error('Terjadi kesalahan saat memuat data.');
       }
-      markers = [];
 
-      showMarkers(deviceLocations);
+      const deviceLocations = data.results.map(item => ({
+        id: item.id_alat,
+        name: item.nama_alat,
+        address: item.alamat,
+        jarak: item.jarak,
+        rainfall: item.hujan,
+        longitude: item.longitude,
+        latitude: item.latitude,
+        status: 'Aman'
+      }));
+
+      // Check jika data terbaru dari server sudah berubah
+      if (JSON.stringify(deviceLocations) !== JSON.stringify(lastData)) {
+        lastData = deviceLocations;
+        for (const marker of markers) {
+          map.removeLayer(marker);
+        }
+        markers = [];
+
+        showMarkers(deviceLocations);
+      }
+
+    } catch (error) {
+      console.error(error);
     }
-
-  } catch (error) {
-    console.error(error);
   }
-}
 
-function startPolling() {
-  setInterval(() => {
-    loadData();
-  }, intervalTime);
-}
+  function startPolling() {
+    setInterval(() => {
+      loadData();
+    }, intervalTime);
+  }
 
-// Pemanggilan fungsi polling pada saat halaman sudah render
-document.addEventListener('DOMContentLoaded', () => {
-  startPolling();
-});
+  // Pemanggilan fungsi polling pada saat halaman sudah render
+  document.addEventListener('DOMContentLoaded', () => {
+    startPolling();
+  });
 
-function showMarkers(deviceLocations) {
-  deviceLocations.forEach((deviceLocation) => {
-    const {
-      name,
-      jarak,
-      latitude,
-      longitude
-    } = deviceLocation;
+  function showMarkers(deviceLocations) {
+    deviceLocations.forEach((deviceLocation) => {
+      const {
+        name,
+        jarak,
+        latitude,
+        longitude
+      } = deviceLocation;
 
-    let status = 'Aman';
-    let iconUrl = 'img/aman.png';
+      let status = 'Aman';
+      let iconUrl = 'img/aman.png';
 
-    if (jarak <= 10) {
-      status = 'Bahaya';
-      iconUrl = 'img/bahaya.png';
-    } else if (jarak > 10 && jarak <= 20) {
-      status = 'Awas';
-      iconUrl = 'img/awas.png';
-    }
+      if (jarak <= 10) {
+        status = 'Bahaya';
+        iconUrl = 'img/bahaya.png';
+      } else if (jarak > 10 && jarak <= 20) {
+        status = 'Awas';
+        iconUrl = 'img/awas.png';
+      }
 
-    const marker = L.marker([latitude, longitude], {
-      title: name,
-      icon: L.icon({
-        iconUrl: iconUrl,
-        iconSize: [30, 45],
-        popupAnchor: [-1, -20]
-      })
-    });
+      const marker = L.marker([latitude, longitude], {
+        title: name,
+        icon: L.icon({
+          iconUrl: iconUrl,
+          iconSize: [30, 45],
+          popupAnchor: [-1, -20]
+        })
+      });
 
-    const popupContent = `
+      const popupContent = `
       <h6> Nama Alat: ${name} </h6>
       <h6><p> Status: ${status} </p></h6>
       <h6> Jarak Air: ${jarak} cm </h6></br>
@@ -189,16 +189,16 @@ function showMarkers(deviceLocations) {
       <a class='btn btn-warning btn-sm' target='_blank' href='https://www.google.com/maps/dir/?api=1&origin=${location.coords.latitude},${location.coords.longitude}&destination=${latitude},${longitude}&travelmode=driving'>Rute</a>
     `;
 
-    marker.on('click', () => {
-      marker.bindPopup(popupContent).openPopup();
+      marker.on('click', () => {
+        marker.bindPopup(popupContent).openPopup();
+      });
+
+      marker.addTo(map);
+      markers.push(marker);
     });
+  }
 
-    marker.addTo(map);
-    markers.push(marker);
-  });
-}
-
-let markers = [];
+  let markers = [];
 
 });
 
@@ -236,7 +236,7 @@ function updateData() {
   })
     .then(response => response.json())
     .then(data => {
-      let errorIds = []; 
+      let errorIds = [];
 
       let html = '';
 
@@ -262,7 +262,7 @@ function updateData() {
 
         html += `
           <tr>
-            <td>${index+1}</td>
+            <td>${index + 1}</td>
             <td>${result.nama_alat}</td>
             <td>${result.jarak} cm</td>
             ${siaga}
@@ -299,12 +299,5 @@ function updateData() {
 }
 
 
-// fungsi untuk melakukan refresh data setiap 5 detik
-function refreshData() {
-  setInterval(function () {
-    updateData();
-  }, 5000); // set interval ke 5 detik (5000 ms)
-}
-
-// panggil fungsi refreshData() saat halaman dimuat
+function refreshData() { setInterval(updateData, 5000); } 
 refreshData();
