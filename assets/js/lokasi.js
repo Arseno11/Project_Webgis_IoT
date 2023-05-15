@@ -102,138 +102,86 @@ navigator.geolocation.getCurrentPosition(function (location) {
     iconSize: [50, 50]
   }).addTo(map);
 
-  // deklarasi variabel untuk menyimpan popup yang sedang terbuka
-  let currentPopup = null;
 
-
-  // fungsi untuk memanggil data dari API
   async function loadData() {
-    try {
-      const response = await fetch('ambildata.php');
-      if (!response.ok) {
-        throw new Error('Terjadi kesalahan saat memuat data.');
-      }
-      const data = await response.json();
+  try {
+    const response = await fetch('ambildata.php');
+    const data = await response.json();
 
-      // memformat data menjadi objek yang diinginkan
-      const deviceLocations = data.results.map(item => ({
-        id: item.id_alat,
-        name: item.nama_alat,
-        address: item.alamat,
-        jarak: item.jarak,
-        rainfall: item.hujan,
-        longitude: item.longitude,
-        latitude: item.latitude
-      }));
-
-      // Menghapus marker yang telah ada sebelumnya
-      for (let i = 0; i < markers.length; i++) {
-        map.removeLayer(markers[i]);
-      }
-      markers = [];
-
-
-      // Menutup popup yang sedang terbuka jika ada
-      if (currentPopup) {
-        currentPopup._close();
-      }
-
-      // memanggil fungsi untuk menampilkan marker di peta
-      showMarkers(deviceLocations);
-    } catch (error) {
-      console.error(error);
+    if (!response.ok || !data || typeof data.results !== 'object') {
+      throw new Error('Terjadi kesalahan saat memuat data.');
     }
+
+    const deviceLocations = data.results.map(item => ({
+      id: item.id_alat,
+      name: item.nama_alat,
+      address: item.alamat,
+      jarak: item.jarak,
+      rainfall: item.hujan,
+      longitude: item.longitude,
+      latitude: item.latitude,
+      status: 'Aman'
+    }));
+
+    for (const marker of markers) {
+      map.removeLayer(marker);
+    }
+    markers = [];
+
+    showMarkers(deviceLocations);
+
+  } catch (error) {
+    console.error(error);
   }
+}
 
-  // fungsi untuk menampilkan marker di peta
-  function showMarkers(deviceLocations) {
+function showMarkers(deviceLocations) {
+  deviceLocations.forEach((deviceLocation) => {
+    const {
+      name,
+      jarak,
+      latitude,
+      longitude
+    } = deviceLocation;
 
-    // Membuat loop untuk setiap lokasi alat
-    for (var i = 0; i < deviceLocations.length; i++) {
-      var deviceLocation = deviceLocations[i];
+    let status = 'Aman';
+    let iconUrl = 'img/aman.png';
 
-      // Memeriksa status hujan dan jarak air
-      // Memeriksa status hujan dan jarak air
-      let iconUrl;
-      let status;
+    if (jarak <= 10) {
+      status = 'Bahaya';
+      iconUrl = 'img/bahaya.png';
+    } else if (jarak > 10 && jarak <= 20) {
+      status = 'Awas';
+      iconUrl = 'img/awas.png';
+    }
 
-      if (deviceLocation.jarak <= 10) {
-        // Menentukan ikon marker dan konten popup
-        iconUrl = 'img/bahaya.png';
-        status = 'Bahaya';
-      } else if (deviceLocation.jarak > 10 && deviceLocation.jarak <= 20) {
-        iconUrl = 'img/awas.png';
-        status = 'Awas';
-      } else {
-        iconUrl = 'img/aman.png';
-        status = 'Aman';
-      }
+    const marker = L.marker([latitude, longitude], {
+      title: name,
+      icon: L.icon({
+        iconUrl: iconUrl,
+        iconSize: [30, 45],
+        popupAnchor: [-1, -20]
+      })
+    });
 
-      // Membuat marker di peta
-      var marker = L.marker([deviceLocation.latitude, deviceLocation.longitude], {
-        title: deviceLocation.name,
-        icon: L.icon({
-          iconUrl: iconUrl,
-          iconSize: [30, 45], // ukuran ikon
-          popupAnchor: [-1, -20]
-        })
-      });
-
-      // Menambahkan popup ke marker
-      var popupContent =
-        `<h6> Nama Alat: ${deviceLocation.name}</h6> 
-      <h6><p> Status: ${status}</p></h6>
-      <h6>Jarak Air: ${deviceLocation.jarak} cm</h6></br>
+    const popupContent = `
+      <h6> Nama Alat: ${name} </h6>
+      <h6><p> Status: ${status} </p></h6>
+      <h6> Jarak Air: ${jarak} cm </h6></br>
       <a class='btn btn-success btn-sm' href='detail.php?id_alat=${deviceLocation.id}'> Info Detail </a>
-      <a class='btn btn-warning btn-sm' target='_blank' href='https://www.google.com/maps/dir/?api=1&origin=${location.coords.latitude},${location.coords.longitude}&destination=${deviceLocation.latitude},${deviceLocation.longitude}&travelmode=driving'>Rute</a>`;
+      <a class='btn btn-warning btn-sm' target='_blank' href='https://www.google.com/maps/dir/?api=1&origin=${location.coords.latitude},${location.coords.longitude}&destination=${latitude},${longitude}&travelmode=driving'>Rute</a>
+    `;
 
-      // Menambahkan konten popup ke marker
-      marker.bindPopup(popupContent);
-      // Menambahkan marker ke peta dan ke array markers
-      marker.addTo(map);
-      markers.push(marker);
-      // Menambahkan event listener mouseover pada marker
-      marker.on('click', function () {
-        this.openPopup();
-      });
-    }
-  }
+    marker.on('click', () => {
+      marker.bindPopup(popupContent).openPopup();
+    });
 
-  // Array untuk menyimpan marker
-  markers = [];
+    marker.addTo(map);
+    markers.push(marker);
+  });
+}
 
-  // fungsi untuk memanggil data dari API
-  async function loadData() {
-    try {
-      const response = await fetch('ambildata.php');
-      if (!response.ok) {
-        throw new Error('Terjadi kesalahan saat memuat data.');
-      }
-      const data = await response.json(); // memformat data menjadi objek yang diinginkan
-      const deviceLocations = data.results.map(item => ({
-        id: item.id_alat,
-        name: item.nama_alat,
-        address: item.alamat,
-        jarak: item.jarak,
-        rainfall: item.hujan,
-        longitude: item.longitude,
-        latitude: item.latitude
-      }));
-
-      // Menghapus marker yang telah ada sebelumnya
-      for (let i = 0; i < markers.length; i++) {
-        map.removeLayer(markers[i]);
-      }
-      markers = [];
-
-      // memanggil fungsi untuk menampilkan marker di peta
-      showMarkers(deviceLocations);
-
-    } catch (error) {
-      console.error(error);
-    }
-
-  }
+let markers = [];
 
   // fungsi untuk melakukan refresh data setiap 5 detik
   function refreshData() {
@@ -280,83 +228,66 @@ function updateData() {
   })
     .then(response => response.json())
     .then(data => {
-      let errorIds = []; // Inisialisasi array untuk menyimpan id alat yang error
+      let errorIds = []; 
+
       let html = '';
 
-      for (let i = 0; i < data.results.length; i++) {
-        let result = data.results[i];
+      data.results.forEach((result, index) => {
         let siaga, hujan;
+        const showAlertKey = 'showAlert_' + result.id_alat;
 
-        if (result.jarak <= 10) {
-          siaga = '<td style=color:red>Siaga 1</td>';
-          if (localStorage.getItem('showAlert_' + result.id_alat) !== 'false') {
-            showAlert('error', 'Peringatan Banjir', 'Jarak sensor telah mencapai Siaga 1 untuk Alat Dengan Nama ' + result.nama_alat, 5000);
-            localStorage.setItem('showAlert_' + result.id_alat, 'false');
-            localStorage.removeItem('showAlert_' + result.id_alat + '_siaga2');
-          }
-        } else if (result.jarak > 10 && result.jarak <= 20) {
-          siaga = '<td style=color:yellow>Siaga 2</td>';
-          if (localStorage.getItem('showAlert_' + result.id_alat + '_siaga2') !== 'false') {
-            showAlert('warning', 'Peringatan Banjir', 'Jarak sensor telah mencapai Siaga 2 untuk Alat Dengan Nama ' + result.nama_alat, 5000);
-            localStorage.setItem('showAlert_' + result.id_alat + '_siaga2', 'false');
-            localStorage.removeItem('showAlert_' + result.id_alat);
-          }
-        } else {
-          siaga = '<td style=color:green>Aman</td>';
-          localStorage.removeItem('showAlert_' + result.id_alat);
-          localStorage.removeItem('showAlert_' + result.id_alat + '_siaga2');
+        switch (true) {
+          case (result.jarak <= 10):
+            siaga = `<td style="color:red">Siaga 1</td>`;
+            showAlertWrapper(showAlertKey, '_siaga2', () => showAlert('error', 'Peringatan Banjir', `Jarak sensor telah mencapai Siaga 1 untuk Alat Dengan Nama ${result.nama_alat}`, 5000));
+            break;
+          case (result.jarak > 10 && result.jarak <= 20):
+            siaga = `<td style="color:yellow">Siaga 2</td>`;
+            showAlertWrapper(showAlertKey, '', () => showAlert('warning', 'Peringatan Banjir', `Jarak sensor telah mencapai Siaga 2 untuk Alat Dengan Nama ${result.nama_alat}`, 5000));
+            break;
+          default:
+            siaga = `<td style="color:green">Aman</td>`;
+            break;
         }
 
-        if (result.hujan < 500) {
-          hujan = '<td><i class="fas fa-cloud-showers-heavy"></i> Hujan</td>';
-        } else {
-          hujan = '<td><i class="fas fa-sun"></i> Cerah</td>';
-        }
+        hujan = (result.hujan < 500) ? `<td><i class="fas fa-cloud-showers-heavy"></i> Hujan</td>` : `<td><i class="fas fa-sun"></i> Cerah</td>`;
 
         html += `
-            <tr>
-              <td>${i + 1}</td>
-              <td>${result.nama_alat}</td>
-              <td>${result.jarak} cm</td>
-              ${siaga}
-              ${hujan}
-            </tr>
-          `;
+          <tr>
+            <td>${index+1}</td>
+            <td>${result.nama_alat}</td>
+            <td>${result.jarak} cm</td>
+            ${siaga}
+            ${hujan}
+          </tr>
+        `;
 
-        // Tambahkan id alat ke dalam array errorIds jika data tidak di-update
-        if (result.update === 'false') {
-          errorIds.push(result.id_alat);
-        }
-        console.log(errorIds);
-      }
+        if (!result.update) errorIds.push(result.id_alat);
+      });
 
-      // Mengecek apakah ada alat yang error
-      const hasErrors = data.errors && Object.keys(data.errors).length > 0;
-
-      // Cek apakah data masih error berdasarkan localStorage
-      const isDataError = localStorage.getItem('dataError') === 'true';
-
-      // Tampilkan pesan error jika data belum diupdate dan alert belum ditampilkan sebelumnya
-      if (hasErrors && !isDataError) {
+      if (data.errors && Object.keys(data.errors).length && localStorage.getItem('dataError') !== 'true') {
         const errorIds = Object.keys(data.errors);
-        const errorMessage = `Data tidak diupdate pada alat dengan nama: ${errorIds.join(', ')}`;
-
+        const errorMessage = `Data tidak diperbarui untuk alat dengan nama: ${errorIds.join(', ')}`;
         showAlert('error', 'Terjadi Error', errorMessage, 5000);
-
-        // Set localStorage agar alert tidak ditampilkan lagi
         localStorage.setItem('dataError', 'true');
       }
 
-      // Hapus localStorage jika data sudah diupdate
-      if (!hasErrors) {
-        localStorage.removeItem('dataError');
-      }
+      if (!Object.keys(data.errors).length) localStorage.removeItem('dataError');
 
       $("#data").html(html);
-    }).catch(error => {
+    })
+    .catch(error => {
       showAlert('error', 'Error', 'Terjadi kesalahan saat mengambil data. Silakan coba lagi.', 5000);
       console.error(error);
     });
+
+  function showAlertWrapper(key, sufix, showAlertFunc) {
+    if (localStorage.getItem(key + sufix) !== 'false') {
+      showAlertFunc();
+      localStorage.setItem(key + sufix, 'false');
+      localStorage.removeItem((sufix) ? key : key + '_siaga2');
+    }
+  }
 }
 
 
