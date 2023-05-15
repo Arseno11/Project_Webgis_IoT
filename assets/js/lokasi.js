@@ -234,15 +234,35 @@ navigator.geolocation.getCurrentPosition(function (location) {
   function refreshData() { setInterval(fetchAndRenderData, intervalTime); }
 
   // Fungsi untuk menampilkan SweetAlert 
-  function showAlert(icon, title, text) { Swal.fire({ icon: icon, title: title, text: text, }).then((result) => { if (result.isConfirmed) { localStorage.setItem('showAlert', 'false'); } }); }
+  function showAlert(icon, title, text) {
+    Swal.fire({ icon: icon, title: title, text: text, }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.setItem('showAlert', 'false');
+      }
+    });
+  }
 
   // Fungsi untuk menghapus item local storage ketika halaman di-reload atau ditutup 
-  window.addEventListener('beforeunload', function () { localStorage.removeItem('showAlert'); for (let i = 0; i < localStorage.length; i++) { let key = localStorage.key(i); if (key.includes('showAlert_')) { localStorage.removeItem(key); } } });
+  window.addEventListener('beforeunload', function () {
+    localStorage.removeItem('showAlert');
+    for (let i = 0; i < localStorage.length; i++) {
+      let key = localStorage.key(i);
+      if (key.includes('showAlert_')) {
+        localStorage.removeItem(key);
+      }
+    }
+  });
 
   // Pemanggilan fungsi polling pada saat halaman sudah render 
   document.addEventListener('DOMContentLoaded', () => { refreshData(); });
 
   let markers = [];
 
-  function showAlertWrapper(key, sufix, showAlertFunc) { if (localStorage.getItem(key + sufix) !== 'false') { showAlertFunc(); localStorage.setItem(key + sufix, 'false'); localStorage.removeItem((sufix) ? key : key + '_siaga2'); } }
+  function showAlertWrapper(key, sufix, showAlertFunc) {
+    if (localStorage.getItem(key + sufix) !== 'false') {
+      showAlertFunc();
+      localStorage.setItem(key + sufix, 'false');
+      localStorage.removeItem((sufix) ? key : key + '_siaga2');
+    }
+  }
 });
