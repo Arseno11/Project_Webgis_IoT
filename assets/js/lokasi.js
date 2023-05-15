@@ -102,8 +102,10 @@ navigator.geolocation.getCurrentPosition(function (location) {
     iconSize: [50, 50]
   }).addTo(map);
 
+const intervalTime = 3000; // Waktu polling dalam milidetik
+let lastData = null;
 
-  async function loadData() {
+async function loadData() {
   try {
     const response = await fetch('ambildata.php');
     const data = await response.json();
@@ -123,17 +125,32 @@ navigator.geolocation.getCurrentPosition(function (location) {
       status: 'Aman'
     }));
 
-    for (const marker of markers) {
-      map.removeLayer(marker);
-    }
-    markers = [];
+    // Check jika data terbaru dari server sudah berubah
+    if (JSON.stringify(deviceLocations) !== JSON.stringify(lastData)) {
+      lastData = deviceLocations;
+      for (const marker of markers) {
+        map.removeLayer(marker);
+      }
+      markers = [];
 
-    showMarkers(deviceLocations);
+      showMarkers(deviceLocations);
+    }
 
   } catch (error) {
     console.error(error);
   }
 }
+
+function startPolling() {
+  setInterval(() => {
+    loadData();
+  }, intervalTime);
+}
+
+// Pemanggilan fungsi polling pada saat halaman sudah render
+document.addEventListener('DOMContentLoaded', () => {
+  startPolling();
+});
 
 function showMarkers(deviceLocations) {
   deviceLocations.forEach((deviceLocation) => {
