@@ -102,6 +102,9 @@ navigator.geolocation.getCurrentPosition(function (location) {
     iconSize: [50, 50]
   }).addTo(map);
 
+const intervalTime = 3000; // Waktu polling dalam milidetik
+let lastData = null;
+
 async function loadData() {
   try {
     const response = await fetch('ambildata.php');
@@ -125,67 +128,12 @@ async function loadData() {
     // Check jika data terbaru dari server sudah berubah
     if (JSON.stringify(deviceLocations) !== JSON.stringify(lastData)) {
       lastData = deviceLocations;
-      for (const deviceLocation of deviceLocations) {
-        const {
-          name,
-          jarak,
-          latitude,
-          longitude
-        } = deviceLocation;
-
-        let status = 'Aman';
-        let iconUrl = 'img/aman.png';
-
-        if (jarak <= 10) {
-          status = 'Bahaya';
-          iconUrl = 'img/bahaya.png';
-        } else if (jarak > 10 && jarak <= 20) {
-          status = 'Awas';
-          iconUrl = 'img/awas.png';
-        }
-
-        const marker = markers.find(marker => marker.options.title === name);
-
-        if (marker) {
-          const popup = marker.getPopup();
-          const popupContent = popup.getContent();
-          const newPopupContent = `
-            <h6> Nama Alat: ${name} </h6>
-            <h6><p> Status: ${status} </p></h6>
-            <h6> Jarak Air: ${jarak} cm </h6></br>
-            <a class='btn btn-success btn-sm' href='detail.php?id_alat=${deviceLocation.id}'> Info Detail </a>
-            <a class='btn btn-warning btn-sm' target='_blank' href='https://www.google.com/maps/dir/?api=1&origin=${location.coords.latitude},${location.coords.longitude}&destination=${latitude},${longitude}&travelmode=driving'>Rute</a>
-          `;
-          popup.setContent(newPopupContent);
-          
-          // Pemanggilan fungsi openPopup() hanya jika popup telah ada
-          marker.openPopup();
-        } else {
-          const marker = L.marker([latitude, longitude], {
-            title: name,
-            icon: L.icon({
-              iconUrl: iconUrl,
-              iconSize: [30, 45],
-              popupAnchor: [-1, -20]
-            })
-          });
-
-          const popupContent = `
-            <h6> Nama Alat: ${name} </h6>
-            <h6><p> Status: ${status} </p></h6>
-            <h6> Jarak Air: ${jarak} cm </h6></br>
-            <a class='btn btn-success btn-sm' href='detail.php?id_alat=${deviceLocation.id}'> Info Detail </a>
-            <a class='btn btn-warning btn-sm' target='_blank' href='https://www.google.com/maps/dir/?api=1&origin=${location.coords.latitude},${location.coords.longitude}&destination=${latitude},${longitude}&travelmode=driving'>Rute</a>
-          `;
-
-          marker.on('click', () => {
-            marker.bindPopup(popupContent).openPopup();
-          });
-
-          marker.addTo(map);
-          markers.push(marker);
-        }
+      for (const marker of markers) {
+        map.removeLayer(marker);
       }
+      markers = [];
+
+      showMarkers(deviceLocations);
     }
 
   } catch (error) {
@@ -193,15 +141,65 @@ async function loadData() {
   }
 }
 
-  // fungsi untuk melakukan refresh data setiap 5 detik
-  function refreshData() {
-    setInterval(function () {
-      loadData();
-    },3000); // set interval ke 5 detik (5000 ms)
-  }
+function startPolling() {
+  setInterval(() => {
+    loadData();
+  }, intervalTime);
+}
 
-  // panggil fungsi refreshData() saat halaman dimuat
-  refreshData();
+// Pemanggilan fungsi polling pada saat halaman sudah render
+document.addEventListener('DOMContentLoaded', () => {
+  startPolling();
+});
+
+function showMarkers(deviceLocations) {
+  deviceLocations.forEach((deviceLocation) => {
+    const {
+      name,
+      jarak,
+      latitude,
+      longitude
+    } = deviceLocation;
+
+    let status = 'Aman';
+    let iconUrl = 'img/aman.png';
+
+    if (jarak <= 10) {
+      status = 'Bahaya';
+      iconUrl = 'img/bahaya.png';
+    } else if (jarak > 10 && jarak <= 20) {
+      status = 'Awas';
+      iconUrl = 'img/awas.png';
+    }
+
+    const marker = L.marker([latitude, longitude], {
+      title: name,
+      icon: L.icon({
+        iconUrl: iconUrl,
+        iconSize: [30, 45],
+        popupAnchor: [-1, -20]
+      })
+    });
+
+    const popupContent = `
+      <h6> Nama Alat: ${name} </h6>
+      <h6><p> Status: ${status} </p></h6>
+      <h6> Jarak Air: ${jarak} cm </h6></br>
+      <a class='btn btn-success btn-sm' href='detail.php?id_alat=${deviceLocation.id}'> Info Detail </a>
+      <a class='btn btn-warning btn-sm' target='_blank' href='https://www.google.com/maps/dir/?api=1&origin=${location.coords.latitude},${location.coords.longitude}&destination=${latitude},${longitude}&travelmode=driving'>Rute</a>
+    `;
+
+    marker.on('click', () => {
+      marker.bindPopup(popupContent).openPopup();
+    });
+
+    marker.addTo(map);
+    markers.push(marker);
+  });
+}
+
+let markers = [];
+
 });
 
 
