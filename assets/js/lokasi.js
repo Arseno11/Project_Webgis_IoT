@@ -1,13 +1,13 @@
 navigator.geolocation.getCurrentPosition(function (location) {
   var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
   var isMobile = window.matchMedia("only screen and (max-width: 768px)").matches;
-
   var map = L.map('map', {
     center: [-7.782793615552607, 110.36728950566525],
     zoom: 13,
     scrollWheelZoom: true // Menonaktifkan zoom dengan scroll
   });
 
+  
   // Nonaktifkan scrollWheelZoom di perangkat mobile
   if (isMobile) {
     map.scrollWheelZoom.disable();
@@ -193,11 +193,11 @@ navigator.geolocation.getCurrentPosition(function (location) {
         switch (true) {
           case (result.jarak <= 10):
             siaga = `<td style="color:red">Siaga 1</td>`;
-            showAlertWrapper(showAlertKey, '_siaga2', () => showAlert('error', 'Peringatan Banjir', `Jarak sensor telah mencapai Siaga 1 untuk Alat Dengan Nama ${result.nama_alat}`, 5000));
+            showAlertWrapper(showAlertKey, '_siaga2', () => showAlert('error', 'Peringatan Banjir', `Jarak sensor telah mencapai status Bahaya untuk Alat Dengan Nama ${result.nama_alat}`, 5000));
             break;
           case (result.jarak > 10 && result.jarak <= 20):
             siaga = `<td style="color:yellow">Siaga 2</td>`;
-            showAlertWrapper(showAlertKey, '', () => showAlert('warning', 'Peringatan Banjir', `Jarak sensor telah mencapai Siaga 2 untuk Alat Dengan Nama ${result.nama_alat}`, 5000));
+            showAlertWrapper(showAlertKey, '', () => showAlert('warning', 'Peringatan Banjir', `Jarak sensor telah mencapai status Awas untuk Alat Dengan Nama ${result.nama_alat}`, 5000));
             break;
           default:
             siaga = `<td style="color:green">Aman</td>`;
@@ -231,7 +231,9 @@ navigator.geolocation.getCurrentPosition(function (location) {
   }
 
   // Fungsi untuk melakukan refresh data setiap beberapa detik 
-  function refreshData() { setInterval(fetchAndRenderData, intervalTime); }
+  function refreshData() { 
+    setInterval(fetchAndRenderData, intervalTime); 
+  }
 
   // Fungsi untuk menampilkan SweetAlert 
   function showAlert(icon, title, text) {
