@@ -256,7 +256,9 @@ navigator.geolocation.getCurrentPosition(function (location) {
   });
 
   // Pemanggilan fungsi polling pada saat halaman sudah render 
-  document.addEventListener('DOMContentLoaded', () => { refreshData(); });
+  document.addEventListener('DOMContentLoaded', () => { 
+    refreshData(); 
+  });
 
   let markers = [];
 
