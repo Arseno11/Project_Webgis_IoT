@@ -7,7 +7,7 @@ navigator.geolocation.getCurrentPosition(function (location) {
     scrollWheelZoom: true // Menonaktifkan zoom dengan scroll
   });
 
-  
+
   // Nonaktifkan scrollWheelZoom di perangkat mobile
   if (isMobile) {
     map.scrollWheelZoom.disable();
@@ -102,9 +102,6 @@ navigator.geolocation.getCurrentPosition(function (location) {
     iconSize: [50, 50]
   }).addTo(map);
 
-const intervalTime = 3000; // Waktu polling dalam milidetik
-  let lastData = null;
-
   async function loadData() {
     try {
       const response = await fetch('ambildata.php');
@@ -125,32 +122,17 @@ const intervalTime = 3000; // Waktu polling dalam milidetik
         status: 'Aman'
       }));
 
-      // Check jika data terbaru dari server sudah berubah
-      if (JSON.stringify(deviceLocations) !== JSON.stringify(lastData)) {
-        lastData = deviceLocations;
-        for (const marker of markers) {
-          map.removeLayer(marker);
-        }
-        markers = [];
-
-        showMarkers(deviceLocations);
+      for (const marker of markers) {
+        map.removeLayer(marker);
       }
+      markers = [];
+
+      showMarkers(deviceLocations);
 
     } catch (error) {
       console.error(error);
     }
   }
-
-  function startPolling() {
-    setInterval(() => {
-      loadData();
-    }, intervalTime);
-  }
-
-  // Pemanggilan fungsi polling pada saat halaman sudah render
-  document.addEventListener('DOMContentLoaded', () => {
-    startPolling();
-  });
 
   function showMarkers(deviceLocations) {
     deviceLocations.forEach((deviceLocation) => {
@@ -200,6 +182,14 @@ const intervalTime = 3000; // Waktu polling dalam milidetik
 
   let markers = [];
 
+  function refreshData1() {
+  setInterval(function () {
+    loadData();
+  }, 3000); // set interval ke 5 detik (5000 ms)
+}
+// panggil fungsi refreshData() saat halaman dimuat
+refreshData1();
+
 });
 
 
@@ -247,11 +237,13 @@ function updateData() {
         switch (true) {
           case (result.jarak <= 10):
             siaga = `<td style="color:red">Siaga 1</td>`;
-            showAlertWrapper(showAlertKey, '_siaga2', () => showAlert('error', 'Peringatan Banjir', `Jarak sensor telah mencapai Siaga 1 untuk Alat Dengan Nama ${result.nama_alat}`, 5000));
+            showAlertWrapper(showAlertKey, '_siaga2', () =>
+              showAlert('error', 'Peringatan Banjir', `Jarak sensor telah mencapai Siaga 1 untuk Alat Dengan Nama ${result.nama_alat}`, 5000));
             break;
           case (result.jarak > 10 && result.jarak <= 20):
             siaga = `<td style="color:yellow">Siaga 2</td>`;
-            showAlertWrapper(showAlertKey, '', () => showAlert('warning', 'Peringatan Banjir', `Jarak sensor telah mencapai Siaga 2 untuk Alat Dengan Nama ${result.nama_alat}`, 5000));
+            showAlertWrapper(showAlertKey, '', () =>
+              showAlert('warning', 'Peringatan Banjir', `Jarak sensor telah mencapai Siaga 2 untuk Alat Dengan Nama ${result.nama_alat}`, 5000));
             break;
           default:
             siaga = `<td style="color:green">Aman</td>`;
@@ -297,3 +289,11 @@ function updateData() {
     }
   }
 }
+
+function refreshData() {
+  setInterval(function () {
+    updateData();
+  }, 4000); // set interval ke 5 detik (5000 ms)
+}
+// panggil fungsi refreshData() saat halaman dimuat
+refreshData();
