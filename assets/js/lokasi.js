@@ -194,14 +194,16 @@ refreshData1();
 
 
 // Fungsi untuk menampilkan SweetAlert
-function showAlert(icon, title, text) {
+function showAlert(icon, title, text, callback) {
   Swal.fire({
     icon: icon,
     title: title,
     text: text,
   }).then((result) => {
     if (result.isConfirmed) {
-      showNextAlert();
+      if (typeof callback === 'function') {
+        callback();
+      }
     }
   });
 }
@@ -210,29 +212,28 @@ function showAlert(icon, title, text) {
 function showNextAlert() {
   const showAlert = localStorage.getItem('showAlert');
   if (showAlert === 'true') {
-    // Tambahkan logika atau pemanggilan fungsi untuk menampilkan alert selanjutnya di sini
     const alertKeys = Object.keys(localStorage).filter((key) => key.startsWith('showAlert_'));
     alertKeys.forEach((key) => {
       const showAlertValue = localStorage.getItem(key);
       if (showAlertValue === 'true') {
-        // Dapatkan informasi alert dari key
         const alertInfo = key.split('_');
         const alertType = alertInfo[1];
         const alertMessage = alertInfo.slice(2).join('_');
 
-        // Tampilkan alert sesuai informasi yang didapatkan
         switch (alertType) {
           case 'siaga1':
-            showAlert('error', 'Peringatan Banjir', alertMessage, 5000);
+            showAlert('error', 'Peringatan Banjir', alertMessage, () => {
+              localStorage.setItem(key, 'false');
+              showNextAlert();
+            });
             break;
           case 'siaga2':
-            showAlert('warning', 'Peringatan Banjir', alertMessage, 5000);
+            showAlert('warning', 'Peringatan Banjir', alertMessage, () => {
+              localStorage.setItem(key, 'false');
+              showNextAlert();
+            });
             break;
-          // Tambahkan case untuk tipe alert lainnya jika diperlukan
         }
-
-        // Set localStorage item menjadi false setelah alert ditampilkan
-        localStorage.setItem(key, 'false');
       }
     });
   }
@@ -270,12 +271,18 @@ function updateData() {
           case (result.jarak <= 10):
             siaga = `<td style="color:red; text-size:25px;"><strong>Bahaya</strong></td>`;
             showAlertWrapper(showAlertKey, '_siaga1', () =>
-              showAlert('error', 'Peringatan Banjir', `Jarak sensor telah mencapai Status Bahaya untuk Alat Dengan Nama ${result.nama_alat}`, 5000));
+              showAlert('error', 'Peringatan Banjir', `Jarak sensor telah mencapai Status Bahaya untuk Alat Dengan Nama ${result.nama_alat}`, () => {
+                localStorage.setItem(showAlertKey + '_siaga1', 'false');
+                showNextAlert();
+              }));
             break;
           case (result.jarak > 10 && result.jarak <= 20):
             siaga = `<td style="color:yellow; text-size:25px;"><strong>Awas</strong></td>`;
             showAlertWrapper(showAlertKey, '_siaga2', () =>
-              showAlert('warning', 'Peringatan Banjir', `Jarak sensor telah mencapai Status Awas untuk Alat Dengan Nama ${result.nama_alat}`, 5000));
+              showAlert('warning', 'Peringatan Banjir', `Jarak sensor telah mencapai Status Awas untuk Alat Dengan Nama ${result.nama_alat}`, () => {
+                localStorage.setItem(showAlertKey + '_siaga2', 'false');
+                showNextAlert();
+              }));
             break;
           default:
             siaga = `<td style="color:green; text-size:25px;"><strong>Aman</strong></td>`;
@@ -300,8 +307,10 @@ function updateData() {
       if (data.errors && Object.keys(data.errors).length && localStorage.getItem('dataError') !== 'true') {
         const errorIds = Object.keys(data.errors);
         const errorMessage = `Data tidak diperbarui untuk alat dengan nama: ${errorIds.join(', ')}`;
-        showAlert('error', 'Terjadi Error', errorMessage, 5000);
-        localStorage.setItem('dataError', 'true');
+        showAlert('error', 'Terjadi Error', errorMessage, () => {
+          localStorage.setItem('dataError', 'true');
+          showNextAlert();
+        });
       }
 
       if (!Object.keys(data.errors).length) localStorage.removeItem('dataError');
@@ -311,8 +320,9 @@ function updateData() {
       showNextAlert(); // Panggil fungsi showNextAlert setelah memperbarui data
     })
     .catch(error => {
-      showAlert('error', 'Error', 'Terjadi kesalahan saat mengambil data. Silakan coba lagi.', 5000);
-      console.error(error);
+      showAlert('error', 'Error', 'Terjadi kesalahan saat mengambil data. Silakan coba lagi.', () => {
+        console.error(error);
+      });
     });
 
   function showAlertWrapper(key, sufix, showAlertFunc) {
@@ -324,8 +334,6 @@ function updateData() {
     }
   }
 }
-
-
 
 function refreshData() {
   setInterval(function () {
