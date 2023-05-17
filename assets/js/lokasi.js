@@ -134,60 +134,54 @@ navigator.geolocation.getCurrentPosition(function (location) {
     }
   }
 
-function showMarkers(deviceLocations) {
-  deviceLocations.forEach((deviceLocation) => {
-    const { name, jarak, latitude, longitude } = deviceLocation;
+  function showMarkers(deviceLocations) {
+    deviceLocations.forEach((deviceLocation) => {
+      const { name, jarak, latitude, longitude } = deviceLocation;
 
-    let status = 'Aman';
-    let iconUrl = 'img/aman.png';
+      let status = 'Aman';
+      let iconUrl = 'img/aman.png';
 
-    if (jarak <= 10) {
-      status = 'Bahaya';
-      iconUrl = 'img/bahaya.png';
-    } else if (jarak > 10 && jarak <= 20) {
-      status = 'Awas';
-      iconUrl = 'img/awas.png';
-    }
+      if (jarak <= 10) {
+        status = 'Bahaya';
+        iconUrl = 'img/bahaya.png';
+      } else if (jarak > 10 && jarak <= 20) {
+        status = 'Awas';
+        iconUrl = 'img/awas.png';
+      }
 
-    const marker = L.marker([latitude, longitude], {
-      title: name,
-      icon: L.icon({
-        iconUrl: iconUrl,
-        iconSize: [30, 45],
-        popupAnchor: [-1, -20]
-      })
-    });
+      const marker = L.marker([latitude, longitude], {
+        title: name,
+        icon: L.icon({
+          iconUrl: iconUrl,
+          iconSize: [30, 45],
+          popupAnchor: [-1, -20]
+        })
+      });
 
-    const popupContent = `
+      const popupContent = `
       <h6> Nama Alat: ${name} </h6>
       <h6><p> Status: ${status} </p></h6>
       <h6> Jarak Air: ${jarak} cm </h6></br>
       <a class='btn btn-success btn-sm' href='detail.php?id_alat=${deviceLocation.id}'> Info Detail </a>
-      <a class='btn btn-warning btn-sm' href='#' onclick='goToMarker("${name}")'>Rute</a>
+      <a class='btn btn-warning btn-sm marker-route' href='#' data-marker-name="${name}">Rute</a>
     `;
 
-    marker.bindPopup(popupContent);
-    marker.addTo(map);
-    markers.push(marker);
-  });
-}
+      marker.bindPopup(popupContent);
+      marker.addTo(map);
+      markers.push(marker);
+    });
 
-// Setelah pembaruan data
-$('.marker-name').click(function(event) {
-  event.preventDefault();
-  const markerName = $(this).data('marker-name');
-  const marker = findMarkerByName(markerName);
-  if (marker) {
-    map.flyTo(marker.getLatLng());
-    marker.openPopup();
+    // Event listener untuk mengarahkan ke marker dan membuka popup
+    $('.marker-link').click(function (event) {
+      event.preventDefault();
+      const markerName = $(this).data('marker-name');
+      const marker = markers.find((marker) => marker.options.title === markerName);
+      if (marker) {
+        map.flyTo(marker.getLatLng());
+        marker.openPopup();
+      }
+    });
   }
-});
-
-// Fungsi untuk mencari marker berdasarkan nama
-function findMarkerByName(name) {
-  return markers.find((marker) => marker.options.title === name);
-}
-
   let markers = [];
 
   function refreshData1() {
@@ -299,12 +293,13 @@ function updateData() {
         html += `
           <tr>
             <td>${index + 1}</td>
-            <td><a href="#map" class="marker-name" data-marker-name="${result.nama_alat}">${result.nama_alat}</a></td>
+            <td><a href="#map" class="marker-link" data-marker-name="${result.nama_alat}">${result.nama_alat}</a></td>
             <td>${result.jarak} cm</td>
             ${siaga}
             ${hujan}
           </tr>
         `;
+
 
         if (!result.update) {
           errorIds.push(result.id_alat);
