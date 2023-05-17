@@ -59,7 +59,7 @@
           <div class="card mx-auto h-100">
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-striped table-dark w-100">
+                <table class="table table-striped table-dark w-100 ">
                   <thead class="thead-dark">
                     <tr>
                       <th scope="col">#</th>
