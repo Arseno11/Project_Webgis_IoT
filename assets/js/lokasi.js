@@ -175,20 +175,18 @@ function showMarkers(deviceLocations) {
 // Setelah pembaruan data
 $('.marker-name').click(function(event) {
   event.preventDefault();
-  const latitude = $(this).data('marker-lat');
-  const longitude = $(this).data('marker-lng');
-  const marker = findMarkerByCoordinates(latitude, longitude);
+  const markerName = $(this).data('marker-name');
+  const marker = findMarkerByName(markerName);
   if (marker) {
     map.flyTo(marker.getLatLng());
     marker.openPopup();
   }
 });
 
-// Fungsi untuk mencari marker berdasarkan koordinat
-function findMarkerByCoordinates(latitude, longitude) {
-  return markers.find((marker) => marker.getLatLng().lat === latitude && marker.getLatLng().lng === longitude);
+// Fungsi untuk mencari marker berdasarkan nama
+function findMarkerByName(name) {
+  return markers.find((marker) => marker.options.title === name);
 }
-
 
   let markers = [];
 
@@ -301,7 +299,7 @@ function updateData() {
         html += `
           <tr>
             <td>${index + 1}</td>
-            <td><a href="#map" class="marker-name" data-marker-lat="${result.latitude}" data-marker-lng="${result.longitude}">${result.nama_alat}</a></td>
+            <td><a href="#map" class="marker-name" data-marker-name="${result.nama_alat}">${result.nama_alat}</a></td>
             <td>${result.jarak} cm</td>
             ${siaga}
             ${hujan}
