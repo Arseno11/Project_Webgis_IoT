@@ -275,11 +275,11 @@ function updateData() {
         switch (true) {
           case (result.jarak <= 10):
             siaga = `<td style="color:red; text-size:25px;"><strong>Bahaya</strong></td>`;
-            showAlertWrapper(result, showAlertKey, '_siaga1', 'Bahaya');
+            showAlertWrapper(result, showAlertKey, 'Bahaya', 'error');
             break;
           case (result.jarak > 10 && result.jarak <= 20):
             siaga = `<td style="color:yellow; text-size:25px;"><strong>Awas</strong></td>`;
-            showAlertWrapper(result, showAlertKey, '_siaga2', 'Siaga');
+            showAlertWrapper(result, showAlertKey, 'Awas', 'warning');
             break;
           default:
             siaga = `<td style="color:green; text-size:25px;"><strong>Aman</strong></td>`;
