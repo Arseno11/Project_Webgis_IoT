@@ -201,9 +201,41 @@ function showAlert(icon, title, text) {
     text: text,
   }).then((result) => {
     if (result.isConfirmed) {
-      localStorage.setItem('showAlert', 'false');
+      showNextAlert();
     }
   });
+}
+
+// Fungsi untuk menampilkan alert selanjutnya
+function showNextAlert() {
+  const showAlert = localStorage.getItem('showAlert');
+  if (showAlert === 'true') {
+    // Tambahkan logika atau pemanggilan fungsi untuk menampilkan alert selanjutnya di sini
+    const alertKeys = Object.keys(localStorage).filter((key) => key.startsWith('showAlert_'));
+    alertKeys.forEach((key) => {
+      const showAlertValue = localStorage.getItem(key);
+      if (showAlertValue === 'true') {
+        // Dapatkan informasi alert dari key
+        const alertInfo = key.split('_');
+        const alertType = alertInfo[1];
+        const alertMessage = alertInfo[2];
+
+        // Tampilkan alert sesuai informasi yang didapatkan
+        switch (alertType) {
+          case 'siaga1':
+            showAlert('error', 'Peringatan Banjir', alertMessage, 5000);
+            break;
+          case 'siaga2':
+            showAlert('warning', 'Peringatan Banjir', alertMessage, 5000);
+            break;
+          // Tambahkan case untuk tipe alert lainnya jika diperlukan
+        }
+
+        // Set localStorage item menjadi false setelah alert ditampilkan
+        localStorage.setItem(key, 'false');
+      }
+    });
+  }
 }
 
 // Fungsi untuk menghapus item local storage ketika halaman di-reload atau ditutup
@@ -290,6 +322,7 @@ function updateData() {
     }
   }
 }
+
 
 function refreshData() {
   setInterval(function () {
