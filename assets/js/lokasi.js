@@ -272,7 +272,7 @@ function updateData() {
             siaga = `<td style="color:red; text-size:25px;"><strong>Bahaya</strong></td>`;
             showAlertWrapper(showAlertKey, '_siaga2', () =>
               showAlert('error', 'Peringatan Banjir', `Jarak sensor telah mencapai Status Bahaya untuk Alat Dengan Nama ${result.nama_alat}`, () => {
-                localStorage.setItem(showAlertKey + '_siaga1', 'false');
+                localStorage.setItem(showAlertKey + '_siaga1', 'true');
                 showNextAlert();
               }));
             break;
@@ -280,7 +280,7 @@ function updateData() {
             siaga = `<td style="color:yellow; text-size:25px;"><strong>Awas</strong></td>`;
             showAlertWrapper(showAlertKey, ' ', () =>
               showAlert('warning', 'Peringatan Banjir', `Jarak sensor telah mencapai Status Awas untuk Alat Dengan Nama ${result.nama_alat}`, () => {
-                localStorage.setItem(showAlertKey + '_siaga2', 'false');
+                localStorage.setItem(showAlertKey + '_siaga2', 'true');
                 showNextAlert();
               }));
             break;
