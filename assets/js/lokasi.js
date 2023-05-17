@@ -218,7 +218,7 @@ function showNextAlert() {
         // Dapatkan informasi alert dari key
         const alertInfo = key.split('_');
         const alertType = alertInfo[1];
-        const alertMessage = alertInfo[2];
+        const alertMessage = alertInfo.slice(2).join('_');
 
         // Tampilkan alert sesuai informasi yang didapatkan
         switch (alertType) {
@@ -243,7 +243,7 @@ window.addEventListener('beforeunload', function () {
   localStorage.removeItem('showAlert');
   for (let i = 0; i < localStorage.length; i++) {
     let key = localStorage.key(i);
-    if (key.includes('showAlert_')) {
+    if (key.startsWith('showAlert_')) {
       localStorage.removeItem(key);
     }
   }
@@ -307,6 +307,8 @@ function updateData() {
       if (!Object.keys(data.errors).length) localStorage.removeItem('dataError');
 
       $("#data").html(html);
+
+      showNextAlert(); // Panggil fungsi showNextAlert setelah memperbarui data
     })
     .catch(error => {
       showAlert('error', 'Error', 'Terjadi kesalahan saat mengambil data. Silakan coba lagi.', 5000);
@@ -322,6 +324,7 @@ function updateData() {
     }
   }
 }
+
 
 
 function refreshData() {
