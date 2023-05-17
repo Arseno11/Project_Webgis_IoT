@@ -233,9 +233,6 @@ function showNextAlert() {
               showNextAlert();
             });
             break;
-            default:
-              localStorage.setItem(key, 'fale');
-              break;
         }
       }
     });
