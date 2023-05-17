@@ -177,10 +177,11 @@ navigator.geolocation.getCurrentPosition(function (location) {
       const markerName = $(this).data('marker-name');
       const marker = markers.find((marker) => marker.options.title === markerName);
       if (marker) {
-        map.flyTo(marker.getLatLng());
+        map.flyTo(marker.getLatLng(), 15); // Mengatur zoom level ke 15
         marker.openPopup();
       }
     });
+
   }
   let markers = [];
 
