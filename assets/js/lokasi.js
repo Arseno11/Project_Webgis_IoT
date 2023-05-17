@@ -298,7 +298,7 @@ function updateData() {
         html += `
           <tr>
             <td>${index + 1}</td>
-            <td>${result.nama_alat}</td>
+            <td><a href="#" onclick="goToMarker('${result.nama_alat}')">${result.nama_alat}</a></td>
             <td>${result.jarak} cm</td>
             ${siaga}
             ${hujan}
