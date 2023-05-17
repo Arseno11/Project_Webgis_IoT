@@ -223,16 +223,19 @@ function showNextAlert() {
         switch (alertType) {
           case 'siaga1':
             showAlert('error', 'Peringatan Banjir', alertMessage, () => {
-              localStorage.setItem(key, 'false');
+              localStorage.setItem(key, 'true');
               showNextAlert();
             });
             break;
           case 'siaga2':
             showAlert('warning', 'Peringatan Banjir', alertMessage, () => {
-              localStorage.setItem(key, 'false');
+              localStorage.setItem(key, 'true');
               showNextAlert();
             });
             break;
+            default:
+              localStorage.setItem(key, 'fale');
+              break;
         }
       }
     });
