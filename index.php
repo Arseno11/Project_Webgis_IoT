@@ -55,7 +55,7 @@
             <p>Menampilkan jumlah alat yang terpasang</p>
           </div>
         </div>
-        <div class="col-4 col-lg-8">
+        <div class="col-12">
           <div class="card mx-auto h-100">
             <div class="card-body">
               <div class="table-responsive">
