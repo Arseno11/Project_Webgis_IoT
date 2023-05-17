@@ -220,18 +220,18 @@ function showNextAlert() {
         switch (alertType) {
           case 'siaga1':
             showAlert('error', 'Peringatan Banjir', alertMessage, () => {
-              localStorage.setItem(key, 'false');
+              localStorage.setItem(key, 'true');
               showNextAlert();
             });
             break;
           case 'siaga2':
             showAlert('warning', 'Peringatan Banjir', alertMessage, () => {
-              localStorage.setItem(key, 'false');
+              localStorage.setItem(key, 'true');
               showNextAlert();
             });
             break;
           default:
-             localStorage.setItem(key, 'true');
+             localStorage.setItem(key, 'false');
             break;
         }
       }
@@ -327,7 +327,7 @@ function updateData() {
   function showAlertWrapper(key, suffix, showAlertFunc) {
     if (localStorage.getItem(key + suffix) !== 'false') {
       showAlertFunc();
-      localStorage.setItem(key + suffix, 'true');
+      localStorage.setItem(key + suffix, 'false');
       localStorage.removeItem((suffix) ? key : key + '_siaga1');
       localStorage.removeItem((suffix) ? key : key + '_siaga2');
     }
