@@ -223,13 +223,13 @@ function showNextAlert() {
         switch (alertType) {
           case 'siaga1':
             showAlert('error', 'Peringatan Banjir', alertMessage, () => {
-              localStorage.setItem(key, 'true');
+              localStorage.setItem(key, 'false');
               showNextAlert();
             });
             break;
           case 'siaga2':
             showAlert('warning', 'Peringatan Banjir', alertMessage, () => {
-              localStorage.setItem(key, 'true');
+              localStorage.setItem(key, 'false');
               showNextAlert();
             });
             break;
