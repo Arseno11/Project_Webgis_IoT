@@ -200,10 +200,8 @@ function showAlert(icon, title, text, callback) {
     title: title,
     text: text,
   }).then((result) => {
-    if (result.isConfirmed) {
-      if (typeof callback === 'function') {
-        callback();
-      }
+    if (result.isConfirmed && typeof callback === 'function') {
+      callback();
     }
   });
 }
@@ -216,9 +214,8 @@ function showNextAlert() {
     alertKeys.forEach((key) => {
       const showAlertValue = localStorage.getItem(key);
       if (showAlertValue === 'true') {
-        const alertInfo = key.split('_');
-        const alertType = alertInfo[1];
-        const alertMessage = alertInfo.slice(2).join('_');
+        const [_, alertType, ...alertMessageParts] = key.split('_');
+        const alertMessage = alertMessageParts.join('_');
 
         switch (alertType) {
           case 'siaga1':
@@ -232,6 +229,9 @@ function showNextAlert() {
               localStorage.setItem(key, 'false');
               showNextAlert();
             });
+            break;
+          default:
+            localStorage.removeItem(key);
             break;
         }
       }
@@ -260,7 +260,6 @@ function updateData() {
     .then(response => response.json())
     .then(data => {
       let errorIds = [];
-
       let html = '';
 
       data.results.forEach((result, index) => {
@@ -270,7 +269,7 @@ function updateData() {
         switch (true) {
           case (result.jarak <= 10):
             siaga = `<td style="color:red; text-size:25px;"><strong>Bahaya</strong></td>`;
-            showAlertWrapper(showAlertKey, '_siaga2', () =>
+            showAlertWrapper(showAlertKey, '_siaga1', () =>
               showAlert('error', 'Peringatan Banjir', `Jarak sensor telah mencapai Status Bahaya untuk Alat Dengan Nama ${result.nama_alat}`, () => {
                 localStorage.setItem(showAlertKey + '_siaga1', 'true');
                 showNextAlert();
@@ -278,7 +277,7 @@ function updateData() {
             break;
           case (result.jarak > 10 && result.jarak <= 20):
             siaga = `<td style="color:yellow; text-size:25px;"><strong>Awas</strong></td>`;
-            showAlertWrapper(showAlertKey, ' ', () =>
+            showAlertWrapper(showAlertKey, '_siaga2', () =>
               showAlert('warning', 'Peringatan Banjir', `Jarak sensor telah mencapai Status Awas untuk Alat Dengan Nama ${result.nama_alat}`, () => {
                 localStorage.setItem(showAlertKey + '_siaga2', 'true');
                 showNextAlert();
@@ -304,16 +303,16 @@ function updateData() {
         if (!result.update) errorIds.push(result.id_alat);
       });
 
-      if (data.errors && Object.keys(data.errors).length && localStorage.getItem('dataError') !== 'true') {
+      if (Object.keys(data.errors).length > 0 && localStorage.getItem('dataError') !== 'true') {
         const errorIds = Object.keys(data.errors);
         const errorMessage = `Data tidak diperbarui untuk alat dengan nama: ${errorIds.join(', ')}`;
         showAlert('error', 'Terjadi Error', errorMessage, () => {
           localStorage.setItem('dataError', 'true');
           showNextAlert();
         });
+      } else {
+        localStorage.removeItem('dataError');
       }
-
-      if (!Object.keys(data.errors).length) localStorage.removeItem('dataError');
 
       $("#data").html(html);
 
@@ -325,11 +324,12 @@ function updateData() {
       });
     });
 
-  function showAlertWrapper(key, sufix, showAlertFunc) {
-    if (localStorage.getItem(key + sufix) !== 'false') {
+  function showAlertWrapper(key, suffix, showAlertFunc) {
+    if (localStorage.getItem(key + suffix) !== 'false') {
       showAlertFunc();
-      localStorage.setItem(key + sufix, 'false');
-      localStorage.removeItem((sufix) ? key : key + '_siaga2');
+      localStorage.setItem(key + suffix, 'false');
+      localStorage.removeItem((suffix) ? key : key + '_siaga1');
+      localStorage.removeItem((suffix) ? key : key + '_siaga2');
     }
   }
 }
