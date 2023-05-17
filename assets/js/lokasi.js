@@ -172,6 +172,13 @@ function showMarkers(deviceLocations) {
   });
 }
 
+// Setelah pembaruan data
+$('.marker-name').click(function() {
+  const name = $(this).data('marker-name');
+  goToMarker(name);
+});
+
+// Fungsi goToMarker
 function goToMarker(name) {
   const marker = markers.find((marker) => marker.options.title === name);
   if (marker) {
@@ -291,7 +298,7 @@ function updateData() {
         html += `
           <tr>
             <td>${index + 1}</td>
-            <td><a href="#" onclick="goToMarker('${result.nama_alat}')">${result.nama_alat}</a></td>
+            <td class="marker-name" data-marker-name="${result.nama_alat}">${result.nama_alat}</td>
             <td>${result.jarak} cm</td>
             ${siaga}
             ${hujan}
