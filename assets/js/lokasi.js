@@ -328,7 +328,7 @@ function updateData() {
   function showAlertWrapper(key, sufix, showAlertFunc) {
     if (localStorage.getItem(key + sufix) !== 'false') {
       showAlertFunc();
-      localStorage.setItem(key + sufix, 'true');
+      localStorage.setItem(key + sufix, 'false');
       localStorage.removeItem((sufix) ? key : key + '_siaga2');
     }
   }
