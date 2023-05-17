@@ -134,36 +134,36 @@ navigator.geolocation.getCurrentPosition(function (location) {
     }
   }
 
-  function showMarkers(deviceLocations) {
-    deviceLocations.forEach((deviceLocation) => {
-      const {
-        name,
-        jarak,
-        latitude,
-        longitude
-      } = deviceLocation;
+function showMarkers(deviceLocations) {
+  deviceLocations.forEach((deviceLocation) => {
+    const {
+      name,
+      jarak,
+      latitude,
+      longitude
+    } = deviceLocation;
 
-      let status = 'Aman';
-      let iconUrl = 'img/aman.png';
+    let status = 'Aman';
+    let iconUrl = 'img/aman.png';
 
-      if (jarak <= 10) {
-        status = 'Bahaya';
-        iconUrl = 'img/bahaya.png';
-      } else if (jarak > 10 && jarak <= 20) {
-        status = 'Awas';
-        iconUrl = 'img/awas.png';
-      }
+    if (jarak <= 10) {
+      status = 'Bahaya';
+      iconUrl = 'img/bahaya.png';
+    } else if (jarak > 10 && jarak <= 20) {
+      status = 'Awas';
+      iconUrl = 'img/awas.png';
+    }
 
-      const marker = L.marker([latitude, longitude], {
-        title: name,
-        icon: L.icon({
-          iconUrl: iconUrl,
-          iconSize: [30, 45],
-          popupAnchor: [-1, -20]
-        })
-      });
+    const marker = L.marker([latitude, longitude], {
+      title: name,
+      icon: L.icon({
+        iconUrl: iconUrl,
+        iconSize: [30, 45],
+        popupAnchor: [-1, -20]
+      })
+    });
 
-      const popupContent = `
+    const popupContent = `
       <h6> Nama Alat: ${name} </h6>
       <h6><p> Status: ${status} </p></h6>
       <h6> Jarak Air: ${jarak} cm </h6></br>
@@ -171,14 +171,21 @@ navigator.geolocation.getCurrentPosition(function (location) {
       <a class='btn btn-warning btn-sm' target='_blank' href='https://www.google.com/maps/dir/?api=1&origin=${location.coords.latitude},${location.coords.longitude}&destination=${latitude},${longitude}&travelmode=driving'>Rute</a>
     `;
 
-      marker.on('click', () => {
-        marker.bindPopup(popupContent).openPopup();
-      });
-
-      marker.addTo(map);
-      markers.push(marker);
+    const tableRow = document.createElement('tr');
+    const nameCell = document.createElement('td');
+    nameCell.innerHTML = name;
+    nameCell.addEventListener('click', () => {
+      marker.openPopup();
     });
-  }
+
+    tableRow.appendChild(nameCell);
+
+    marker.bindPopup(popupContent);
+
+    marker.addTo(map);
+    markers.push(marker);
+  });
+}
 
   let markers = [];
 
