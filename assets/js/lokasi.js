@@ -163,7 +163,7 @@ navigator.geolocation.getCurrentPosition(function (location) {
       <h6><p> Status: ${status} </p></h6>
       <h6> Jarak Air: ${jarak} cm </h6></br>
       <a class='btn btn-success btn-sm' href='detail.php?id_alat=${deviceLocation.id}'> Info Detail </a>
-      <a class='btn btn-warning btn-sm marker-route' href='#' data-marker-name="${name}">Rute</a>
+      <a class='btn btn-warning btn-sm' target='_blank' href='https://www.google.com/maps/dir/?api=1&origin=${location.coords.latitude},${location.coords.longitude}&destination=${latitude},${longitude}&travelmode=driving'>Rute</a>
     `;
 
       marker.bindPopup(popupContent);
