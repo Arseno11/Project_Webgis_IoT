@@ -301,7 +301,7 @@ function updateData() {
         html += `
           <tr>
             <td>${index + 1}</td>
-            <td><a href="map" class="marker-name" data-marker-lat="${result.latitude}" data-marker-lng="${result.longitude}">${result.nama_alat}</a></td>
+            <td><a href="#map" class="marker-name" data-marker-lat="${result.latitude}" data-marker-lng="${result.longitude}">${result.nama_alat}</a></td>
             <td>${result.jarak} cm</td>
             ${siaga}
             ${hujan}
