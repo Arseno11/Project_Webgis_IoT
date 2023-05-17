@@ -231,7 +231,7 @@ function showNextAlert() {
             });
             break;
           default:
-            localStorage.removeItem(key);
+             localStorage.setItem(key, 'true');
             break;
         }
       }
