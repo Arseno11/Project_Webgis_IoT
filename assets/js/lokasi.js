@@ -183,12 +183,12 @@ navigator.geolocation.getCurrentPosition(function (location) {
   let markers = [];
 
   function refreshData1() {
-  setInterval(function () {
-    loadData();
-  }, 3000); // set interval ke 5 detik (5000 ms)
-}
-// panggil fungsi refreshData() saat halaman dimuat
-refreshData1();
+    setInterval(function () {
+      loadData();
+    }, 3000); // set interval ke 5 detik (5000 ms)
+  }
+  // panggil fungsi refreshData() saat halaman dimuat
+  refreshData1();
 
 });
 
@@ -324,7 +324,7 @@ function updateData() {
       });
     });
 
-  function showAlertWrapper(key, suffix, icon) {
+  function showAlertWrapper(result, key, suffix, icon) {
     if (localStorage.getItem(key + suffix) !== 'false') {
       showAlert(icon, 'Peringatan Banjir', `Jarak sensor telah mencapai Status ${suffix.toUpperCase()} untuk Alat Dengan Nama ${result.nama_alat}`, () => {
         localStorage.setItem(key + suffix, 'false');
