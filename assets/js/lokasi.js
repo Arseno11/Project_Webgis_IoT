@@ -136,12 +136,7 @@ navigator.geolocation.getCurrentPosition(function (location) {
 
 function showMarkers(deviceLocations) {
   deviceLocations.forEach((deviceLocation) => {
-    const {
-      name,
-      jarak,
-      latitude,
-      longitude
-    } = deviceLocation;
+    const { name, jarak, latitude, longitude } = deviceLocation;
 
     let status = 'Aman';
     let iconUrl = 'img/aman.png';
@@ -168,23 +163,21 @@ function showMarkers(deviceLocations) {
       <h6><p> Status: ${status} </p></h6>
       <h6> Jarak Air: ${jarak} cm </h6></br>
       <a class='btn btn-success btn-sm' href='detail.php?id_alat=${deviceLocation.id}'> Info Detail </a>
-      <a class='btn btn-warning btn-sm' target='_blank' href='https://www.google.com/maps/dir/?api=1&origin=${location.coords.latitude},${location.coords.longitude}&destination=${latitude},${longitude}&travelmode=driving'>Rute</a>
+      <a class='btn btn-warning btn-sm' href='#' onclick='goToMarker("${name}")'>Rute</a>
     `;
 
-    const tableRow = document.createElement('tr');
-    const nameCell = document.createElement('td');
-    nameCell.innerHTML = name;
-    nameCell.addEventListener('click', () => {
-      marker.openPopup();
-    });
-
-    tableRow.appendChild(nameCell);
-
     marker.bindPopup(popupContent);
-
     marker.addTo(map);
     markers.push(marker);
   });
+}
+
+function goToMarker(name) {
+  const marker = markers.find((marker) => marker.options.title === name);
+  if (marker) {
+    map.flyTo(marker.getLatLng());
+    marker.openPopup();
+  }
 }
 
   let markers = [];
