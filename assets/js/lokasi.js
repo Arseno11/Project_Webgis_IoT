@@ -294,7 +294,7 @@ function updateData() {
         html += `
           <tr>
             <td>${index + 1}</td>
-            <td><a style="text-color:white" href="#map" class="marker-link" data-marker-name="${result.nama_alat}">${result.nama_alat}</a></td>
+            <td><a style="color: white" href="#map" class="marker-link" data-marker-name="${result.nama_alat}">${result.nama_alat}</a></td>
             <td>${result.jarak} cm</td>
             ${siaga}
             ${hujan}
