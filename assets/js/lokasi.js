@@ -273,7 +273,7 @@ function updateData() {
         switch (true) {
           case (result.jarak <= 10):
             siaga = `<td style="color:red; text-size:25px;"><strong>Bahaya</strong></td>`;
-            showAlertWrapper(showAlertKey, '_siaga1', () =>
+            showAlertWrapper(showAlertKey, '_siaga2', () =>
               showAlert('error', 'Peringatan Banjir', `Jarak sensor telah mencapai Status Bahaya untuk Alat Dengan Nama ${result.nama_alat}`, () => {
                 localStorage.setItem(showAlertKey + '_siaga1', 'false');
                 showNextAlert();
@@ -281,7 +281,7 @@ function updateData() {
             break;
           case (result.jarak > 10 && result.jarak <= 20):
             siaga = `<td style="color:yellow; text-size:25px;"><strong>Awas</strong></td>`;
-            showAlertWrapper(showAlertKey, '_siaga2', () =>
+            showAlertWrapper(showAlertKey, ' ', () =>
               showAlert('warning', 'Peringatan Banjir', `Jarak sensor telah mencapai Status Awas untuk Alat Dengan Nama ${result.nama_alat}`, () => {
                 localStorage.setItem(showAlertKey + '_siaga2', 'false');
                 showNextAlert();
@@ -332,7 +332,6 @@ function updateData() {
     if (localStorage.getItem(key + sufix) !== 'false') {
       showAlertFunc();
       localStorage.setItem(key + sufix, 'true');
-      localStorage.removeItem((sufix) ? key : key + '_siaga1');
       localStorage.removeItem((sufix) ? key : key + '_siaga2');
     }
   }
