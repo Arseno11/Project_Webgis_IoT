@@ -307,7 +307,7 @@ function updateData() {
         }
       });
 
-      if (Object.keys(data.errors).length > 0 && localStorage.getItem('dataError') !== 'true') {
+      if (Object.keys(data.errors).length > 0 && localStorage.getItem('dataError') !== 'false') {
         const errorIds = Object.keys(data.errors);
         const errorMessage = `Data tidak diperbarui untuk alat dengan nama: ${errorIds.join(', ')}`;
         showAlert('error', 'Terjadi Error', errorMessage, () => {
