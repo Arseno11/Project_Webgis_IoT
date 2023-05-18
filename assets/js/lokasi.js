@@ -311,7 +311,6 @@ function updateData() {
 
       $("#data").html(html);
 
-      showNextAlert(); // Panggil fungsi showNextAlert setelah memperbarui data
     })
     .catch(error => {
       showAlert('error', 'Error', 'Terjadi kesalahan saat mengambil data. Silakan coba lagi.', () => {
