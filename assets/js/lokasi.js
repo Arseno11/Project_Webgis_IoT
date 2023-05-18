@@ -306,7 +306,7 @@ function updateData() {
         const errorIds = Object.keys(data.errors);
         const errorMessage = `Data tidak diperbarui untuk alat dengan nama: ${errorIds.join(', ')}`;
         showAlert('error', 'Terjadi Error', errorMessage, () => {
-          localStorage.setItem('dataError', 'false'); //
+          localStorage.setItem('dataError', 'false');
           showNextAlert();
         });
       } else {
@@ -314,33 +314,35 @@ function updateData() {
       }
 
       $("#data").html(html);
-
-      showNextAlert(); // Panggil fungsi showNextAlert setelah memperbarui data
     })
     .catch(error => {
       showAlert('error', 'Error', 'Terjadi kesalahan saat mengambil data. Silakan coba lagi.', () => {
         console.error(error);
       });
     });
+}
 
-    // Fungsi untuk mengecek dan mengatur state dataError saat halaman dimuat
+// Panggil fungsi updateDataAndShowAlert saat halaman dimuat
+updateData();
+
+// Fungsi untuk mengecek dan mengatur state dataError saat halaman dimuat
 window.addEventListener('load', function () {
   if (localStorage.getItem('dataError') === 'false') {
     localStorage.removeItem('dataError');
-  } else if (localStorage.getItem('dataError') === 'false') {
+  } else if (localStorage.getItem('dataError') === null) {
     showNextAlert();
   }
 });
 
- function showAlertWrapper(result, key, suffix, icon) {
-    if (localStorage.getItem(key + suffix) !== 'false') {
-      showAlert(icon, 'Peringatan Banjir', `Jarak sensor telah mencapai Status ${suffix.toUpperCase()} untuk Alat Dengan Nama ${result.nama_alat}`, () => {
-        localStorage.setItem(key + suffix, 'false');
-        showNextAlert();
-      });
-    }
+function showAlertWrapper(result, key, suffix, icon) {
+  if (localStorage.getItem(key + suffix) !== 'false') {
+    showAlert(icon, 'Peringatan Banjir', `Jarak sensor telah mencapai Status ${suffix.toUpperCase()} untuk Alat Dengan Nama ${result.nama_alat}`, () => {
+      localStorage.setItem(key + suffix, 'false');
+      showNextAlert();
+    });
   }
 }
+
 
 function refreshData() {
   setInterval(function () {
