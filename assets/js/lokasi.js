@@ -209,49 +209,14 @@ function showAlert(icon, title, text, callback) {
   });
 }
 
-// Fungsi untuk menampilkan alert selanjutnya
-function showNextAlert() {
-  const showAlertKey = Object.keys(localStorage).find((key) => key.startsWith('showAlert_') && localStorage.getItem(key) === 'false');
-
-  if (showAlertKey) {
-    const [_, alertType, ...alertMessageParts] = showAlertKey.split('_');
-    const alertMessage = alertMessageParts.join('_');
-
-    const alertConfig = {
-      siaga1: {
-        icon: 'error',
-        title: 'Peringatan Banjir',
-        callback: () => {
-          localStorage.setItem(showAlertKey, 'false');
-        }
-      },
-      siaga2: {
-        icon: 'warning',
-        title: 'Peringatan Banjir',
-        callback: () => {
-          localStorage.setItem(showAlertKey, 'false');
-        }
-      }
-    };
-
-    const config = alertConfig[alertType];
-    if (config) {
-      showAlert(config.icon, config.title, `Jarak sensor telah mencapai Status ${alertType.toUpperCase()} untuk Alat Dengan Nama ${alertMessage}`, config.callback);
-    } else {
-      localStorage.removeItem(showAlertKey);
-    }
-  }
-}
-
-// Fungsi untuk menghapus item sessionStorage ketika halaman di-reload
+// Fungsi untuk menghapus item localStorage ketika halaman di-reload atau ditutup
 window.addEventListener('beforeunload', function () {
-  Object.keys(sessionStorage).forEach((key) => {
+  Object.keys(localStorage).forEach((key) => {
     if (key.startsWith('showAlert_')) {
       localStorage.removeItem(key);
     }
   });
 });
-
 function updateData() {
   fetch('ambildata.php', {
     headers: {
@@ -299,14 +264,16 @@ function updateData() {
         }
       });
 
-      if (Object.keys(data.errors).length > 0 && sessionStorage.getItem('dataError') !== 'false') {
+     if (Object.keys(data.errors).length > 0) {
         const errorIds = Object.keys(data.errors);
         const errorMessage = `Data tidak diperbarui untuk alat dengan nama: ${errorIds.join(', ')}`;
         showAlert('error', 'Terjadi Error', errorMessage, () => {
           localStorage.setItem('dataError', 'true');
+          showNextAlert();
         });
-      } else{
+      } else {
         localStorage.removeItem('dataError');
+        showNextAlert();
       }
 
       $("#data").html(html);
