@@ -307,15 +307,17 @@ function updateData() {
         }
       });
 
-      if (Object.keys(data.errors).length > 0 && localStorage.getItem('dataError') !== 'false') {
-        const errorIds = Object.keys(data.errors);
-        const errorMessage = `Data tidak diperbarui untuk alat dengan nama: ${errorIds.join(', ')}`;
-        showAlert('error', 'Terjadi Error', errorMessage, () => {
-          localStorage.setItem('dataError', 'true');
-        });
-      } else {
-        localStorage.removeItem('dataError');
-      }
+      window.addEventListener('load', function () {
+        if (Object.keys(data.errors).length > 0 && localStorage.getItem('dataError') !== 'false') {
+          const errorIds = Object.keys(data.errors);
+          const errorMessage = `Data tidak diperbarui untuk alat dengan nama: ${errorIds.join(', ')}`;
+          showAlert('error', 'Terjadi Error', errorMessage, () => {
+            localStorage.setItem('dataError', 'false');
+          });
+        } else {
+          localStorage.setItem('dataError', 'false');
+        }
+      });
 
       $("#data").html(html);
 
