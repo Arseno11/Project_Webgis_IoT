@@ -310,7 +310,6 @@ function updateData() {
           showNextAlert();
         });
       } else {
-        localStorage.setItem('dataError', 'true'); //
         showNextAlert();
       }
 
@@ -323,6 +322,15 @@ function updateData() {
         console.error(error);
       });
     });
+
+    // Fungsi untuk mengecek dan mengatur state dataError saat halaman dimuat
+window.addEventListener('load', function () {
+  if (localStorage.getItem('dataError') === null) {
+    localStorage.setItem('dataError', 'true');
+  } else if (localStorage.getItem('dataError') === 'false') {
+    showNextAlert();
+  }
+});
 
  function showAlertWrapper(result, key, suffix, icon) {
     if (localStorage.getItem(key + suffix) !== 'false') {
