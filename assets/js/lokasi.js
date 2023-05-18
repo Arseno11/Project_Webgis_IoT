@@ -312,7 +312,6 @@ function updateData() {
         const errorMessage = `Data tidak diperbarui untuk alat dengan nama: ${errorIds.join(', ')}`;
         showAlert('error', 'Terjadi Error', errorMessage, () => {
           localStorage.setItem('dataError', 'true');
-          showNextAlert();
         });
       } else {
         localStorage.removeItem('dataError');
