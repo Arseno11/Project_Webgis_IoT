@@ -299,7 +299,7 @@ function updateData() {
         }
       });
 
-      if (Object.keys(data.errors).length > 0 && sessionStorage.getItem('dataError') !== 'false') {
+      if (Object.keys(data.errors).length > 0 && sessionStorage.getItem('dataError') !== 'true') {
         const errorIds = Object.keys(data.errors);
         const errorMessage = `Data tidak diperbarui untuk alat dengan nama: ${errorIds.join(', ')}`;
         showAlert('error', 'Terjadi Error', errorMessage, () => {
