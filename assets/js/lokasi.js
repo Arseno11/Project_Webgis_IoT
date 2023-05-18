@@ -305,6 +305,8 @@ function updateData() {
         showAlert('error', 'Terjadi Error', errorMessage, () => {
           sessionStorage.setItem('dataError', 'true');
         });
+      } else{
+        sessionStorage.removeItem('dataError');
       }
 
       $("#data").html(html);
