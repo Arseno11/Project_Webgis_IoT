@@ -310,6 +310,7 @@ function updateData() {
           showNextAlert();
         });
       } else {
+        localStorage.setItem('dataError', 'true'); //
         showNextAlert();
       }
 
