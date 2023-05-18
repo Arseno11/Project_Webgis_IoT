@@ -211,49 +211,40 @@ function showAlert(icon, title, text, callback) {
 
 // Fungsi untuk menampilkan alert selanjutnya
 function showNextAlert() {
-  const showAlert = localStorage.getItem('showAlert');
-  if (showAlert === 'true') {
-    const alertKeys = Object.keys(localStorage).filter((key) => key.startsWith('showAlert_'));
-    const nextAlertKey = alertKeys.find((key) => localStorage.getItem(key) === 'true');
+  const showAlertKey = Object.keys(localStorage).find((key) => key.startsWith('showAlert_') && localStorage.getItem(key) === 'true');
 
-    if (nextAlertKey) {
-      const [_, alertType, ...alertMessageParts] = nextAlertKey.split('_');
-      const alertMessage = alertMessageParts.join('_');
+  if (showAlertKey) {
+    const [_, alertType, ...alertMessageParts] = showAlertKey.split('_');
+    const alertMessage = alertMessageParts.join('_');
 
-      const alertConfig = {
-        siaga1: {
-          icon: 'error',
-          title: 'Peringatan Banjir',
-          callback: () => {
-            localStorage.setItem(nextAlertKey, 'false');
-            showNextAlert();
-          }
-        },
-        siaga2: {
-          icon: 'warning',
-          title: 'Peringatan Banjir',
-          callback: () => {
-            localStorage.setItem(nextAlertKey, 'false');
-            showNextAlert();
-          }
+    const alertConfig = {
+      siaga1: {
+        icon: 'error',
+        title: 'Peringatan Banjir',
+        callback: () => {
+          localStorage.setItem(showAlertKey, 'false');
         }
-      };
-
-      const config = alertConfig[alertType];
-      if (config) {
-        showAlert(config.icon, config.title, `Jarak sensor telah mencapai Status ${alertType.toUpperCase()} untuk Alat Dengan Nama ${alertMessage}`, config.callback);
-      } else {
-        localStorage.removeItem(nextAlertKey);
+      },
+      siaga2: {
+        icon: 'warning',
+        title: 'Peringatan Banjir',
+        callback: () => {
+          localStorage.setItem(showAlertKey, 'false');
+        }
       }
+    };
+
+    const config = alertConfig[alertType];
+    if (config) {
+      showAlert(config.icon, config.title, `Jarak sensor telah mencapai Status ${alertType.toUpperCase()} untuk Alat Dengan Nama ${alertMessage}`, config.callback);
+    } else {
+      localStorage.removeItem(showAlertKey);
     }
-  } else {
-    localStorage.setItem('showAlert', 'false');
   }
 }
 
 // Fungsi untuk menghapus item local storage ketika halaman di-reload atau ditutup
 window.addEventListener('beforeunload', function () {
-  localStorage.removeItem('showAlert');
   Object.keys(localStorage).forEach((key) => {
     if (key.startsWith('showAlert_')) {
       localStorage.removeItem(key);
@@ -300,7 +291,7 @@ function updateData() {
             <td>${result.jarak} cm</td>
             ${siaga}
             ${hujan}
-          </tr>
+         </tr>
         `;
 
         if (!result.update) {
@@ -313,7 +304,6 @@ function updateData() {
         const errorMessage = `Data tidak diperbarui untuk alat dengan nama: ${errorIds.join(', ')}`;
         showAlert('error', 'Terjadi Error', errorMessage, () => {
           localStorage.setItem('dataError', 'true');
-          showNextAlert();
         });
       } else {
         localStorage.removeItem('dataError');
@@ -338,7 +328,6 @@ function updateData() {
     }
   }
 }
-
 
 function refreshData() {
   setInterval(function () {
