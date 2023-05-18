@@ -305,12 +305,11 @@ function updateData() {
         showAlert('error', 'Terjadi Error', errorMessage, () => {
           sessionStorage.setItem('dataError', 'false');
         });
-      } else {
-        sessionStorage.removeItem('dataError');
       }
 
       $("#data").html(html);
 
+      showNextAlert(); // Panggil fungsi showNextAlert setelah memperbarui data
     })
     .catch(error => {
       showAlert('error', 'Error', 'Terjadi kesalahan saat mengambil data. Silakan coba lagi.', () => {
