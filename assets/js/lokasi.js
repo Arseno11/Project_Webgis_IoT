@@ -325,7 +325,7 @@ function updateData() {
 
     // Fungsi untuk mengecek dan mengatur state dataError saat halaman dimuat
 window.addEventListener('load', function () {
-  if (localStorage.getItem('dataError') === null) {
+  if (localStorage.getItem('dataError') === 'false') {
     localStorage.setItem('dataError', 'true');
   } else if (localStorage.getItem('dataError') === 'false') {
     showNextAlert();
