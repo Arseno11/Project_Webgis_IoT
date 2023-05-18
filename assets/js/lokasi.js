@@ -211,7 +211,7 @@ function showAlert(icon, title, text, callback) {
 
 // Fungsi untuk menampilkan alert selanjutnya
 function showNextAlert() {
-  const showAlertKey = Object.keys(localStorage).find((key) => key.startsWith('showAlert_') && localStorage.getItem(key) === 'true');
+  const showAlertKey = Object.keys(localStorage).find((key) => key.startsWith('showAlert_') && localStorage.getItem(key) === 'false');
 
   if (showAlertKey) {
     const [_, alertType, ...alertMessageParts] = showAlertKey.split('_');
