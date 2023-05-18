@@ -299,11 +299,11 @@ function updateData() {
         }
       });
 
-      if (Object.keys(data.errors).length > 0 && sessionStorage.getItem('dataError') !== 'true') {
+      if (Object.keys(data.errors).length > 0 && sessionStorage.getItem('dataError') !== 'false') {
         const errorIds = Object.keys(data.errors);
         const errorMessage = `Data tidak diperbarui untuk alat dengan nama: ${errorIds.join(', ')}`;
         showAlert('error', 'Terjadi Error', errorMessage, () => {
-          sessionStorage.setItem('dataError', 'false');
+          sessionStorage.setItem('dataError', 'true');
         });
       }
 
