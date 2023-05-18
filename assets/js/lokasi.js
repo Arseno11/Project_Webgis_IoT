@@ -310,7 +310,6 @@ function updateData() {
           showNextAlert();
         });
       } else {
-        localStorage.removeItem('dataError');
         showNextAlert();
       }
 
