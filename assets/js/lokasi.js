@@ -211,7 +211,7 @@ function showAlert(icon, title, text, callback) {
 
 // Fungsi untuk menampilkan alert selanjutnya
 function showNextAlert() {
-  const showAlertKey = Object.keys(sessionStorage).find((key) => key.startsWith('showAlert_') && sessionStorage.getItem(key) === 'true');
+  const showAlertKey = Object.keys(localStorage).find((key) => key.startsWith('showAlert_') && localStorage.getItem(key) === 'false');
 
   if (showAlertKey) {
     const [_, alertType, ...alertMessageParts] = showAlertKey.split('_');
@@ -222,14 +222,14 @@ function showNextAlert() {
         icon: 'error',
         title: 'Peringatan Banjir',
         callback: () => {
-          sessionStorage.setItem(showAlertKey, 'false');
+          localStorage.setItem(showAlertKey, 'false');
         }
       },
       siaga2: {
         icon: 'warning',
         title: 'Peringatan Banjir',
         callback: () => {
-          sessionStorage.setItem(showAlertKey, 'false');
+          localStorage.setItem(showAlertKey, 'false');
         }
       }
     };
@@ -238,7 +238,7 @@ function showNextAlert() {
     if (config) {
       showAlert(config.icon, config.title, `Jarak sensor telah mencapai Status ${alertType.toUpperCase()} untuk Alat Dengan Nama ${alertMessage}`, config.callback);
     } else {
-      sessionStorage.removeItem(showAlertKey);
+      localStorage.removeItem(showAlertKey);
     }
   }
 }
@@ -247,7 +247,7 @@ function showNextAlert() {
 window.addEventListener('beforeunload', function () {
   Object.keys(sessionStorage).forEach((key) => {
     if (key.startsWith('showAlert_')) {
-      sessionStorage.removeItem(key);
+      localStorage.removeItem(key);
     }
   });
 });
@@ -303,10 +303,10 @@ function updateData() {
         const errorIds = Object.keys(data.errors);
         const errorMessage = `Data tidak diperbarui untuk alat dengan nama: ${errorIds.join(', ')}`;
         showAlert('error', 'Terjadi Error', errorMessage, () => {
-          sessionStorage.setItem('dataError', 'true');
+          localStorage.setItem('dataError', 'true');
         });
       } else{
-        sessionStorage.removeItem('dataError');
+        localStorage.removeItem('dataError');
       }
 
       $("#data").html(html);
@@ -320,9 +320,9 @@ function updateData() {
     });
 
   function showAlertWrapper(result, key, suffix, icon) {
-    if (sessionStorage.getItem(key + suffix) !== 'false') {
+    if (localStorage.getItem(key + suffix) !== 'false') {
       showAlert(icon, 'Peringatan Banjir', `Jarak sensor telah mencapai Status ${suffix.toUpperCase()} untuk Alat Dengan Nama ${result.nama_alat}`, () => {
-        sessionStorage.setItem(key + suffix, 'false');
+        localStorage.setItem(key + suffix, 'false');
         showNextAlert();
       });
     }
