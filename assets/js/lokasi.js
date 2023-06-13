@@ -222,15 +222,6 @@ function showFirstAlert(alertConfig, showAlertKey) {
   }
 }
 
-// Fungsi untuk menghapus item localStorage ketika halaman di-reload atau ditutup
-window.addEventListener('beforeunload', function () {
-  Object.keys(localStorage).forEach((key) => {
-    if (key.startsWith('showAlert_')) {
-      localStorage.removeItem(key);
-    }
-  });
-});
-
 let previousData = null;
 let isFirstAlertShown = false; // Flag untuk melacak apakah alert pertama kali sudah ditampilkan atau belum
 
@@ -327,14 +318,6 @@ function updateData() {
     });
 }
 
-function showAlertWrapper(result, key, suffix, icon) {
-  if (localStorage.getItem(key + suffix) !== 'false') {
-    showAlert(icon, 'Peringatan Banjir', `Jarak sensor telah mencapai Status ${suffix.toUpperCase()} untuk Alat Dengan Nama ${result.nama_alat}`, () => {
-      localStorage.setItem(key + suffix, 'false');
-    });
-  }
-}
-
 // Panggil fungsi updateData saat halaman dimuat
 updateData();
 
@@ -353,4 +336,10 @@ function refreshData() {
 
 refreshData();
 
-
+function showAlertWrapper(result, key, suffix, icon) {
+  if (localStorage.getItem(key + suffix) !== 'false') {
+    showAlert(icon, 'Peringatan Banjir', `Jarak sensor telah mencapai Status ${suffix.toUpperCase()} untuk Alat Dengan Nama ${result.nama_alat}`, () => {
+      localStorage.setItem(key + suffix, 'false');
+    });
+  }
+}
