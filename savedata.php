@@ -15,28 +15,6 @@ $jarak = $data->jarak;
 $hujan = $data->hujan;
 $id_alat = $data->id_alat;
 
-// Memeriksa apakah id sudah ada di database
-$id_exists_stmt = mysqli_prepare(
-    $koneksi,
-    "SELECT id_alat FROM alat WHERE id_alat = ?"
-);
-if (!$id_exists_stmt) {
-    http_response_code(500);
-    die("Failed to prepare SQL statement: " . mysqli_error($koneksi));
-}
-
-mysqli_stmt_bind_param($id_exists_stmt, "i", $id_alat);
-if (!mysqli_stmt_execute($id_exists_stmt)) {
-    http_response_code(500);
-    die("Failed to check id in database: " . mysqli_error($koneksi));
-}
-
-mysqli_stmt_store_result($id_exists_stmt);
-if (mysqli_stmt_num_rows($id_exists_stmt) == 0) {
-    http_response_code(404);
-    die("Id not found in database");
-}
-
 // Mempersiapkan pernyataan SQL yang akan dijalankan
 $stmt = mysqli_prepare(
     $koneksi,
@@ -47,7 +25,7 @@ if (!$stmt) {
     die("Failed to prepare SQL statement: " . mysqli_error($koneksi));
 }
 
-// Menyisipkan data ke dalam database
+// Menyisipkan data ke dalam pernyataan SQL
 mysqli_stmt_bind_param($stmt, "iii", $jarak, $hujan, $id_alat);
 if (!mysqli_stmt_execute($stmt)) {
     http_response_code(500);
