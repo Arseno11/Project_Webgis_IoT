@@ -209,6 +209,19 @@ function showAlert(icon, title, text, callback) {
   });
 }
 
+// Fungsi untuk menampilkan SweetAlert
+function showAlert(icon, title, text, callback) {
+  Swal.fire({
+    icon: icon,
+    title: title,
+    text: text,
+  }).then((result) => {
+    if (result.isConfirmed && typeof callback === 'function') {
+      callback();
+    }
+  });
+}
+
 // Fungsi untuk menampilkan alert selanjutnya
 function showNextAlert() {
   const showAlertKey = Object.keys(localStorage).find((key) => key.startsWith('showAlert_') && localStorage.getItem(key) === 'true');
@@ -313,14 +326,9 @@ function updateData() {
           showNextAlert();
         });
       } else {
-        if (JSON.stringify(data.results) !== JSON.stringify(previousData)) {
-          // Terjadi perubahan data, tampilkan alert selanjutnya hanya sekali
-          if (showAlertFlag) {
-            showAlertFlag = false;
-            showNextAlert();
-          }
-        } else {
-          showAlertFlag = true;
+        if (JSON.stringify(data.results) !== JSON.stringify(previousData) && showAlertFlag) {
+          showAlertFlag = false; // Set flag menjadi false setelah alert pertama ditampilkan
+          showNextAlert();
         }
       }
 
@@ -358,9 +366,11 @@ function showAlertWrapper(result, key, suffix, icon) {
 function refreshData() {
   setInterval(function () {
     updateData();
-  }, 5000); // Set interval ke 5 detik (5000 ms) untuk pembaruan data
+    showAlertFlag = true; // Set flag menjadi true setiap kali pembaruan data dilakukan
+  }, 1000); // Set interval ke 5 detik (5000 ms) untuk pembaruan data
 }
 
 refreshData();
+
 
 
