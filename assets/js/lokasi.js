@@ -222,8 +222,21 @@ function showAlert(icon, title, text, callback) {
   });
 }
 
-// Fungsi untuk menampilkan alert selanjutnya
-function showNextAlert() {
+// Fungsi untuk menampilkan SweetAlert
+function showAlert(icon, title, text, callback) {
+  Swal.fire({
+    icon: icon,
+    title: title,
+    text: text,
+  }).then((result) => {
+    if (result.isConfirmed && typeof callback === 'function') {
+      callback();
+    }
+  });
+}
+
+// Fungsi untuk menampilkan alert pertama kali saja
+function showFirstAlert() {
   const showAlertKey = Object.keys(localStorage).find((key) => key.startsWith('showAlert_') && localStorage.getItem(key) === 'true');
 
   if (showAlertKey) {
@@ -236,7 +249,6 @@ function showNextAlert() {
         title: 'Peringatan Banjir',
         callback: () => {
           localStorage.setItem(showAlertKey, 'false');
-          showNextAlert();
         }
       },
       siaga2: {
@@ -244,7 +256,6 @@ function showNextAlert() {
         title: 'Peringatan Banjir',
         callback: () => {
           localStorage.setItem(showAlertKey, 'false');
-          showNextAlert();
         }
       }
     };
@@ -254,7 +265,6 @@ function showNextAlert() {
       showAlert(config.icon, config.title, `Jarak sensor telah mencapai Status ${alertType.toUpperCase()} untuk Alat Dengan Nama ${alertMessage}`, config.callback);
     } else {
       localStorage.removeItem(showAlertKey);
-      showNextAlert();
     }
   }
 }
@@ -269,7 +279,6 @@ window.addEventListener('beforeunload', function () {
 });
 
 let previousData = null;
-let showAlertFlag = true; // Penanda untuk menampilkan alert hanya sekali
 
 function updateData() {
   fetch('ambildata.php', {
@@ -323,17 +332,14 @@ function updateData() {
         const errorMessage = `Data tidak diperbarui untuk alat dengan nama: ${errorIds.join(', ')}`;
         showAlert('error', 'Terjadi Error', errorMessage, () => {
           localStorage.setItem('dataError', 'false');
-          showNextAlert();
         });
-      } else {
-        if (JSON.stringify(data.results) !== JSON.stringify(previousData) && showAlertFlag) {
-          showAlertFlag = false; // Set flag menjadi false setelah alert pertama ditampilkan
-          showNextAlert();
-        }
       }
 
-      $("#data").html(html);
-      previousData = data.results; // Simpan data terbaru
+      if (JSON.stringify(data.results) !== JSON.stringify(previousData)) {
+        $("#data").html(html);
+        showFirstAlert();
+        previousData = data.results;
+      }
     })
     .catch(error => {
       showAlert('error', 'Error', 'Terjadi kesalahan saat mengambil data. Silakan coba lagi.', () => {
@@ -349,8 +355,6 @@ updateData();
 window.addEventListener('load', function () {
   if (localStorage.getItem('dataError') === 'false') {
     localStorage.removeItem('dataError');
-  } else if (localStorage.getItem('dataError') === null) {
-    showNextAlert();
   }
 });
 
@@ -358,7 +362,6 @@ function showAlertWrapper(result, key, suffix, icon) {
   if (localStorage.getItem(key + suffix) !== 'false') {
     showAlert(icon, 'Peringatan Banjir', `Jarak sensor telah mencapai Status ${suffix.toUpperCase()} untuk Alat Dengan Nama ${result.nama_alat}`, () => {
       localStorage.setItem(key + suffix, 'false');
-      showNextAlert();
     });
   }
 }
@@ -366,11 +369,8 @@ function showAlertWrapper(result, key, suffix, icon) {
 function refreshData() {
   setInterval(function () {
     updateData();
-    showAlertFlag = true; // Set flag menjadi true setiap kali pembaruan data dilakukan
-  }, 1000); // Set interval ke 5 detik (5000 ms) untuk pembaruan data
+  }, 5000); // Set interval ke 5 detik (5000 ms) untuk pembaruan data
 }
 
 refreshData();
-
-
 
