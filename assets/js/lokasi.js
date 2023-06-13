@@ -346,7 +346,7 @@ function showAlertWrapper(result, key, suffix, icon) {
 function refreshData() {
   setInterval(function () {
     updateData();
-  }, 5000); // Set interval ke 5 detik (5000 ms) untuk pembaruan data
+  }, 1000); // Set interval ke 5 detik (5000 ms) untuk pembaruan data
 }
 
 // panggil fungsi refreshData() saat halaman dimuat
