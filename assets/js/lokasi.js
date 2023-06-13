@@ -338,16 +338,16 @@ function showAlertWrapper(result, key, suffix, icon) {
   if (localStorage.getItem(key + suffix) !== 'false') {
     showAlert(icon, 'Peringatan Banjir', `Jarak sensor telah mencapai Status ${suffix.toUpperCase()} untuk Alat Dengan Nama ${result.nama_alat}`, () => {
       localStorage.setItem(key + suffix, 'false');
-      showNextAlert();
+      setTimeout(showNextAlert, 3000); // Menambahkan jeda 3 detik sebelum menampilkan alert berikutnya
     });
   }
 }
 
-
 function refreshData() {
   setInterval(function () {
     updateData();
-  }, 1000); // set interval ke 5 detik (5000 ms)
+  }, 5000); // Set interval ke 5 detik (5000 ms) untuk pembaruan data
 }
+
 // panggil fungsi refreshData() saat halaman dimuat
 refreshData();
