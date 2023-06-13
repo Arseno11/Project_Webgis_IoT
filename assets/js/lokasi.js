@@ -194,7 +194,6 @@ navigator.geolocation.getCurrentPosition(function (location) {
   refreshData1();
 
 });
-
 // Fungsi untuk menampilkan SweetAlert
 function showAlert(icon, title, text, callback) {
   Swal.fire({
