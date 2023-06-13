@@ -1,16 +1,19 @@
 <?php
 include 'koneksi.php';
 
-// Memastikan bahwa parameter "jarak", "hujan", dan "id_alat" telah ditentukan
-if (!isset($_GET["jarak"]) || !isset($_GET["hujan"]) || !isset($_GET["id_alat"])) {
+// Mendapatkan data dari permintaan POST
+$data = json_decode(file_get_contents("php://input"));
+
+// Memastikan bahwa data yang diperlukan ada
+if (!isset($data->jarak) || !isset($data->hujan) || !isset($data->id_alat)) {
     http_response_code(400);
     die("Missing required parameters");
 }
 
-// Mengambil nilai dari parameter "jarak", "hujan", dan "id_alat"
-$jarak = $_GET["jarak"];
-$hujan = $_GET["hujan"];
-$id_alat = $_GET["id_alat"];
+// Mengambil nilai dari data
+$jarak = $data->jarak;
+$hujan = $data->hujan;
+$id_alat = $data->id_alat;
 
 // Memeriksa apakah id sudah ada di database
 $id_exists_stmt = mysqli_prepare(
