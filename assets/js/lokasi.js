@@ -209,19 +209,6 @@ function showAlert(icon, title, text, callback) {
   });
 }
 
-// Fungsi untuk menampilkan SweetAlert
-function showAlert(icon, title, text, callback) {
-  Swal.fire({
-    icon: icon,
-    title: title,
-    text: text,
-  }).then((result) => {
-    if (result.isConfirmed && typeof callback === 'function') {
-      callback();
-    }
-  });
-}
-
 // Fungsi untuk menampilkan alert pertama kali saja
 function showFirstAlert(alertConfig, showAlertKey) {
   const [_, alertType, ...alertMessageParts] = showAlertKey.split('_');
@@ -245,6 +232,7 @@ window.addEventListener('beforeunload', function () {
 });
 
 let previousData = null;
+let isFirstAlertShown = false; // Flag untuk melacak apakah alert pertama kali sudah ditampilkan atau belum
 
 function updateData() {
   fetch('ambildata.php', {
@@ -293,6 +281,32 @@ function updateData() {
         }
       });
 
+      if (!isFirstAlertShown) { // Tampilkan alert pertama kali jika belum ditampilkan
+        const showAlertKey = Object.keys(localStorage).find((key) => key.startsWith('showAlert_') && localStorage.getItem(key) === 'true');
+
+        if (showAlertKey) {
+          const alertConfig = {
+            siaga1: {
+              icon: 'error',
+              title: 'Peringatan Banjir',
+              callback: () => {
+                localStorage.setItem(showAlertKey, 'false');
+              }
+            },
+            siaga2: {
+              icon: 'warning',
+              title: 'Peringatan Banjir',
+              callback: () => {
+                localStorage.setItem(showAlertKey, 'false');
+              }
+            }
+          };
+
+          showFirstAlert(alertConfig, showAlertKey);
+          isFirstAlertShown = true; // Set flag menjadi true setelah alert pertama kali ditampilkan
+        }
+      }
+
       if (Object.keys(data.errors).length > 0 && localStorage.getItem('dataError') !== 'false') {
         const errorIds = Object.keys(data.errors);
         const errorMessage = `Data tidak diperbarui untuk alat dengan nama: ${errorIds.join(', ')}`;
@@ -334,8 +348,9 @@ window.addEventListener('load', function () {
 function refreshData() {
   setInterval(function () {
     updateData();
-  }, 1000); // Set interval ke 5 detik (5000 ms) untuk pembaruan data
+  }, 1000); // Set interval ke 1 detik (1000 ms) untuk pembaruan data
 }
 
 refreshData();
+
 
