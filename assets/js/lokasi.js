@@ -210,22 +210,52 @@ function showAlert(icon, title, text, callback) {
 }
 
 // Fungsi untuk menampilkan alert pertama kali saja
-function showFirstAlert(alertConfig, showAlertKey) {
-  const [_, alertType, ...alertMessageParts] = showAlertKey.split('_');
-  const alertMessage = alertMessageParts.join('_');
+function showFirstAlert(result) {
+  const showAlertKey = Object.keys(localStorage).find((key) => key.startsWith('showAlert_') && localStorage.getItem(key) === 'true');
 
-  const config = alertConfig[alertType];
-  if (config) {
-    showAlert(config.icon, config.title, `Jarak sensor telah mencapai Status ${alertType.toUpperCase()} untuk Alat Dengan Nama ${alertMessage}`, config.callback);
-  } else {
-    localStorage.removeItem(showAlertKey);
+  if (showAlertKey) {
+    const alertConfig = {
+      siaga1: {
+        icon: 'error',
+        title: 'Peringatan Banjir',
+        callback: () => {
+          localStorage.setItem(showAlertKey, 'false');
+        }
+      },
+      siaga2: {
+        icon: 'warning',
+        title: 'Peringatan Banjir',
+        callback: () => {
+          localStorage.setItem(showAlertKey, 'false');
+        }
+      }
+    };
+
+    const [_, alertType, ...alertMessageParts] = showAlertKey.split('_');
+    const alertMessage = alertMessageParts.join('_');
+
+    const config = alertConfig[alertType];
+    if (config) {
+      showAlert(config.icon, config.title, `Jarak sensor telah mencapai Status ${alertType.toUpperCase()} untuk Alat Dengan Nama ${alertMessage}`, config.callback);
+    } else {
+      localStorage.removeItem(showAlertKey);
+    }
   }
 }
 
-let previousData = null;
-let isFirstAlertShown = false; // Flag untuk melacak apakah alert pertama kali sudah ditampilkan atau belum
+// Fungsi untuk menampilkan error data
+function showErrorDataAlert(data) {
+  if (Object.keys(data.errors).length > 0 && localStorage.getItem('dataError') !== 'false') {
+    const errorIds = Object.keys(data.errors);
+    const errorMessage = `Data tidak diperbarui untuk alat dengan nama: ${errorIds.join(', ')}`;
+    showAlert('error', 'Terjadi Error', errorMessage, () => {
+      localStorage.setItem('dataError', 'false');
+    });
+  }
+}
 
-function updateData() {
+// Fungsi untuk mengambil data dan memperbarui tampilan
+function fetchDataAndUpdateView() {
   fetch('ambildata.php', {
     headers: {
       'Cache-Control': 'no-cache'
@@ -239,16 +269,15 @@ function updateData() {
 
       data.results.forEach((result, index) => {
         let siaga, hujan;
-        const showAlertKey = 'showAlert_' + result.id_alat;
 
         switch (true) {
           case (result.jarak <= 10):
             siaga = `<td style="color:red; text-size:25px;"><strong>Bahaya</strong></td>`;
-            showAlertWrapper(result, showAlertKey, 'Bahaya', 'error');
+            showAlertWrapper(result, 'Bahaya', 'error');
             break;
           case (result.jarak > 10 && result.jarak <= 20):
             siaga = `<td style="color:yellow; text-size:25px;"><strong>Awas</strong></td>`;
-            showAlertWrapper(result, showAlertKey, 'Awas', 'warning');
+            showAlertWrapper(result, 'Awas', 'warning');
             break;
           default:
             siaga = `<td style="color:green; text-size:25px;"><strong>Aman</strong></td>`;
@@ -272,42 +301,12 @@ function updateData() {
         }
       });
 
-      if (!isFirstAlertShown) { // Tampilkan alert pertama kali jika belum ditampilkan
-        const showAlertKey = Object.keys(localStorage).find((key) => key.startsWith('showAlert_') && localStorage.getItem(key) === 'true');
+      $("#data").html(html);
 
-        if (showAlertKey) {
-          const alertConfig = {
-            siaga1: {
-              icon: 'error',
-              title: 'Peringatan Banjir',
-              callback: () => {
-                localStorage.setItem(showAlertKey, 'false');
-              }
-            },
-            siaga2: {
-              icon: 'warning',
-              title: 'Peringatan Banjir',
-              callback: () => {
-                localStorage.setItem(showAlertKey, 'false');
-              }
-            }
-          };
-
-          showFirstAlert(alertConfig, showAlertKey);
-          isFirstAlertShown = true; // Set flag menjadi true setelah alert pertama kali ditampilkan
-        }
-      }
-
-      if (Object.keys(data.errors).length > 0 && localStorage.getItem('dataError') !== 'false') {
-        const errorIds = Object.keys(data.errors);
-        const errorMessage = `Data tidak diperbarui untuk alat dengan nama: ${errorIds.join(', ')}`;
-        showAlert('error', 'Terjadi Error', errorMessage, () => {
-          localStorage.setItem('dataError', 'false');
-        });
-      }
+      showErrorDataAlert(data);
 
       if (JSON.stringify(data.results) !== JSON.stringify(previousData)) {
-        $("#data").html(html);
+        showFirstAlert();
         previousData = data.results;
       }
     })
@@ -318,9 +317,6 @@ function updateData() {
     });
 }
 
-// Panggil fungsi updateData saat halaman dimuat
-updateData();
-
 // Fungsi untuk mengecek dan mengatur state dataError saat halaman dimuat
 window.addEventListener('load', function () {
   if (localStorage.getItem('dataError') === 'false') {
@@ -328,15 +324,19 @@ window.addEventListener('load', function () {
   }
 });
 
-function refreshData() {
-  setInterval(function () {
-    updateData();
-  }, 1000); // Set interval ke 1 detik (1000 ms) untuk pembaruan data
+let previousData = null;
+
+// Fungsi untuk memperbarui data dan tampilan secara teratur
+function updateDataAndRefresh() {
+  fetchDataAndUpdateView();
+  setInterval(fetchDataAndUpdateView, 1000); // Set interval ke 1 detik (1000 ms) untuk pembaruan data
 }
 
-refreshData();
+// Panggil fungsi updateDataAndRefresh saat halaman dimuat
+updateDataAndRefresh();
 
-function showAlertWrapper(result, key, suffix, icon) {
+function showAlertWrapper(result, suffix, icon) {
+  const key = 'showAlert_' + result.id_alat;
   if (localStorage.getItem(key + suffix) !== 'false') {
     showAlert(icon, 'Peringatan Banjir', `Jarak sensor telah mencapai Status ${suffix.toUpperCase()} untuk Alat Dengan Nama ${result.nama_alat}`, () => {
       localStorage.setItem(key + suffix, 'false');
