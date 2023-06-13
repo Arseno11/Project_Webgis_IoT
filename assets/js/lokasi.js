@@ -302,13 +302,9 @@ function fetchDataAndUpdateView() {
       });
 
       $("#data").html(html);
-
       showErrorDataAlert(data);
+      showFirstAlert(data.results); // Tampilkan alert pertama kali
 
-      if (JSON.stringify(data.results) !== JSON.stringify(previousData)) {
-        showFirstAlert();
-        previousData = data.results;
-      }
     })
     .catch(error => {
       showAlert('error', 'Error', 'Terjadi kesalahan saat mengambil data. Silakan coba lagi.', () => {
@@ -316,6 +312,15 @@ function fetchDataAndUpdateView() {
       });
     });
 }
+
+// Fungsi untuk menghapus item localStorage ketika halaman di-reload atau ditutup
+window.addEventListener('beforeunload', function () {
+  Object.keys(localStorage).forEach((key) => {
+    if (key.startsWith('showAlert_')) {
+      localStorage.removeItem(key);
+    }
+  });
+});
 
 // Fungsi untuk mengecek dan mengatur state dataError saat halaman dimuat
 window.addEventListener('load', function () {
@@ -326,10 +331,13 @@ window.addEventListener('load', function () {
 
 let previousData = null;
 
+// Panggil fungsi fetchDataAndUpdateView saat halaman dimuat
+fetchDataAndUpdateView();
+
 // Fungsi untuk memperbarui data dan tampilan secara teratur
 function updateDataAndRefresh() {
   fetchDataAndUpdateView();
-  setInterval(fetchDataAndUpdateView, 1000); // Set interval ke 1 detik (1000 ms) untuk pembaruan data
+  setInterval(fetchDataAndUpdateView, 1000); // Set interval ke 5 detik (5000 ms) untuk pembaruan data
 }
 
 // Panggil fungsi updateDataAndRefresh saat halaman dimuat
