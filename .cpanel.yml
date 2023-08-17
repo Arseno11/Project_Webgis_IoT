@@ -1,4 +1,4 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/example/public_html/
+    - export DEPLOYPATH=/home/example/public_html/arseno.asistenrumahkopi.com
     - /bin/cp -R * $DEPLOYPATH
